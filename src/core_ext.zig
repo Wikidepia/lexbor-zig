@@ -146,33 +146,33 @@ pub const LEXBOR_VERSION_STRING = "1.8.0";
 // TODO: #define lexbor_min(val1, val2) ((val1) < (val2) ? (val1) : (val2))
 
 pub const lexbor_status_t = enum(c_int) {
-    ok = 0x0000,
-    @"error" = 0x0001,
-    error_memory_allocation,
-    error_object_is_null,
-    error_small_buffer,
-    error_incomplete_object,
-    error_no_free_slot,
-    error_too_small_size,
-    error_not_exists,
-    error_wrong_args,
-    error_wrong_stage,
-    error_unexpected_result,
-    error_unexpected_data,
-    error_overflow,
-    @"continue",
-    small_buffer,
-    aborted,
-    stopped,
-    next,
-    stop,
-    warning,
+    LXB_STATUS_OK = 0x0000,
+    LXB_STATUS_ERROR = 0x0001,
+    LXB_STATUS_ERROR_MEMORY_ALLOCATION,
+    LXB_STATUS_ERROR_OBJECT_IS_NULL,
+    LXB_STATUS_ERROR_SMALL_BUFFER,
+    LXB_STATUS_ERROR_INCOMPLETE_OBJECT,
+    LXB_STATUS_ERROR_NO_FREE_SLOT,
+    LXB_STATUS_ERROR_TOO_SMALL_SIZE,
+    LXB_STATUS_ERROR_NOT_EXISTS,
+    LXB_STATUS_ERROR_WRONG_ARGS,
+    LXB_STATUS_ERROR_WRONG_STAGE,
+    LXB_STATUS_ERROR_UNEXPECTED_RESULT,
+    LXB_STATUS_ERROR_UNEXPECTED_DATA,
+    LXB_STATUS_ERROR_OVERFLOW,
+    LXB_STATUS_CONTINUE,
+    LXB_STATUS_SMALL_BUFFER,
+    LXB_STATUS_ABORTED,
+    LXB_STATUS_STOPPED,
+    LXB_STATUS_NEXT,
+    LXB_STATUS_STOP,
+    LXB_STATUS_WARNING,
 };
 
 pub const lexbor_action_t = enum(c_int) {
-    ok = 0x00,
-    stop = 0x01,
-    next = 0x02,
+    LEXBOR_ACTION_OK = 0x00,
+    LEXBOR_ACTION_STOP = 0x01,
+    LEXBOR_ACTION_NEXT = 0x02,
 };
 
 pub const lexbor_serialize_cb_f = ?*const fn (data: ?*const lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
@@ -470,21 +470,21 @@ extern fn lexbor_dtoa(value: f64, begin: ?*lxb_char_t, len: usize) usize;
 pub const lexbor_fs_dir_file_f = ?*const fn (fullpath: ?*const lxb_char_t, fullpath_len: usize, filename: ?*const lxb_char_t, filename_len: usize, ctx: ?*anyopaque) callconv(.C) lexbor_action_t;
 
 pub const lexbor_fs_dir_opt = enum(c_int) {
-    undef = 0x00,
-    without_dir = 0x01,
-    without_file = 0x02,
-    without_hidden = 0x04,
+    LEXBOR_FS_DIR_OPT_UNDEF = 0x00,
+    LEXBOR_FS_DIR_OPT_WITHOUT_DIR = 0x01,
+    LEXBOR_FS_DIR_OPT_WITHOUT_FILE = 0x02,
+    LEXBOR_FS_DIR_OPT_WITHOUT_HIDDEN = 0x04,
 };
 
 pub const lexbor_fs_file_type_t = enum(c_int) {
-    undef = 0x00,
-    file = 0x01,
-    directory = 0x02,
-    block_device = 0x03,
-    lxb_char_tacter_device = 0x04,
-    pipe = 0x05,
-    symlink = 0x06,
-    socket = 0x07,
+    LEXBOR_FS_FILE_TYPE_UNDEF = 0x00,
+    LEXBOR_FS_FILE_TYPE_FILE = 0x01,
+    LEXBOR_FS_FILE_TYPE_DIRECTORY = 0x02,
+    LEXBOR_FS_FILE_TYPE_BLOCK_DEVICE = 0x03,
+    LEXBOR_FS_FILE_TYPE_CHARACTER_DEVICE = 0x04,
+    LEXBOR_FS_FILE_TYPE_PIPE = 0x05,
+    LEXBOR_FS_FILE_TYPE_SYMLINK = 0x06,
+    LEXBOR_FS_FILE_TYPE_SOCKET = 0x07,
 };
 
 extern fn lexbor_fs_dir_read(dirpath: ?*const lxb_char_t, opt: c_int, callback: lexbor_fs_dir_file_f, ctx: ?*anyopaque) lxb_status_t;
@@ -598,19 +598,22 @@ pub inline fn lexbor_hash_entries_count(hash: ?*lexbor_hash_t) usize {
 
 // core/in.h
 
-pub const lexbor_in_opt_t = enum(c_int) {
-    undef = 0x00,
-    readonly = 0x01,
-    done = 0x02,
-    fake = 0x04,
-    alloc = 0x08,
+pub const lexbor_in_node_t = lexbor_in_node;
+pub const lexbor_in_opt_t = c_int;
+
+pub const lexbor_in_opt = enum(c_int) {
+    LEXBOR_IN_OPT_UNDEF = 0x00,
+    LEXBOR_IN_OPT_READONLY = 0x01,
+    LEXBOR_IN_OPT_DONE = 0x02,
+    LEXBOR_IN_OPT_FAKE = 0x04,
+    LEXBOR_IN_OPT_ALLOC = 0x08,
 };
 
 pub const lexbor_in_t = extern struct {
     nodes: ?*lexbor_dobject_t,
 };
 
-pub const lexbor_in_node_t = extern struct {
+pub const lexbor_in_node = extern struct {
     offset: usize,
     opt: lexbor_in_opt_t,
     begin: ?[*]const lxb_char_t,
