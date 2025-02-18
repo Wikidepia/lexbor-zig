@@ -304,7 +304,7 @@ pub const lxb_css_syntax_token_type_t = enum(c_int) {
     LXB_CSS_SYNTAX_TOKEN_RC_BRACKET, // U+007D RIGHT CURLY BRACKET (})
     LXB_CSS_SYNTAX_TOKEN__EOF,
     LXB_CSS_SYNTAX_TOKEN__TERMINATED, // Deprecated, use LXB_CSS_SYNTAX_TOKEN__END.
-    LXB_CSS_SYNTAX_TOKEN__END = @This().LXB_CSS_SYNTAX_TOKEN__TERMINATED,
+    LXB_CSS_SYNTAX_TOKEN__END = 0x27, // manually counted...
     LXB_CSS_SYNTAX_TOKEN__LAST_ENTRY,
 };
 

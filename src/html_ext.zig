@@ -1,4 +1,5 @@
 // const std = @import("std");
+
 const lexbor_str_t = @import("./core_ext.zig").lexbor_str_t;
 const lxb_status_t = @import("./core_ext.zig").lxb_status_t;
 const lexbor_avl_t = @import("./core_ext.zig").lexbor_avl_t;
@@ -6,6 +7,7 @@ const lexbor_avl_node_t = @import("./core_ext.zig").lexbor_avl_node_t;
 const lexbor_array_t = @import("./core_ext.zig").lexbor_array_t;
 const lexbor_hash_t = @import("./core_ext.zig").lexbor_hash_t;
 const lexbor_dobject_t = @import("./core_ext.zig").lexbor_dobject_t;
+const lxb_char_t = @import("./core_ext.zig").lxb_char_t;
 const lxb_css_memory_t = @import("./css_ext.zig").lxb_css_memory_t;
 const lxb_css_selectors_t = @import("./css_ext.zig").lxb_css_selectors_t;
 const lxb_css_parser_t = @import("./css_ext.zig").lxb_css_parser_t;
@@ -60,6 +62,16 @@ pub const lxb_html_document = extern struct {
     ready_state: lxb_html_document_ready_state_t,
     opt: lxb_html_document_opt_t,
 };
+
+pub extern fn lxb_html_document_create() ?*lxb_html_document_t;
+pub extern fn lxb_html_document_clean(document: ?*lxb_html_document_t) void;
+pub extern fn lxb_html_document_destroy(document: ?*lxb_html_document_t) ?*lxb_html_document_t;
+pub extern fn lxb_html_document_parse(document: ?*lxb_html_document_t, html: ?*const lxb_char_t, size: usize) lxb_status_t;
+
+// title
+pub extern fn lxb_html_document_title(document: ?*lxb_html_document_t, len: ?*usize) ?*lxb_char_t;
+pub extern fn lxb_html_document_title_set(document: ?*lxb_html_document_t, title: ?*const lxb_char_t, len: ?*usize) lxb_status_t;
+pub extern fn lxb_html_document_title_raw(document: ?*lxb_html_document_t, len: ?*usize) ?*lxb_char_t;
 
 // html/interface.h
 
@@ -330,6 +342,9 @@ pub const lxb_html_label_element = extern struct {
 pub const lxb_html_legend_element = extern struct {
     element: lxb_html_element_t,
 };
+
+pub extern fn lxb_html_legend_element_interface_create(document: ?*lxb_html_document_t) ?*lxb_html_legend_element_t;
+pub extern fn lxb_html_legend_element_interface_destroy(legend_element: ?*lxb_html_legend_element_t) ?*lxb_html_legend_element_t;
 
 // html/interfaces/li_element.h
 

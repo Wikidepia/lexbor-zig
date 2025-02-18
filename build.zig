@@ -713,6 +713,7 @@ const html_src = [_][]const u8{
     "lib/lexbor/html/interfaces/image_element.c",
     "lib/lexbor/html/interfaces/input_element.c",
     "lib/lexbor/html/interfaces/label_element.c",
+    "lib/lexbor/html/interfaces/legend_element.c",
     "lib/lexbor/html/interfaces/li_element.c",
     "lib/lexbor/html/interfaces/link_element.c",
     "lib/lexbor/html/interfaces/map_element.c",
