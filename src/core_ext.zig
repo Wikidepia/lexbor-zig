@@ -1,6 +1,6 @@
 const std = @import("std");
 
-const lb = @import("lexbor.zig");
+// const lb = @import("lexbor.zig");
 
 // libc
 

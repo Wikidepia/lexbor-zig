@@ -113,6 +113,21 @@ pub const Document = struct {
     }
 };
 
+// pub const Parser = struct {
+//     document: *html.lxb_html_document_t,
+//
+//     pub fn init() DocumentError!Document {
+//         const document = html.lxb_html_document_create() orelse return error.FailedToInitialize;
+//         return Document{
+//             .document = document,
+//         };
+//     }
+//
+//     pub fn deinit(self: *Document) void {
+//         _ = html.lxb_html_document_destroy(self.document);
+//     }
+//
+// };
 // std.debug.print("{any}\n", .{});
 
 // test {

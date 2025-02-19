@@ -2,14 +2,15 @@ const std = @import("std");
 const expectEqual = std.testing.expectEqual;
 const expectEqualSlices = std.testing.expectEqualSlices;
 
-const lb = @import("lexbor");
+// const Document = @import("lexbor").Document;
+
 
 test "document_title" {
     const html = "<head><title>  Oh,    my...   </title></head>";
 
     // Initialization
-    var doc = try lb.Document.init();
-    defer doc.deinit();
+    // var doc = try .Create();
+    // defer lb.documentDestroy(&doc);
 
     // Parse HTML
     try doc.parse(html);
@@ -104,6 +105,38 @@ test "document_create" {
     // Print Result
     // _ = doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
 }
+
+// test "document_title" {
+//     const html = "<head><title>  Oh,    my...   </title></head>";
+//
+//     // Initialization
+//     var doc = try lb.Document.init();
+//     defer doc.deinit();
+//
+//     // Parse HTML
+//     try doc.parse(html);
+//
+//     // Get title
+//     if (doc.getTitle()) |title| {
+//         try expectEqualSlices(u8, "Oh, my...", title);
+//     }
+//
+//     // Get raw title
+//     if (doc.getRawTitle()) |raw_title| {
+//         try expectEqualSlices(u8, "  Oh,    my...   ", raw_title);
+//     }
+//
+//     // Set new title
+//     try doc.setTitle("We change title");
+//
+//     // Get new title
+//     if (doc.getTitle()) |new_title| {
+//         try expectEqualSlices(u8, "We change title", new_title);
+//     }
+//
+//     // Print HTML tree
+//     // _ = try doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
+// }
 
 // test {
 //     _ = @import("core.zig");

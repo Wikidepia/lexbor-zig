@@ -1,5 +1,7 @@
 // const std = @import("std");
-
+const lexbor_sbst_entry_static_t = @import("./core_ext.zig").lexbor_sbst_entry_static_t;
+const lexbor_array_obj_t = @import("./core_ext.zig").lexbor_array_obj_t;
+const lexbor_mraw_t = @import("./core_ext.zig").lexbor_mraw_t;
 const lexbor_str_t = @import("./core_ext.zig").lexbor_str_t;
 const lxb_status_t = @import("./core_ext.zig").lxb_status_t;
 const lexbor_avl_t = @import("./core_ext.zig").lexbor_avl_t;
@@ -21,6 +23,9 @@ const lxb_dom_document_fragment_t = @import("./dom_ext.zig").lxb_dom_document_fr
 const lxb_dom_element_t = @import("./dom_ext.zig").lxb_dom_element_t;
 const lxb_dom_event_target_t = @import("./dom_ext.zig").lxb_dom_event_target_t;
 const lxb_dom_node_t = @import("./dom_ext.zig").lxb_dom_node_t;
+const lxb_dom_attr_t = @import("./dom_ext.zig").lxb_dom_attr_t;
+const lxb_dom_attr_data_t = @import("./dom_ext.zig").lxb_dom_attr_data_t;
+const lxb_tag_id_t = @import("./tag_ext.zig").lxb_tag_id_t;
 
 // html/interfaces/document.h
 
@@ -615,3 +620,176 @@ pub const lxb_html_serialize_opt = enum(c_int) {
 pub const lxb_html_serialize_cb_f = ?*const fn (data: ?[*:0]const lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
 
 pub extern fn lxb_html_serialize_pretty_tree_cb(node: ?*lxb_dom_node_t, opt: lxb_html_serialize_opt_t, indent: usize, cb: lxb_html_serialize_cb_f, ctx: ?*anyopaque) lxb_status_t;
+
+// html/parser.h
+
+pub const lxb_html_parser_state_t = enum(c_int) {
+    LXB_HTML_PARSER_STATE_BEGIN = 0x00,
+    LXB_HTML_PARSER_STATE_PROCESS = 0x01,
+    LXB_HTML_PARSER_STATE_END = 0x02,
+    LXB_HTML_PARSER_STATE_FRAGMENT_PROCESS = 0x03,
+    LXB_HTML_PARSER_STATE_ERROR = 0x04,
+};
+
+pub const lxb_html_parser_t = extern struct {
+    tkz: ?*lxb_html_tokenizer_t,
+    tree: ?*lxb_html_tree_t,
+    original_tree: ?*lxb_html_tree_t,
+    root: ?*lxb_dom_node_t,
+    form: ?*lxb_dom_node_t,
+    state: lxb_html_parser_state_t,
+    status: lxb_status_t,
+    ref_count: usize,
+};
+
+pub extern fn lxb_html_parser_create() ?*lxb_html_parser_t;
+pub extern fn lxb_html_parser_init(parser: ?*lxb_html_parser_t) lxb_status_t;
+pub extern fn lxb_html_parser_destroy(parser: ?*lxb_html_parser_t) ?*lxb_html_parser_t;
+
+// html/tokenizer.h
+
+// pub const lxb_html_serialize_cb_f = ?*const fn (data: ?[*:0]const lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
+
+pub const lxb_html_tokenizer_state_f = ?*const fn (tkz: ?*lxb_html_tokenizer_t, data: ?*const lxb_char_t, end: ?*const lxb_char_t) callconv(.C) ?*lxb_char_t;
+
+pub const lxb_html_tokenizer_token_f = ?*const fn (tkz: ?*lxb_html_tokenizer_t, token: ?*lxb_html_token_t, ctx: ?*anyopaque) callconv(.C) ?*lxb_html_token_t;
+
+pub const lxb_html_tokenizer = extern struct {
+    state: lxb_html_tokenizer_state_f,
+    state_return: lxb_html_tokenizer_state_f,
+    callback_token_done: lxb_html_tokenizer_token_f,
+    callback_token_ctx: ?*anyopaque,
+    tags: ?*lexbor_hash_t,
+    attrs: ?*lexbor_hash_t,
+    attrs_mraw: ?*lexbor_mraw_t,
+    mraw: ?*lexbor_mraw_t,
+    token: ?*lxb_html_token_t,
+    dobj_token: ?*lexbor_dobject_t,
+    dobj_token_attr: ?*lexbor_dobject_t,
+    parse_errors: ?*lexbor_array_obj_t,
+    tree: ?*lxb_html_tree_t,
+    markup: ?*const lxb_char_t,
+    temp: ?*const lxb_char_t,
+    tmp_tag_id: lxb_tag_id_t,
+    start: ?*lxb_char_t,
+    pos: ?*lxb_char_t,
+    end: ?*const lxb_char_t,
+    begin: ?*const lxb_char_t,
+    last: ?*const lxb_char_t,
+    entity: ?*const lexbor_sbst_entry_static_t,
+    entity_match: ?*const lexbor_sbst_entry_static_t,
+    entity_start: usize,
+    entity_end: usize,
+    entity_length: u32,
+    entity_number: u32,
+    is_attribute: bool,
+    opt: lxb_html_tokenizer_opt_t,
+    status: lxb_status_t,
+    is_eof: bool,
+
+    base: ?*lxb_html_tokenizer_t,
+    ref_count: usize,
+};
+
+pub const lxb_html_tokenizer_eof = @extern(**const lxb_char_t, .{ .name = "lxb_html_tokenizer_eof" });
+
+// html/base.h
+
+pub const LEXBOR_HTML_VERSION_MAJOR = 2;
+pub const LEXBOR_HTML_VERSION_MINOR = 5;
+pub const LEXBOR_HTML_VERSION_PATCH = 0;
+pub const LEXBOR_HTML_VERSION_STRING = "2.5.0";
+
+pub const lxb_html_tokenizer_t = lxb_html_tokenizer;
+pub const lxb_html_tokenizer_opt_t = c_uint;
+pub const lxb_html_tree_t = lxb_html_tree;
+
+pub const lxb_html_status_t = enum(c_int) {
+    LXB_HTML_STATUS_OK = 0x0000,
+};
+
+// html/token.h
+
+pub const lxb_html_token_type_t = c_int;
+
+pub const lxb_html_token_type = enum(c_int) {
+    LXB_HTML_TOKEN_TYPE_OPEN = 0x0000,
+    LXB_HTML_TOKEN_TYPE_CLOSE = 0x0001,
+    LXB_HTML_TOKEN_TYPE_CLOSE_SELF = 0x0002,
+    LXB_HTML_TOKEN_TYPE_FORCE_QUIRKS = 0x0004,
+    LXB_HTML_TOKEN_TYPE_DONE = 0x0008,
+};
+
+pub const lxb_html_token_t = extern struct {
+    begin: ?*const lxb_char_t,
+    end: ?*const lxb_char_t,
+    text_start: ?*const lxb_char_t,
+    text_end: ?*const lxb_char_t,
+    attr_first: ?*lxb_html_token_attr_t,
+    attr_last: ?*lxb_html_token_attr_t,
+    base_element: ?*anyopaque,
+
+    null_count: usize,
+    tag_id: lxb_tag_id_t,
+    type: lxb_html_token_type_t,
+};
+
+// html/tree.h
+
+pub const lxb_html_tree_insertion_mode_f = ?*const fn (tree: ?*lxb_html_tree_t, token: ?*lxb_html_token_t) callconv(.C) bool;
+
+pub const lxb_html_tree_append_attr_f = ?*const fn (tree: ?*lxb_html_tree_t, attr: ?*lxb_dom_attr_t, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
+
+pub const lxb_html_tree_pending_table_t = extern struct {
+    text_list: ?*lexbor_array_obj_t,
+    have_non_ws: bool,
+};
+
+pub const lxb_html_tree = extern struct {
+    tkz_ref: ?*lxb_html_tokenizer_t,
+    document: ?*lxb_html_document_t,
+    fragment: ?*lxb_dom_node_t,
+    form: ?*lxb_html_form_element_t,
+    open_elements: ?*lexbor_array_t,
+    active_formatting: ?*lexbor_array_t,
+    template_insertion_modes: ?*lexbor_array_obj_t,
+    pending_table: lxb_html_tree_pending_table_t,
+    parse_errors: ?*lexbor_array_obj_t,
+    foster_parenting: bool,
+    frameset_ok: bool,
+    scripting: bool,
+    mode: lxb_html_tree_insertion_mode_f,
+    original_mode: lxb_html_tree_insertion_mode_f,
+    before_append_attr: lxb_html_tree_append_attr_f,
+    status: lxb_status_t,
+    ref_count: usize,
+};
+
+pub const lxb_html_tree_insertion_position_t = enum(c_int) {
+    LXB_HTML_TREE_INSERTION_POSITION_CHILD = 0x00,
+    LXB_HTML_TREE_INSERTION_POSITION_BEFORE = 0x01,
+};
+
+// html/token_attr.h
+
+pub const lxb_html_token_attr_t = lxb_html_token_attr;
+pub const lxb_html_token_attr_type_t = c_int;
+
+pub const lxb_html_token_attr_type = enum(c_int) {
+    LXB_HTML_TOKEN_ATTR_TYPE_UNDEF = 0x0000,
+    LXB_HTML_TOKEN_ATTR_TYPE_NAME_NULL = 0x0001,
+    LXB_HTML_TOKEN_ATTR_TYPE_VALUE_NULL = 0x0002,
+};
+
+pub const lxb_html_token_attr = extern struct {
+    name_begin: ?*const lxb_char_t,
+    name_end: ?*const lxb_char_t,
+    value_begin: ?*const lxb_char_t,
+    value_end: ?*const lxb_char_t,
+    name: ?*const lxb_dom_attr_data_t,
+    value: ?*lxb_char_t,
+    value_size: usize,
+    next: ?*lxb_html_token_attr_t,
+    prev: ?*lxb_html_token_attr_t,
+    type: lxb_html_token_attr_type_t,
+};
