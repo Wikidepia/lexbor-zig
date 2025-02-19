@@ -2,18 +2,17 @@ const std = @import("std");
 const expectEqual = std.testing.expectEqual;
 const expectEqualSlices = std.testing.expectEqualSlices;
 
-// const Document = @import("lexbor").Document;
-
+const html = @import("lexbor").html;
 
 test "document_title" {
-    const html = "<head><title>  Oh,    my...   </title></head>";
+    const input = "<head><title>  Oh,    my...   </title></head>";
 
     // Initialization
-    // var doc = try .Create();
-    // defer lb.documentDestroy(&doc);
+    var doc = try html.Document.create();
+    defer doc.destroy();
 
     // Parse HTML
-    try doc.parse(html);
+    try doc.parse(input);
 
     // Get title
     if (doc.getTitle()) |title| {
@@ -38,7 +37,7 @@ test "document_title" {
 }
 
 test "document_parse_chunk" {
-    const html = [_][]const u8{
+    const input = [_][]const u8{
         "<!DOCT",
         "YPE htm",
         "l>",
@@ -58,13 +57,13 @@ test "document_parse_chunk" {
     };
 
     // Initialization
-    var doc = try lb.Document.init();
-    defer doc.deinit();
+    var doc = try html.Document.create();
+    defer doc.destroy();
 
     // Parse HTML
     try doc.parseChunkBegin();
 
-    for (html) |h| {
+    for (input) |h| {
         try doc.parseChunk(&h[0], h.len);
     }
 
@@ -80,12 +79,19 @@ test "document_parse_chunk" {
 }
 
 test "document_create" {
+    const input = "";
 
-    // // Initialization
-    // var doc = lb.Document.init() orelse return error.FailedToInitialize;
-    // defer doc.deinit();
-    //
-    // // Parse HTML
+    // Initialization
+    var parser = try html.Parser.create();
+
+    try parser.init();
+
+    // Parse
+    const doc = try parser.parse(input, input.len);
+    _ = doc;
+
+    parser.destroy();
+
     // status = doc.parseChunkBegin();
     // try expectEqual(status, .LXB_STATUS_OK);
     //
@@ -105,38 +111,6 @@ test "document_create" {
     // Print Result
     // _ = doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
 }
-
-// test "document_title" {
-//     const html = "<head><title>  Oh,    my...   </title></head>";
-//
-//     // Initialization
-//     var doc = try lb.Document.init();
-//     defer doc.deinit();
-//
-//     // Parse HTML
-//     try doc.parse(html);
-//
-//     // Get title
-//     if (doc.getTitle()) |title| {
-//         try expectEqualSlices(u8, "Oh, my...", title);
-//     }
-//
-//     // Get raw title
-//     if (doc.getRawTitle()) |raw_title| {
-//         try expectEqualSlices(u8, "  Oh,    my...   ", raw_title);
-//     }
-//
-//     // Set new title
-//     try doc.setTitle("We change title");
-//
-//     // Get new title
-//     if (doc.getTitle()) |new_title| {
-//         try expectEqualSlices(u8, "We change title", new_title);
-//     }
-//
-//     // Print HTML tree
-//     // _ = try doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
-// }
 
 // test {
 //     _ = @import("core.zig");

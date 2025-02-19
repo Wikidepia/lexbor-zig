@@ -646,6 +646,8 @@ pub extern fn lxb_html_parser_create() ?*lxb_html_parser_t;
 pub extern fn lxb_html_parser_init(parser: ?*lxb_html_parser_t) lxb_status_t;
 pub extern fn lxb_html_parser_destroy(parser: ?*lxb_html_parser_t) ?*lxb_html_parser_t;
 
+pub extern fn lxb_html_parse(parser: ?*lxb_html_parser_t, html: ?*const lxb_char_t, size: usize) ?*lxb_html_document_t;
+
 // html/tokenizer.h
 
 // pub const lxb_html_serialize_cb_f = ?*const fn (data: ?[*:0]const lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
