@@ -38,8 +38,8 @@ pub const Document = struct {
         return sliceTo(@as([*:0]u8, @ptrCast(raw_title)), 0);
     }
 
-    pub fn setTitle(self: *Document, title: ?*const core.lxb_char_t, len: usize) core.lexbor_status_t {
-        const status = html.lxb_html_document_title_set(self.document, title, len);
+    pub fn setTitle(self: *Document, new_title: []const u8) core.lexbor_status_t {
+        const status = html.lxb_html_document_title_set(self.document, &new_title[0], new_title.len);
         return @enumFromInt(status);
     }
 };

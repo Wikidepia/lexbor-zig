@@ -27,7 +27,7 @@ test "document_title" {
     }
 
     // Set new title
-    status = doc.setTitle(&"We change title"[0], "We change title".len);
+    status = doc.setTitle("We change title");
     try expectEqual(status, .LXB_STATUS_OK);
 
     // Get new title
