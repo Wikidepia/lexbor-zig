@@ -9,4 +9,5 @@
 // pub const Parser = @import("html/Parser.zig");
 
 pub const html = @import("html.zig");
+pub const tag = @import("tag.zig");
 // pub const Parser = @import("html/Parser.zig");

@@ -3,6 +3,7 @@ const expectEqual = std.testing.expectEqual;
 const expectEqualSlices = std.testing.expectEqualSlices;
 
 const html = @import("lexbor").html;
+const tag = @import("lexbor").tag;
 
 test "document_title" {
     const input = "<head><title>  Oh,    my...   </title></head>";
@@ -33,7 +34,7 @@ test "document_title" {
     }
 
     // Print HTML tree
-    // _ = try doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
+    // try doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
 }
 
 test "document_parse_chunk" {
@@ -75,10 +76,12 @@ test "document_parse_chunk" {
     }
 
     // Print Result
-    // _ = doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
+    // try doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
 }
 
 test "document_create" {
+    var tag_name_len: usize = undefined;
+
     const input = "";
 
     // Initialization
@@ -87,10 +90,26 @@ test "document_create" {
     try parser.init();
 
     // Parse
-    const doc = try parser.parse(input, input.len);
-    _ = doc;
-
+    var doc = try parser.parse(input, input.len);
     parser.destroy();
+
+    const body = doc.bodyElement();
+    _ = body;
+
+    // const t = tag.IdEnum.create(.LXB_TAG_A);
+    // const t = tag.Id.create(.LXB_TAG_A);
+    // _ = t;
+
+    var cur: tag.Id = .LXB_TAG_A;
+    const last: tag.Id = .LXB_TAG__LAST_ENTRY;
+
+    while (@intFromEnum(cur) < @intFromEnum(last)) : (cur = @enumFromInt(@intFromEnum(cur) + 1)) {
+        // const tag_name = cur.tagNameById(&tag_name_len);
+        const tag_name = tag.nameById(cur, &tag_name_len);
+        // std.debug.print("{s}\n", .{(tag_name.?)});
+        std.debug.print("{s}\n", .{(@as([*:0]const u8, @ptrCast(tag_name.?)))});
+        std.debug.print("{d}\n", .{tag_name_len});
+    }
 
     // status = doc.parseChunkBegin();
     // try expectEqual(status, .LXB_STATUS_OK);
@@ -109,7 +128,7 @@ test "document_create" {
     // }
 
     // Print Result
-    // _ = doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
+    // try doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
 }
 
 // test {

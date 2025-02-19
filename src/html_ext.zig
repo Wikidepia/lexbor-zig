@@ -81,6 +81,11 @@ pub extern fn lxb_html_document_title(document: ?*lxb_html_document_t, len: ?*us
 pub extern fn lxb_html_document_title_set(document: ?*lxb_html_document_t, title: ?*const lxb_char_t, len: usize) lxb_status_t;
 pub extern fn lxb_html_document_title_raw(document: ?*lxb_html_document_t, len: ?*usize) ?*lxb_char_t;
 
+// inline functions
+pub inline fn lxb_html_document_body_element(document: ?*lxb_html_document_t) ?*lxb_html_body_element_t {
+    return document.?.body;
+}
+
 // html/interface.h
 
 pub const lxb_html_document_t = lxb_html_document;

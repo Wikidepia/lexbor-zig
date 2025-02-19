@@ -559,7 +559,7 @@ pub inline fn lexbor_hash_mraw(hash: ?*lexbor_hash_t) ?*lexbor_mraw_t {
 
 pub inline fn lexbor_hash_entry_str(entry: ?*lexbor_hash_entry_t) ?*lxb_char_t {
     if (entry.?.length <= LEXBOR_HASH_SHORT_SIZE) {
-        return entry.?.u.short_str;
+        return &entry.?.u.short_str[0];
     }
     return entry.?.u.long_str;
 }
@@ -569,7 +569,7 @@ pub inline fn lexbor_hash_entry_str_set(entry: ?*lexbor_hash_entry_t, data: ?*lx
 
     if (length <= LEXBOR_HASH_SHORT_SIZE) {
         _ = memcpy(entry.?.u.short_str, data, length);
-        return entry.?.u.short_str;
+        return &entry.?.u.short_str[0];
     }
 
     entry.?.u.long_str = data;

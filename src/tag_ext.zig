@@ -1,9 +1,11 @@
 // const lexbor_str_t  = @import("./core_ext.zig").lexbor_str_t;
 // const lxb_status_t = @import("./core_ext.zig").lxb_status_t;
-// const lxb_char_t = @import("./core_ext.zig").lxb_char_t;
+const lxb_char_t = @import("./core_ext.zig").lxb_char_t;
 // const lexbor_mraw_t = @import("./core_ext.zig").lexbor_mraw_t;
 // const lexbor_action_t = @import("./core_ext.zig").lexbor_action_t;
-// const lexbor_hash_t = @import("./core_ext.zig").lexbor_hash_t;
+const lexbor_hash_t = @import("./core_ext.zig").lexbor_hash_t;
+const lexbor_hash_entry_t = @import("./core_ext.zig").lexbor_hash_entry_t;
+const lexbor_hash_entry_str = @import("./core_ext.zig").lexbor_hash_entry_str;
 // const lexbor_avl_t = @import("./core_ext.zig").lexbor_avl_t;
 // const lexbor_array_t = @import("./core_ext.zig").lexbor_array_t;
 // const lexbor_hash_t = @import("./core_ext.zig").lexbor_hash_t;
@@ -221,3 +223,33 @@ pub const lxb_tag_id_enum_t = enum(c_int) {
     LXB_TAG_XMP = 0x00c3,
     LXB_TAG__LAST_ENTRY = 0x00c4,
 };
+
+// tag/tag.h
+
+pub const lxb_tag_data_t = extern struct {
+    entry: lexbor_hash_entry_t,
+    tag_id: lxb_tag_id_t,
+    ref_count: usize,
+    read_only: bool,
+};
+
+pub extern fn lxb_tag_data_by_id(tag_id: lxb_tag_id_t) ?*lxb_tag_data_t;
+pub extern fn lxb_tag_data_by_name(hash: ?*lexbor_hash_t, name: ?*const lxb_char_t, len: usize) ?*lxb_tag_data_t;
+pub extern fn lxb_tag_data_by_name_upper(hash: ?*lexbor_hash_t, name: ?*const lxb_char_t, len: usize) ?*lxb_tag_data_t;
+
+pub inline fn lxb_tag_name_by_id(tag_id: lxb_tag_id_t, len: ?*usize) ?*lxb_char_t {
+    const data = lxb_tag_data_by_id(tag_id);
+    if (data == null) {
+        if (len != null) {
+            len.?.* = 0;
+        }
+
+        return null;
+    }
+
+    if (len != null) {
+        len.?.* = data.?.entry.length;
+    }
+
+    return lexbor_hash_entry_str(&data.?.entry);
+}

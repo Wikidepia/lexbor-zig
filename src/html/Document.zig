@@ -69,6 +69,10 @@ pub fn serialize(self: Document, opt: html.lxb_html_serialize_opt) errors.LxbSta
     return errors.maybeLxbStatusError(status);
 }
 
+pub fn bodyElement(self: Document) ?*html.lxb_html_body_element_t {
+    return self.document.body;
+}
+
 fn serializer_callback(data: ?[*:0]const core.lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) core.lxb_status_t {
     _ = ctx;
     _ = len;
