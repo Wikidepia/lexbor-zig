@@ -1,10 +1,9 @@
 const std = @import("std");
 const expectEqual = std.testing.expectEqual;
-const expectEqualSlices = std.testing.expectEqualSlices;
 
 const lb = @import("lexbor");
 
-test "document_title" {
+pub fn main() !void {
     const html = "<head><title>  Oh,    my...   </title></head>";
     var status: lb.core.lexbor_status_t = undefined;
 
@@ -18,12 +17,12 @@ test "document_title" {
 
     // Get title
     if (doc.getTitle()) |title| {
-        try expectEqualSlices(u8, "Oh, my...", title);
+        std.debug.print("Title: {s}\n", .{title});
     }
 
     // Get raw title
     if (doc.getRawTitle()) |raw_title| {
-        try expectEqualSlices(u8, "  Oh,    my...   ", raw_title);
+        std.debug.print("Raw Title: {s}\n", .{raw_title});
     }
 
     // Set new title
@@ -32,20 +31,6 @@ test "document_title" {
 
     // Get new title
     if (doc.getTitle()) |new_title| {
-        try expectEqualSlices(u8, "We change title", new_title);
+        std.debug.print("New Title: {s}\n", .{new_title});
     }
 }
-
-// test {
-//     _ = @import("core.zig");
-//     _ = @import("core/array_obj.zig");
-//     _ = @import("core/avl.zig");
-//     _ = @import("core/bst.zig");
-//     _ = @import("core/bst_map.zig");
-//     _ = @import("core/dobject.zig");
-//     _ = @import("core/hash.zig");
-//     _ = @import("core/in.zig");
-//     _ = @import("core/mem.zig");
-//     _ = @import("core/mraw.zig");
-//     _ = @import("core/str.zig");
-// }

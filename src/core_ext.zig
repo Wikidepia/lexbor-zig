@@ -4,8 +4,8 @@ const lb = @import("lexbor.zig");
 
 // libc
 
-extern fn memset(dest: ?*anyopaque, c: c_int, count: usize) ?*anyopaque;
-extern fn memcpy(dest: ?*anyopaque, src: ?*const anyopaque, count: usize) ?*anyopaque;
+pub extern fn memset(dest: ?*anyopaque, c: c_int, count: usize) ?*anyopaque;
+pub extern fn memcpy(dest: ?*anyopaque, src: ?*const anyopaque, count: usize) ?*anyopaque;
 
 // core/array.h
 
@@ -15,19 +15,19 @@ pub const lexbor_array_t = extern struct {
     length: usize,
 };
 
-extern fn lexbor_array_create() ?*lexbor_array_t;
+pub extern fn lexbor_array_create() ?*lexbor_array_t;
 pub extern fn lexbor_array_init(array: ?*lexbor_array_t, size: usize) lxb_status_t;
-extern fn lexbor_array_clean(array: ?*lexbor_array_t) void;
-extern fn lexbor_array_destroy(array: ?*lexbor_array_t, self_destroy: bool) ?*lexbor_array_t;
-extern fn lexbor_array_expand(array: ?*lexbor_array_t, up_to: usize) ?*?*anyopaque;
-extern fn lexbor_array_push(array: ?*lexbor_array_t, value: ?*anyopaque) lxb_status_t;
-extern fn lexbor_array_pop(array: ?*lexbor_array_t) ?*anyopaque;
-extern fn lexbor_array_insert(array: ?*lexbor_array_t, idx: usize, value: ?*anyopaque) lxb_status_t;
-extern fn lexbor_array_set(array: ?*lexbor_array_t, idx: usize, value: ?*anyopaque) lxb_status_t;
-extern fn lexbor_array_delete(array: ?*lexbor_array_t, begin: usize, length: usize) void;
-extern fn lexbor_array_get_noi(array: ?*lexbor_array_t, idx: usize) ?*anyopaque;
-extern fn lexbor_array_length_noi(array: ?*lexbor_array_t) usize;
-extern fn lexbor_array_size_noi(array: ?*lexbor_array_t) usize;
+pub extern fn lexbor_array_clean(array: ?*lexbor_array_t) void;
+pub extern fn lexbor_array_destroy(array: ?*lexbor_array_t, self_destroy: bool) ?*lexbor_array_t;
+pub extern fn lexbor_array_expand(array: ?*lexbor_array_t, up_to: usize) ?*?*anyopaque;
+pub extern fn lexbor_array_push(array: ?*lexbor_array_t, value: ?*anyopaque) lxb_status_t;
+pub extern fn lexbor_array_pop(array: ?*lexbor_array_t) ?*anyopaque;
+pub extern fn lexbor_array_insert(array: ?*lexbor_array_t, idx: usize, value: ?*anyopaque) lxb_status_t;
+pub extern fn lexbor_array_set(array: ?*lexbor_array_t, idx: usize, value: ?*anyopaque) lxb_status_t;
+pub extern fn lexbor_array_delete(array: ?*lexbor_array_t, begin: usize, length: usize) void;
+pub extern fn lexbor_array_get_noi(array: ?*lexbor_array_t, idx: usize) ?*anyopaque;
+pub extern fn lexbor_array_length_noi(array: ?*lexbor_array_t) usize;
+pub extern fn lexbor_array_size_noi(array: ?*lexbor_array_t) usize;
 
 pub inline fn lexbor_array_get(array: ?*lexbor_array_t, idx: usize) ?*anyopaque {
     if (idx >= array.?.length) {
@@ -54,22 +54,22 @@ pub const lexbor_array_obj_t = extern struct {
     struct_size: usize,
 };
 
-extern fn lexbor_array_obj_create() ?*lexbor_array_obj_t;
-extern fn lexbor_array_obj_init(array: ?*lexbor_array_obj_t, size: usize, struct_size: usize) lxb_status_t;
-extern fn lexbor_array_obj_clean(array: ?*lexbor_array_obj_t) void;
-extern fn lexbor_array_obj_destroy(array: ?*lexbor_array_obj_t, self_destroy: bool) ?*lexbor_array_obj_t;
-extern fn lexbor_array_obj_expand(array: ?*lexbor_array_obj_t, up_to: usize) ?*u8;
-extern fn lexbor_array_obj_push(array: ?*lexbor_array_obj_t) ?*anyopaque;
-extern fn lexbor_array_obj_push_wo_cls(array: ?*lexbor_array_obj_t) ?*anyopaque;
-extern fn lexbor_array_obj_push_n(array: ?*lexbor_array_obj_t, count: usize) ?*anyopaque;
-extern fn lexbor_array_obj_pop(array: ?*lexbor_array_obj_t) ?*anyopaque;
-extern fn lexbor_array_obj_delete(array: ?*lexbor_array_obj_t, begin: usize, length: usize) void;
-extern fn lexbor_array_obj_erase_noi(array: ?*lexbor_array_obj_t) void;
-extern fn lexbor_array_obj_get_noi(array: ?*lexbor_array_obj_t, idx: usize) ?*anyopaque;
-extern fn lexbor_array_obj_length_noi(array: ?*lexbor_array_obj_t) usize;
-extern fn lexbor_array_obj_size_noi(array: ?*lexbor_array_obj_t) usize;
-extern fn lexbor_array_obj_struct_size_noi(array: ?*lexbor_array_obj_t) usize;
-extern fn lexbor_array_obj_last_noi(array: ?*lexbor_array_obj_t) ?*anyopaque;
+pub extern fn lexbor_array_obj_create() ?*lexbor_array_obj_t;
+pub extern fn lexbor_array_obj_init(array: ?*lexbor_array_obj_t, size: usize, struct_size: usize) lxb_status_t;
+pub extern fn lexbor_array_obj_clean(array: ?*lexbor_array_obj_t) void;
+pub extern fn lexbor_array_obj_destroy(array: ?*lexbor_array_obj_t, self_destroy: bool) ?*lexbor_array_obj_t;
+pub extern fn lexbor_array_obj_expand(array: ?*lexbor_array_obj_t, up_to: usize) ?*u8;
+pub extern fn lexbor_array_obj_push(array: ?*lexbor_array_obj_t) ?*anyopaque;
+pub extern fn lexbor_array_obj_push_wo_cls(array: ?*lexbor_array_obj_t) ?*anyopaque;
+pub extern fn lexbor_array_obj_push_n(array: ?*lexbor_array_obj_t, count: usize) ?*anyopaque;
+pub extern fn lexbor_array_obj_pop(array: ?*lexbor_array_obj_t) ?*anyopaque;
+pub extern fn lexbor_array_obj_delete(array: ?*lexbor_array_obj_t, begin: usize, length: usize) void;
+pub extern fn lexbor_array_obj_erase_noi(array: ?*lexbor_array_obj_t) void;
+pub extern fn lexbor_array_obj_get_noi(array: ?*lexbor_array_obj_t, idx: usize) ?*anyopaque;
+pub extern fn lexbor_array_obj_length_noi(array: ?*lexbor_array_obj_t) usize;
+pub extern fn lexbor_array_obj_size_noi(array: ?*lexbor_array_obj_t) usize;
+pub extern fn lexbor_array_obj_struct_size_noi(array: ?*lexbor_array_obj_t) usize;
+pub extern fn lexbor_array_obj_last_noi(array: ?*lexbor_array_obj_t) ?*anyopaque;
 
 pub inline fn lexbor_array_obj_erase(array: ?*lexbor_array_obj_t) void {
     _ = memset(array.?, 0, @sizeOf(lexbor_array_obj_t));
@@ -119,19 +119,19 @@ pub const lexbor_avl_t = extern struct {
     last_right: ?*lexbor_avl_node_t,
 };
 
-extern fn lexbor_avl_create() ?*lexbor_avl_t;
-extern fn lexbor_avl_init(avl: ?*lexbor_avl_t, chunk_len: usize, struct_size: usize) lxb_status_t;
-extern fn lexbor_avl_clean(avl: ?*lexbor_avl_t) void;
-extern fn lexbor_avl_destroy(avl: ?*lexbor_avl_t, struct_destroy: bool) ?*lexbor_avl_t;
-extern fn lexbor_avl_node_make(avl: ?*lexbor_avl_t, type: usize, value: ?*anyopaque) ?*lexbor_avl_node_t;
-extern fn lexbor_avl_node_clean(node: ?*lexbor_avl_node_t) void;
-extern fn lexbor_avl_node_destroy(avl: ?*lexbor_avl_t, node: ?*lexbor_avl_node_t, self_destroy: bool) ?*lexbor_avl_node_t;
-extern fn lexbor_avl_insert(avl: ?*lexbor_avl_t, scope: ?*?*lexbor_avl_node_t, type: usize, value: ?*anyopaque) ?*lexbor_avl_node_t;
-extern fn lexbor_avl_search(avl: ?*lexbor_avl_t, scope: ?*lexbor_avl_node_t, type: usize) ?*lexbor_avl_node_t;
-extern fn lexbor_avl_remove(avl: ?*lexbor_avl_t, scope: ?*?*lexbor_avl_node_t, type: usize) ?*anyopaque;
-extern fn lexbor_avl_remove_by_node(avl: ?*lexbor_avl_t, root: ?*?*lexbor_avl_node_t, node: ?*lexbor_avl_node_t) void;
-extern fn lexbor_avl_foreach(avl: ?*lexbor_avl_t, scope: ?*?*lexbor_avl_node_t, cb: lexbor_avl_node_f, ctx: ?*anyopaque) lxb_status_t;
-extern fn lexbor_avl_foreach_recursion(avl: ?*lexbor_avl_t, scope: ?*lexbor_avl_node_t, callback: lexbor_avl_node_f, ctx: ?*anyopaque) void;
+pub extern fn lexbor_avl_create() ?*lexbor_avl_t;
+pub extern fn lexbor_avl_init(avl: ?*lexbor_avl_t, chunk_len: usize, struct_size: usize) lxb_status_t;
+pub extern fn lexbor_avl_clean(avl: ?*lexbor_avl_t) void;
+pub extern fn lexbor_avl_destroy(avl: ?*lexbor_avl_t, struct_destroy: bool) ?*lexbor_avl_t;
+pub extern fn lexbor_avl_node_make(avl: ?*lexbor_avl_t, type: usize, value: ?*anyopaque) ?*lexbor_avl_node_t;
+pub extern fn lexbor_avl_node_clean(node: ?*lexbor_avl_node_t) void;
+pub extern fn lexbor_avl_node_destroy(avl: ?*lexbor_avl_t, node: ?*lexbor_avl_node_t, self_destroy: bool) ?*lexbor_avl_node_t;
+pub extern fn lexbor_avl_insert(avl: ?*lexbor_avl_t, scope: ?*?*lexbor_avl_node_t, type: usize, value: ?*anyopaque) ?*lexbor_avl_node_t;
+pub extern fn lexbor_avl_search(avl: ?*lexbor_avl_t, scope: ?*lexbor_avl_node_t, type: usize) ?*lexbor_avl_node_t;
+pub extern fn lexbor_avl_remove(avl: ?*lexbor_avl_t, scope: ?*?*lexbor_avl_node_t, type: usize) ?*anyopaque;
+pub extern fn lexbor_avl_remove_by_node(avl: ?*lexbor_avl_t, root: ?*?*lexbor_avl_node_t, node: ?*lexbor_avl_node_t) void;
+pub extern fn lexbor_avl_foreach(avl: ?*lexbor_avl_t, scope: ?*?*lexbor_avl_node_t, cb: lexbor_avl_node_f, ctx: ?*anyopaque) lxb_status_t;
+pub extern fn lexbor_avl_foreach_recursion(avl: ?*lexbor_avl_t, scope: ?*lexbor_avl_node_t, callback: lexbor_avl_node_f, ctx: ?*anyopaque) void;
 
 // core/base.h
 
@@ -212,20 +212,20 @@ pub const lexbor_bst_t = extern struct {
     tree_length: usize,
 };
 
-extern fn lexbor_bst_create() ?*lexbor_bst_t;
-extern fn lexbor_bst_init(bst: ?*lexbor_bst_t, size: usize) lxb_status_t;
-extern fn lexbor_bst_clean(bst: ?*lexbor_bst_t) void;
-extern fn lexbor_bst_destroy(bst: ?*lexbor_bst_t, self_destroy: bool) ?*lexbor_bst_t;
-extern fn lexbor_bst_entry_make(bst: ?*lexbor_bst_t, size: usize) ?*lexbor_bst_entry_t;
-extern fn lexbor_bst_insert(bst: ?*lexbor_bst_t, scope: ?*?*lexbor_bst_entry_t, size: usize, value: ?*anyopaque) ?*lexbor_bst_entry_t;
-extern fn lexbor_bst_insert_not_exists(bst: ?*lexbor_bst_t, scope: ?*?*lexbor_bst_entry_t, size: usize) ?*lexbor_bst_entry_t;
-extern fn lexbor_bst_search(bst: ?*lexbor_bst_t, scope: ?*lexbor_bst_entry_t, size: usize) ?*lexbor_bst_entry_t;
-extern fn lexbor_bst_search_close(bst: ?*lexbor_bst_t, scope: ?*lexbor_bst_entry_t, size: usize) ?*lexbor_bst_entry_t;
-extern fn lexbor_bst_remove(bst: ?*lexbor_bst_t, root: ?*?*lexbor_bst_entry_t, size: usize) ?*anyopaque;
-extern fn lexbor_bst_remove_close(bst: ?*lexbor_bst_t, root: ?*?*lexbor_bst_entry_t, size: usize, found_size: ?*usize) ?*anyopaque;
-extern fn lexbor_bst_remove_by_pointer(bst: ?*lexbor_bst_t, entry: ?*lexbor_bst_entry_t, root: ?*?*lexbor_bst_entry_t) ?*anyopaque;
-extern fn lexbor_bst_serialize(bst: ?*lexbor_bst_t, callback: lexbor_callback_f, ctx: ?*anyopaque) void;
-extern fn lexbor_bst_serialize_entry(entry: ?*lexbor_bst_entry_t, callback: lexbor_callback_f, ctx: ?*anyopaque, tabs: usize) void;
+pub extern fn lexbor_bst_create() ?*lexbor_bst_t;
+pub extern fn lexbor_bst_init(bst: ?*lexbor_bst_t, size: usize) lxb_status_t;
+pub extern fn lexbor_bst_clean(bst: ?*lexbor_bst_t) void;
+pub extern fn lexbor_bst_destroy(bst: ?*lexbor_bst_t, self_destroy: bool) ?*lexbor_bst_t;
+pub extern fn lexbor_bst_entry_make(bst: ?*lexbor_bst_t, size: usize) ?*lexbor_bst_entry_t;
+pub extern fn lexbor_bst_insert(bst: ?*lexbor_bst_t, scope: ?*?*lexbor_bst_entry_t, size: usize, value: ?*anyopaque) ?*lexbor_bst_entry_t;
+pub extern fn lexbor_bst_insert_not_exists(bst: ?*lexbor_bst_t, scope: ?*?*lexbor_bst_entry_t, size: usize) ?*lexbor_bst_entry_t;
+pub extern fn lexbor_bst_search(bst: ?*lexbor_bst_t, scope: ?*lexbor_bst_entry_t, size: usize) ?*lexbor_bst_entry_t;
+pub extern fn lexbor_bst_search_close(bst: ?*lexbor_bst_t, scope: ?*lexbor_bst_entry_t, size: usize) ?*lexbor_bst_entry_t;
+pub extern fn lexbor_bst_remove(bst: ?*lexbor_bst_t, root: ?*?*lexbor_bst_entry_t, size: usize) ?*anyopaque;
+pub extern fn lexbor_bst_remove_close(bst: ?*lexbor_bst_t, root: ?*?*lexbor_bst_entry_t, size: usize, found_size: ?*usize) ?*anyopaque;
+pub extern fn lexbor_bst_remove_by_pointer(bst: ?*lexbor_bst_t, entry: ?*lexbor_bst_entry_t, root: ?*?*lexbor_bst_entry_t) ?*anyopaque;
+pub extern fn lexbor_bst_serialize(bst: ?*lexbor_bst_t, callback: lexbor_callback_f, ctx: ?*anyopaque) void;
+pub extern fn lexbor_bst_serialize_entry(entry: ?*lexbor_bst_entry_t, callback: lexbor_callback_f, ctx: ?*anyopaque, tabs: usize) void;
 
 // core/bst_map.h
 
@@ -240,15 +240,15 @@ pub const lexbor_bst_map_t = extern struct {
     entries: ?*lexbor_dobject_t,
 };
 
-extern fn lexbor_bst_map_create() ?*lexbor_bst_map_t;
-extern fn lexbor_bst_map_init(bst_map: ?*lexbor_bst_map_t, size: usize) lxb_status_t;
-extern fn lexbor_bst_map_clean(bst_map: ?*lexbor_bst_map_t) void;
-extern fn lexbor_bst_map_destroy(bst_map: ?*lexbor_bst_map_t, self_destroy: bool) ?*lexbor_bst_map_t;
-extern fn lexbor_bst_map_search(bst_map: ?*lexbor_bst_map_t, scope: ?*lexbor_bst_entry_t, key: ?*const lxb_char_t, key_len: usize) ?*lexbor_bst_map_entry_t;
-extern fn lexbor_bst_map_insert(bst_map: ?*lexbor_bst_map_t, scope: ?*?*lexbor_bst_entry_t, key: ?*const lxb_char_t, key_len: usize, value: ?*anyopaque) ?*lexbor_bst_map_entry_t;
-extern fn lexbor_bst_map_insert_not_exists(bst_map: ?*lexbor_bst_map_t, scope: ?*?*lexbor_bst_entry_t, key: ?*const lxb_char_t, key_len: usize) ?*lexbor_bst_map_entry_t;
-extern fn lexbor_bst_map_remove(bst_map: ?*lexbor_bst_map_t, scope: ?*?*lexbor_bst_entry_t, key: ?*const lxb_char_t, key_len: usize) ?*anyopaque;
-extern fn lexbor_bst_map_mraw_noi(bst_map: ?*lexbor_bst_map_t) ?*lexbor_mraw_t;
+pub extern fn lexbor_bst_map_create() ?*lexbor_bst_map_t;
+pub extern fn lexbor_bst_map_init(bst_map: ?*lexbor_bst_map_t, size: usize) lxb_status_t;
+pub extern fn lexbor_bst_map_clean(bst_map: ?*lexbor_bst_map_t) void;
+pub extern fn lexbor_bst_map_destroy(bst_map: ?*lexbor_bst_map_t, self_destroy: bool) ?*lexbor_bst_map_t;
+pub extern fn lexbor_bst_map_search(bst_map: ?*lexbor_bst_map_t, scope: ?*lexbor_bst_entry_t, key: ?*const lxb_char_t, key_len: usize) ?*lexbor_bst_map_entry_t;
+pub extern fn lexbor_bst_map_insert(bst_map: ?*lexbor_bst_map_t, scope: ?*?*lexbor_bst_entry_t, key: ?*const lxb_char_t, key_len: usize, value: ?*anyopaque) ?*lexbor_bst_map_entry_t;
+pub extern fn lexbor_bst_map_insert_not_exists(bst_map: ?*lexbor_bst_map_t, scope: ?*?*lexbor_bst_entry_t, key: ?*const lxb_char_t, key_len: usize) ?*lexbor_bst_map_entry_t;
+pub extern fn lexbor_bst_map_remove(bst_map: ?*lexbor_bst_map_t, scope: ?*?*lexbor_bst_entry_t, key: ?*const lxb_char_t, key_len: usize) ?*anyopaque;
+pub extern fn lexbor_bst_map_mraw_noi(bst_map: ?*lexbor_bst_map_t) ?*lexbor_mraw_t;
 
 pub inline fn lexbor_bst_map_mraw(bst_map: ?*lexbor_bst_map_t) ?*lexbor_mraw_t {
     return bst_map.?.mraw;
@@ -256,14 +256,14 @@ pub inline fn lexbor_bst_map_mraw(bst_map: ?*lexbor_bst_map_t) ?*lexbor_mraw_t {
 
 // core/conv.h
 
-extern fn lexbor_conv_float_to_data(num: f64, buf: ?*lxb_char_t, len: usize) usize;
-extern fn lexbor_conv_long_to_data(num: c_long, buf: ?*lxb_char_t, len: usize) usize;
-extern fn lexbor_conv_int64_to_data(num: i64, buf: ?*lxb_char_t, len: usize) usize;
-extern fn lexbor_conv_data_to_double(start: ?*const ?*lxb_char_t, len: usize) f64;
-extern fn lexbor_conv_data_to_ulong(data: ?*const ?*lxb_char_t, length: usize) c_ulong;
-extern fn lexbor_conv_data_to_long(data: ?*const ?*lxb_char_t, length: usize) c_long;
-extern fn lexbor_conv_data_to_uint(data: ?*const ?*lxb_char_t, length: usize) c_uint;
-extern fn lexbor_conv_dec_to_hex(number: u32, out: ?*lxb_char_t, length: usize) usize;
+pub extern fn lexbor_conv_float_to_data(num: f64, buf: ?*lxb_char_t, len: usize) usize;
+pub extern fn lexbor_conv_long_to_data(num: c_long, buf: ?*lxb_char_t, len: usize) usize;
+pub extern fn lexbor_conv_int64_to_data(num: i64, buf: ?*lxb_char_t, len: usize) usize;
+pub extern fn lexbor_conv_data_to_double(start: ?*const ?*lxb_char_t, len: usize) f64;
+pub extern fn lexbor_conv_data_to_ulong(data: ?*const ?*lxb_char_t, length: usize) c_ulong;
+pub extern fn lexbor_conv_data_to_long(data: ?*const ?*lxb_char_t, length: usize) c_long;
+pub extern fn lexbor_conv_data_to_uint(data: ?*const ?*lxb_char_t, length: usize) c_uint;
+pub extern fn lexbor_conv_dec_to_hex(number: u32, out: ?*lxb_char_t, length: usize) usize;
 
 pub inline fn lexbor_conv_double_to_long(number: f64) c_long {
     if (number > std.math.maxInt(c_long)) {
@@ -309,8 +309,8 @@ pub const lexbor_diyfp_t = extern struct {
     exp: c_int,
 };
 
-extern fn lexbor_cached_power_dec(exp: c_int, dec_exp: ?*c_int) lexbor_diyfp_t;
-extern fn lexbor_cached_power_bin(exp: c_int, dec_exp: ?*c_int) lexbor_diyfp_t;
+pub extern fn lexbor_cached_power_dec(exp: c_int, dec_exp: ?*c_int) lexbor_diyfp_t;
+pub extern fn lexbor_cached_power_bin(exp: c_int, dec_exp: ?*c_int) lexbor_diyfp_t;
 
 pub inline fn lexbor_diyfp_leading_zeros64(x: u64) u64 {
     var n: u64 = undefined;
@@ -441,17 +441,17 @@ pub const lexbor_dobject_t = extern struct {
     struct_size: usize,
 };
 
-extern fn lexbor_dobject_create() ?*lexbor_dobject_t;
-extern fn lexbor_dobject_init(lexbor_dobject_t: ?*lexbor_dobject_t, chunk_size: usize, struct_size: usize) lxb_status_t;
-extern fn lexbor_dobject_clean(lexbor_dobject_t: ?*lexbor_dobject_t) void;
-extern fn lexbor_dobject_destroy(lexbor_dobject_t: ?*lexbor_dobject_t, destroy_self: bool) ?*lexbor_dobject_t;
-extern fn lexbor_dobject_init_list_entries(lexbor_dobject_t: ?*lexbor_dobject_t, pos: usize) ?*u8;
-extern fn lexbor_dobject_alloc(lexbor_dobject_t: ?*lexbor_dobject_t) ?*anyopaque;
-extern fn lexbor_dobject_calloc(lexbor_dobject_t: ?*lexbor_dobject_t) ?*anyopaque;
-extern fn lexbor_dobject_free(lexbor_dobject_t: ?*lexbor_dobject_t, data: ?*anyopaque) ?*anyopaque;
-extern fn lexbor_dobject_by_absolute_position(lexbor_dobject_t: ?*lexbor_dobject_t, pos: usize) ?*anyopaque;
-extern fn lexbor_dobject_allocated_noi(lexbor_dobject_t: ?*lexbor_dobject_t) usize;
-extern fn lexbor_dobject_cache_length_noi(lexbor_dobject_t: ?*lexbor_dobject_t) usize;
+pub extern fn lexbor_dobject_create() ?*lexbor_dobject_t;
+pub extern fn lexbor_dobject_init(lexbor_dobject_t: ?*lexbor_dobject_t, chunk_size: usize, struct_size: usize) lxb_status_t;
+pub extern fn lexbor_dobject_clean(lexbor_dobject_t: ?*lexbor_dobject_t) void;
+pub extern fn lexbor_dobject_destroy(lexbor_dobject_t: ?*lexbor_dobject_t, destroy_self: bool) ?*lexbor_dobject_t;
+pub extern fn lexbor_dobject_init_list_entries(lexbor_dobject_t: ?*lexbor_dobject_t, pos: usize) ?*u8;
+pub extern fn lexbor_dobject_alloc(lexbor_dobject_t: ?*lexbor_dobject_t) ?*anyopaque;
+pub extern fn lexbor_dobject_calloc(lexbor_dobject_t: ?*lexbor_dobject_t) ?*anyopaque;
+pub extern fn lexbor_dobject_free(lexbor_dobject_t: ?*lexbor_dobject_t, data: ?*anyopaque) ?*anyopaque;
+pub extern fn lexbor_dobject_by_absolute_position(lexbor_dobject_t: ?*lexbor_dobject_t, pos: usize) ?*anyopaque;
+pub extern fn lexbor_dobject_allocated_noi(lexbor_dobject_t: ?*lexbor_dobject_t) usize;
+pub extern fn lexbor_dobject_cache_length_noi(lexbor_dobject_t: ?*lexbor_dobject_t) usize;
 
 pub inline fn lexbor_dobject_allocated(dobject: ?*lexbor_dobject_t) usize {
     return dobject.?.allocated;
@@ -463,7 +463,7 @@ pub inline fn lexbor_dobject_cache_length(dobject: ?*lexbor_dobject_t) usize {
 
 // core/dtoa.h
 
-extern fn lexbor_dtoa(value: f64, begin: ?*lxb_char_t, len: usize) usize;
+pub extern fn lexbor_dtoa(value: f64, begin: ?*lxb_char_t, len: usize) usize;
 
 // core/fs.h
 
@@ -487,9 +487,9 @@ pub const lexbor_fs_file_type_t = enum(c_int) {
     LEXBOR_FS_FILE_TYPE_SOCKET = 0x07,
 };
 
-extern fn lexbor_fs_dir_read(dirpath: ?*const lxb_char_t, opt: c_int, callback: lexbor_fs_dir_file_f, ctx: ?*anyopaque) lxb_status_t;
-extern fn lexbor_fs_file_type(full_path: ?*const lxb_char_t) lexbor_fs_file_type_t;
-extern fn lexbor_fs_file_easy_read(full_path: ?*const lxb_char_t, len: ?*usize) ?*lxb_char_t;
+pub extern fn lexbor_fs_dir_read(dirpath: ?*const lxb_char_t, opt: c_int, callback: lexbor_fs_dir_file_f, ctx: ?*anyopaque) lxb_status_t;
+pub extern fn lexbor_fs_file_type(full_path: ?*const lxb_char_t) lexbor_fs_file_type_t;
+pub extern fn lexbor_fs_file_easy_read(full_path: ?*const lxb_char_t, len: ?*usize) ?*lxb_char_t;
 
 // core/hash.h
 
@@ -536,22 +536,22 @@ pub const lexbor_hash_t = extern struct {
     struct_size: usize,
 };
 
-extern fn lexbor_hash_create() ?*lexbor_hash_t;
-extern fn lexbor_hash_init(hash: ?*lexbor_hash_t, table_size: usize, struct_size: usize) lxb_status_t;
-extern fn lexbor_hash_clean(hash: ?*lexbor_hash_t) void;
-extern fn lexbor_hash_destroy(hash: ?*lexbor_hash_t, destroy_obj: bool) ?*lexbor_hash_t;
-extern fn lexbor_hash_insert(hash: ?*lexbor_hash_t, insert: ?*const lexbor_hash_insert_t, key: ?*const lxb_char_t, length: usize) ?*anyopaque;
-extern fn lexbor_hash_insert_by_entry(hash: ?*lexbor_hash_t, entry: ?*lexbor_hash_entry_t, search: ?*const lexbor_hash_search, key: ?*const lxb_char_t, length: usize) ?*anyopaque;
-extern fn lexbor_hash_remove(hash: ?*lexbor_hash_t, search: ?*const lexbor_hash_search, key: ?*const lxb_char_t, length: usize) void;
-extern fn lexbor_hash_search(hash: ?*lexbor_hash_t, search: ?*const lexbor_hash_search, key: ?*const lxb_char_t, length: usize) ?*anyopaque;
-extern fn lexbor_hash_remove_by_hash_id(hash: ?*lexbor_hash_t, hash_id: u32, key: ?*const lxb_char_t, length: usize, cmp_func: lexbor_hash_cmp_f) void;
-extern fn lexbor_hash_search_by_hash_id(hash: ?*lexbor_hash_t, hash_id: u32, key: ?*const lxb_char_t, length: usize, cmp_func: lexbor_hash_cmp_f) ?*anyopaque;
-extern fn lexbor_hash_make_id(key: ?*const lxb_char_t, length: usize) u32;
-extern fn lexbor_hash_make_id_lower(key: ?*const lxb_char_t, length: usize) u32;
-extern fn lexbor_hash_make_id_upper(key: ?*const lxb_char_t, length: usize) u32;
-extern fn lexbor_hash_copy(hash: ?*lexbor_hash_t, entry: ?*lexbor_hash_entry_t, key: ?*const lxb_char_t, length: usize) lxb_status_t;
-extern fn lexbor_hash_copy_lower(hash: ?*lexbor_hash_t, entry: ?*lexbor_hash_entry_t, key: ?*const lxb_char_t, length: usize) lxb_status_t;
-extern fn lexbor_hash_copy_upper(hash: ?*lexbor_hash_t, entry: ?*lexbor_hash_entry_t, key: ?*const lxb_char_t, length: usize) lxb_status_t;
+pub extern fn lexbor_hash_create() ?*lexbor_hash_t;
+pub extern fn lexbor_hash_init(hash: ?*lexbor_hash_t, table_size: usize, struct_size: usize) lxb_status_t;
+pub extern fn lexbor_hash_clean(hash: ?*lexbor_hash_t) void;
+pub extern fn lexbor_hash_destroy(hash: ?*lexbor_hash_t, destroy_obj: bool) ?*lexbor_hash_t;
+pub extern fn lexbor_hash_insert(hash: ?*lexbor_hash_t, insert: ?*const lexbor_hash_insert_t, key: ?*const lxb_char_t, length: usize) ?*anyopaque;
+pub extern fn lexbor_hash_insert_by_entry(hash: ?*lexbor_hash_t, entry: ?*lexbor_hash_entry_t, search: ?*const lexbor_hash_search, key: ?*const lxb_char_t, length: usize) ?*anyopaque;
+pub extern fn lexbor_hash_remove(hash: ?*lexbor_hash_t, search: ?*const lexbor_hash_search, key: ?*const lxb_char_t, length: usize) void;
+pub extern fn lexbor_hash_search(hash: ?*lexbor_hash_t, search: ?*const lexbor_hash_search, key: ?*const lxb_char_t, length: usize) ?*anyopaque;
+pub extern fn lexbor_hash_remove_by_hash_id(hash: ?*lexbor_hash_t, hash_id: u32, key: ?*const lxb_char_t, length: usize, cmp_func: lexbor_hash_cmp_f) void;
+pub extern fn lexbor_hash_search_by_hash_id(hash: ?*lexbor_hash_t, hash_id: u32, key: ?*const lxb_char_t, length: usize, cmp_func: lexbor_hash_cmp_f) ?*anyopaque;
+pub extern fn lexbor_hash_make_id(key: ?*const lxb_char_t, length: usize) u32;
+pub extern fn lexbor_hash_make_id_lower(key: ?*const lxb_char_t, length: usize) u32;
+pub extern fn lexbor_hash_make_id_upper(key: ?*const lxb_char_t, length: usize) u32;
+pub extern fn lexbor_hash_copy(hash: ?*lexbor_hash_t, entry: ?*lexbor_hash_entry_t, key: ?*const lxb_char_t, length: usize) lxb_status_t;
+pub extern fn lexbor_hash_copy_lower(hash: ?*lexbor_hash_t, entry: ?*lexbor_hash_entry_t, key: ?*const lxb_char_t, length: usize) lxb_status_t;
+pub extern fn lexbor_hash_copy_upper(hash: ?*lexbor_hash_t, entry: ?*lexbor_hash_entry_t, key: ?*const lxb_char_t, length: usize) lxb_status_t;
 
 pub inline fn lexbor_hash_mraw(hash: ?*lexbor_hash_t) ?*lexbor_mraw_t {
     return hash.?.mraw;
@@ -624,24 +624,24 @@ pub const lexbor_in_node = extern struct {
     incoming: ?*lexbor_in_t,
 };
 
-extern fn lexbor_in_create() ?*lexbor_in_t;
-extern fn lexbor_in_init(incoming: ?*lexbor_in_t, chunk_size: usize) lxb_status_t;
-extern fn lexbor_in_clean(incoming: ?*lexbor_in_t) void;
-extern fn lexbor_in_destroy(incoming: ?*lexbor_in_t, self_destroy: bool) ?*lexbor_in_t;
-extern fn lexbor_in_node_make(incoming: ?*lexbor_in_t, last_node: ?*lexbor_in_node_t, buf: ?*const lxb_char_t, buf_size: usize) ?*lexbor_in_node_t;
-extern fn lexbor_in_node_clean(node: ?*lexbor_in_node_t) void;
-extern fn lexbor_in_node_destroy(incoming: ?*lexbor_in_t, node: ?*lexbor_in_node_t, self_destroy: bool) ?*lexbor_in_node_t;
-extern fn lexbor_in_node_split(node: ?*lexbor_in_node_t, pos: ?*const lxb_char_t) ?*lexbor_in_node_t;
-extern fn lexbor_in_node_find(node: ?*lexbor_in_node_t, pos: ?*const lxb_char_t) ?*lexbor_in_node_t;
-extern fn lexbor_in_node_pos_up(node: ?*lexbor_in_node_t, return_node: ?*?*lexbor_in_node_t, pos: ?*const lxb_char_t, offset: usize) ?*const lxb_char_t;
-extern fn lexbor_in_node_pos_down(node: ?*lexbor_in_node_t, return_node: ?*?*lexbor_in_node_t, pos: ?*const lxb_char_t, offset: usize) ?*const lxb_char_t;
-extern fn lexbor_in_node_begin_noi(node: ?*const lexbor_in_node_t) ?*const lxb_char_t;
-extern fn lexbor_in_node_end_noi(node: ?*const lexbor_in_node_t) ?*const lxb_char_t;
-extern fn lexbor_in_node_offset_noi(node: ?*const lexbor_in_node_t) usize;
-extern fn lexbor_in_node_next_noi(node: ?*const lexbor_in_node_t) ?*lexbor_in_node_t;
-extern fn lexbor_in_node_prev_noi(node: ?*const lexbor_in_node_t) ?*lexbor_in_node_t;
-extern fn lexbor_in_node_in_noi(node: ?*const lexbor_in_node_t) ?*lexbor_in_t;
-extern fn lexbor_in_segment_noi(node: ?*const lexbor_in_node_t, data: ?*const lxb_char_t) bool;
+pub extern fn lexbor_in_create() ?*lexbor_in_t;
+pub extern fn lexbor_in_init(incoming: ?*lexbor_in_t, chunk_size: usize) lxb_status_t;
+pub extern fn lexbor_in_clean(incoming: ?*lexbor_in_t) void;
+pub extern fn lexbor_in_destroy(incoming: ?*lexbor_in_t, self_destroy: bool) ?*lexbor_in_t;
+pub extern fn lexbor_in_node_make(incoming: ?*lexbor_in_t, last_node: ?*lexbor_in_node_t, buf: ?*const lxb_char_t, buf_size: usize) ?*lexbor_in_node_t;
+pub extern fn lexbor_in_node_clean(node: ?*lexbor_in_node_t) void;
+pub extern fn lexbor_in_node_destroy(incoming: ?*lexbor_in_t, node: ?*lexbor_in_node_t, self_destroy: bool) ?*lexbor_in_node_t;
+pub extern fn lexbor_in_node_split(node: ?*lexbor_in_node_t, pos: ?*const lxb_char_t) ?*lexbor_in_node_t;
+pub extern fn lexbor_in_node_find(node: ?*lexbor_in_node_t, pos: ?*const lxb_char_t) ?*lexbor_in_node_t;
+pub extern fn lexbor_in_node_pos_up(node: ?*lexbor_in_node_t, return_node: ?*?*lexbor_in_node_t, pos: ?*const lxb_char_t, offset: usize) ?*const lxb_char_t;
+pub extern fn lexbor_in_node_pos_down(node: ?*lexbor_in_node_t, return_node: ?*?*lexbor_in_node_t, pos: ?*const lxb_char_t, offset: usize) ?*const lxb_char_t;
+pub extern fn lexbor_in_node_begin_noi(node: ?*const lexbor_in_node_t) ?*const lxb_char_t;
+pub extern fn lexbor_in_node_end_noi(node: ?*const lexbor_in_node_t) ?*const lxb_char_t;
+pub extern fn lexbor_in_node_offset_noi(node: ?*const lexbor_in_node_t) usize;
+pub extern fn lexbor_in_node_next_noi(node: ?*const lexbor_in_node_t) ?*lexbor_in_node_t;
+pub extern fn lexbor_in_node_prev_noi(node: ?*const lexbor_in_node_t) ?*lexbor_in_node_t;
+pub extern fn lexbor_in_node_in_noi(node: ?*const lexbor_in_node_t) ?*lexbor_in_t;
+pub extern fn lexbor_in_segment_noi(node: ?*const lexbor_in_node_t, data: ?*const lxb_char_t) bool;
 
 pub inline fn lexbor_in_node_begin(node: ?*const lexbor_in_node_t) ?[*]const lxb_char_t {
     return node.?.begin;
@@ -678,11 +678,11 @@ pub const lexbor_memory_realloc_f = ?*const fn (dst: ?*anyopaque, size: usize) c
 pub const lexbor_memory_calloc_f = ?*const fn (num: usize, size: usize) callconv(.C) ?*anyopaque;
 pub const lexbor_memory_free_f = ?*const fn (dst: ?*anyopaque) callconv(.C) void;
 
-extern fn lexbor_malloc(size: usize) ?*anyopaque;
-extern fn lexbor_realloc(dst: *anyopaque, size: usize) ?*anyopaque;
-extern fn lexbor_calloc(num: usize, size: usize) ?*anyopaque;
-extern fn lexbor_free(dst: ?*anyopaque) void;
-extern fn lexbor_memory_setup(new_malloc: lexbor_memory_malloc_f, new_realloc: lexbor_memory_realloc_f, new_calloc: lexbor_memory_calloc_f, new_free: lexbor_memory_free_f) void;
+pub extern fn lexbor_malloc(size: usize) ?*anyopaque;
+pub extern fn lexbor_realloc(dst: *anyopaque, size: usize) ?*anyopaque;
+pub extern fn lexbor_calloc(num: usize, size: usize) ?*anyopaque;
+pub extern fn lexbor_free(dst: ?*anyopaque) void;
+pub extern fn lexbor_memory_setup(new_malloc: lexbor_memory_malloc_f, new_realloc: lexbor_memory_realloc_f, new_calloc: lexbor_memory_calloc_f, new_free: lexbor_memory_free_f) void;
 
 // core/mem.h
 
@@ -701,20 +701,20 @@ pub const lexbor_mem_t = extern struct {
     chunk_length: usize,
 };
 
-extern fn lexbor_mem_create() ?*lexbor_mem_t;
-extern fn lexbor_mem_init(mem: ?*lexbor_mem_t, min_chunk_size: usize) lxb_status_t;
-extern fn lexbor_mem_clean(mem: ?*lexbor_mem_t) void;
-extern fn lexbor_mem_destroy(mem: ?*lexbor_mem_t, destroy_self: bool) ?*lexbor_mem_t;
-extern fn lexbor_mem_chunk_init(mem: ?*lexbor_mem_t, chunk: ?*lexbor_mem_chunk_t, length: usize) ?*u8;
-extern fn lexbor_mem_chunk_make(mem: ?*lexbor_mem_t, length: usize) ?*lexbor_mem_chunk_t;
-extern fn lexbor_mem_chunk_destroy(mem: ?*lexbor_mem_t, chunk: ?*lexbor_mem_chunk_t, self_destroy: bool) ?*lexbor_mem_chunk_t;
-extern fn lexbor_mem_alloc(mem: ?*lexbor_mem_t, length: usize) ?*anyopaque;
-extern fn lexbor_mem_calloc(mem: ?*lexbor_mem_t, length: usize) ?*anyopaque;
-extern fn lexbor_mem_current_length_noi(mem: ?*lexbor_mem_t) usize;
-extern fn lexbor_mem_current_size_noi(mem: ?*lexbor_mem_t) usize;
-extern fn lexbor_mem_chunk_length_noi(mem: ?*lexbor_mem_t) usize;
-extern fn lexbor_mem_align_noi(size: usize) usize;
-extern fn lexbor_mem_align_floor_noi(size: usize) usize;
+pub extern fn lexbor_mem_create() ?*lexbor_mem_t;
+pub extern fn lexbor_mem_init(mem: ?*lexbor_mem_t, min_chunk_size: usize) lxb_status_t;
+pub extern fn lexbor_mem_clean(mem: ?*lexbor_mem_t) void;
+pub extern fn lexbor_mem_destroy(mem: ?*lexbor_mem_t, destroy_self: bool) ?*lexbor_mem_t;
+pub extern fn lexbor_mem_chunk_init(mem: ?*lexbor_mem_t, chunk: ?*lexbor_mem_chunk_t, length: usize) ?*u8;
+pub extern fn lexbor_mem_chunk_make(mem: ?*lexbor_mem_t, length: usize) ?*lexbor_mem_chunk_t;
+pub extern fn lexbor_mem_chunk_destroy(mem: ?*lexbor_mem_t, chunk: ?*lexbor_mem_chunk_t, self_destroy: bool) ?*lexbor_mem_chunk_t;
+pub extern fn lexbor_mem_alloc(mem: ?*lexbor_mem_t, length: usize) ?*anyopaque;
+pub extern fn lexbor_mem_calloc(mem: ?*lexbor_mem_t, length: usize) ?*anyopaque;
+pub extern fn lexbor_mem_current_length_noi(mem: ?*lexbor_mem_t) usize;
+pub extern fn lexbor_mem_current_size_noi(mem: ?*lexbor_mem_t) usize;
+pub extern fn lexbor_mem_chunk_length_noi(mem: ?*lexbor_mem_t) usize;
+pub extern fn lexbor_mem_align_noi(size: usize) usize;
+pub extern fn lexbor_mem_align_floor_noi(size: usize) usize;
 
 pub inline fn lexbor_mem_current_length(mem: ?*lexbor_mem_t) usize {
     return mem.?.chunk.?.length;
@@ -750,17 +750,17 @@ pub const lexbor_mraw_t = extern struct {
     ref_count: usize,
 };
 
-extern fn lexbor_mraw_create() ?*lexbor_mraw_t;
-extern fn lexbor_mraw_init(mraw: ?*lexbor_mraw_t, chunk_size: usize) lxb_status_t;
-extern fn lexbor_mraw_clean(mraw: ?*lexbor_mraw_t) void;
-extern fn lexbor_mraw_destroy(mraw: ?*lexbor_mraw_t, destroy_self: bool) ?*lexbor_mraw_t;
-extern fn lexbor_mraw_alloc(mraw: ?*lexbor_mraw_t, size: usize) ?*anyopaque;
-extern fn lexbor_mraw_calloc(mraw: ?*lexbor_mraw_t, size: usize) ?*anyopaque;
-extern fn lexbor_mraw_realloc(mraw: ?*lexbor_mraw_t, data: ?*anyopaque, new_size: usize) ?*anyopaque;
-extern fn lexbor_mraw_free(mraw: ?*lexbor_mraw_t, data: ?*anyopaque) ?*anyopaque;
-extern fn lexbor_mraw_data_size_noi(data: ?*anyopaque) usize;
-extern fn lexbor_mraw_data_size_set_noi(data: ?*anyopaque, size: usize) void;
-extern fn lexbor_mraw_dup_noi(mraw: ?*lexbor_mraw_t, src: ?*const anyopaque, size: usize) ?*anyopaque;
+pub extern fn lexbor_mraw_create() ?*lexbor_mraw_t;
+pub extern fn lexbor_mraw_init(mraw: ?*lexbor_mraw_t, chunk_size: usize) lxb_status_t;
+pub extern fn lexbor_mraw_clean(mraw: ?*lexbor_mraw_t) void;
+pub extern fn lexbor_mraw_destroy(mraw: ?*lexbor_mraw_t, destroy_self: bool) ?*lexbor_mraw_t;
+pub extern fn lexbor_mraw_alloc(mraw: ?*lexbor_mraw_t, size: usize) ?*anyopaque;
+pub extern fn lexbor_mraw_calloc(mraw: ?*lexbor_mraw_t, size: usize) ?*anyopaque;
+pub extern fn lexbor_mraw_realloc(mraw: ?*lexbor_mraw_t, data: ?*anyopaque, new_size: usize) ?*anyopaque;
+pub extern fn lexbor_mraw_free(mraw: ?*lexbor_mraw_t, data: ?*anyopaque) ?*anyopaque;
+pub extern fn lexbor_mraw_data_size_noi(data: ?*anyopaque) usize;
+pub extern fn lexbor_mraw_data_size_set_noi(data: ?*anyopaque, size: usize) void;
+pub extern fn lexbor_mraw_dup_noi(mraw: ?*lexbor_mraw_t, src: ?*const anyopaque, size: usize) ?*anyopaque;
 
 pub inline fn lexbor_mraw_data_size(data: ?*anyopaque) usize {
     return @as(*usize, @ptrFromInt(@intFromPtr(@as(*u8, @ptrCast(data.?))) - lexbor_mraw_meta_size)).*;
@@ -785,12 +785,12 @@ pub inline fn lexbor_mraw_reference_count(mraw: ?*lexbor_mraw_t) usize {
 
 // core/perf.h
 
-extern fn lexbor_perf_create() ?*anyopaque;
-extern fn lexbor_perf_clean(perf: ?*anyopaque) void;
-extern fn lexbor_perf_destroy(perf: ?*anyopaque) void;
-extern fn lexbor_perf_begin(perf: ?*anyopaque) lxb_status_t;
-extern fn lexbor_perf_end(perf: ?*anyopaque) lxb_status_t;
-extern fn lexbor_perf_in_sec(perf: ?*anyopaque) f64;
+pub extern fn lexbor_perf_create() ?*anyopaque;
+pub extern fn lexbor_perf_clean(perf: ?*anyopaque) void;
+pub extern fn lexbor_perf_destroy(perf: ?*anyopaque) void;
+pub extern fn lexbor_perf_begin(perf: ?*anyopaque) lxb_status_t;
+pub extern fn lexbor_perf_end(perf: ?*anyopaque) lxb_status_t;
+pub extern fn lexbor_perf_in_sec(perf: ?*anyopaque) f64;
 
 // core/plog.h
 
@@ -804,12 +804,12 @@ pub const lexbor_plog_t = extern struct {
     list: lexbor_array_obj_t,
 };
 
-extern fn lexbor_plog_init(plog: ?*lexbor_plog_t, init_size: usize, struct_size: usize) lxb_status_t;
-extern fn lexbor_plog_destroy(plog: ?*lexbor_plog_t, self_destroy: bool) ?*lexbor_plog_t;
-extern fn lexbor_plog_create_noi() ?*lexbor_plog_t;
-extern fn lexbor_plog_clean_noi(plog: ?*lexbor_plog_t) void;
-extern fn lexbor_plog_push_noi(plog: ?*lexbor_plog_t, data: ?*const lxb_char_t, ctx: ?*anyopaque, id: c_uint) ?*anyopaque;
-extern fn lexbor_plog_length_noi(plog: ?*lexbor_plog_t) usize;
+pub extern fn lexbor_plog_init(plog: ?*lexbor_plog_t, init_size: usize, struct_size: usize) lxb_status_t;
+pub extern fn lexbor_plog_destroy(plog: ?*lexbor_plog_t, self_destroy: bool) ?*lexbor_plog_t;
+pub extern fn lexbor_plog_create_noi() ?*lexbor_plog_t;
+pub extern fn lexbor_plog_clean_noi(plog: ?*lexbor_plog_t) void;
+pub extern fn lexbor_plog_push_noi(plog: ?*lexbor_plog_t, data: ?*const lxb_char_t, ctx: ?*anyopaque, id: c_uint) ?*anyopaque;
+pub extern fn lexbor_plog_length_noi(plog: ?*lexbor_plog_t) usize;
 
 pub inline fn lexbor_plog_create() ?*lexbor_plog_t {
     return @as(?*lexbor_plog_t, @ptrCast(@alignCast(lexbor_calloc(1, @sizeOf(lexbor_plog_t)))));
@@ -880,8 +880,8 @@ pub inline fn lexbor_sbst_entry_static_find(strt: ?*const lexbor_sbst_entry_stat
 
 // TODO: #define lexbor_serialize_write(cb, data, length, ctx, lxb_status_t)
 
-extern fn lexbor_serialize_length_cb(data: ?*const lxb_char_t, length: usize, ctx: ?*anyopaque) lxb_status_t;
-extern fn lexbor_serialize_copy_cb(data: ?*const lxb_char_t, length: usize, ctx: ?*anyopaque) lxb_status_t;
+pub extern fn lexbor_serialize_length_cb(data: ?*const lxb_char_t, length: usize, ctx: ?*anyopaque) lxb_status_t;
+pub extern fn lexbor_serialize_copy_cb(data: ?*const lxb_char_t, length: usize, ctx: ?*anyopaque) lxb_status_t;
 
 // core/shs.h
 
@@ -898,9 +898,9 @@ pub const lexbor_shs_hash_t = extern struct {
     next: usize,
 };
 
-extern fn lexbor_shs_entry_get_static(tree: ?*const lexbor_shs_entry_t, key: ?*const lxb_char_t, size: usize) ?*lexbor_shs_entry_t;
-extern fn lexbor_shs_entry_get_lower_static(root: ?*const lexbor_shs_entry_t, key: ?*const lxb_char_t, key_len: usize) ?*lexbor_shs_entry_t;
-extern fn lexbor_shs_entry_get_upper_static(root: ?*const lexbor_shs_entry_t, key: ?*const lxb_char_t, key_len: usize) ?*lexbor_shs_entry_t;
+pub extern fn lexbor_shs_entry_get_static(tree: ?*const lexbor_shs_entry_t, key: ?*const lxb_char_t, size: usize) ?*lexbor_shs_entry_t;
+pub extern fn lexbor_shs_entry_get_lower_static(root: ?*const lexbor_shs_entry_t, key: ?*const lxb_char_t, key_len: usize) ?*lexbor_shs_entry_t;
+pub extern fn lexbor_shs_entry_get_upper_static(root: ?*const lexbor_shs_entry_t, key: ?*const lxb_char_t, key_len: usize) ?*lexbor_shs_entry_t;
 
 pub inline fn lexbor_shs_hash_get_static(table: ?[*]const lexbor_shs_hash_t, table_size: usize, key: u32) ?*lexbor_shs_hash_t {
     var entry = &table[(key % table_size) + 1];
@@ -935,47 +935,47 @@ pub const lexbor_str_t = extern struct {
     length: usize,
 };
 
-extern fn lexbor_str_create() ?*lexbor_str_t;
-extern fn lexbor_str_init(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, data: ?*const lxb_char_t, length: usize) ?*lxb_char_t;
-extern fn lexbor_str_init_append(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, data: ?*const lxb_char_t, length: usize) ?*lxb_char_t;
-extern fn lexbor_str_clean(str: ?*lexbor_str_t) void;
-extern fn lexbor_str_clean_all(str: ?*lexbor_str_t) void;
-extern fn lexbor_str_destroy(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, destroy_obj: bool) ?*lexbor_str_t;
-extern fn lexbor_str_realloc(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, new_size: usize) ?*lxb_char_t;
-extern fn lexbor_str_chunk_size(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, plus_len: usize) ?*lxb_char_t;
-extern fn lexbor_str_append(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, data: ?*const lxb_char_t, length: usize) ?*lxb_char_t;
-extern fn lexbor_str_append_before(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, buff: ?*const lxb_char_t, length: usize) ?*lxb_char_t;
-extern fn lexbor_str_append_one(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, data: lxb_char_t) ?*lxb_char_t;
-extern fn lexbor_str_append_lowercase(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, data: ?*const lxb_char_t, length: usize) ?*lxb_char_t;
-extern fn lexbor_str_append_with_rep_null_lxb_char_ts(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, buff: ?*const lxb_char_t, length: usize) ?*lxb_char_t;
-extern fn lexbor_str_copy(dest: ?*lexbor_str_t, target: ?*const lxb_char_t, mraw: ?*lexbor_mraw_t) ?*lxb_char_t;
-extern fn lexbor_str_stay_only_whitespace(target: ?*lexbor_str_t) void;
-extern fn lexbor_str_strip_collapse_whitespace(target: ?*lexbor_str_t) void;
-extern fn lexbor_str_crop_whitespace_from_begin(target: ?*lexbor_str_t) usize;
-extern fn lexbor_str_whitespace_from_begin(target: ?*lexbor_str_t) usize;
-extern fn lexbor_str_whitespace_from_end(target: ?*lexbor_str_t) usize;
+pub extern fn lexbor_str_create() ?*lexbor_str_t;
+pub extern fn lexbor_str_init(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, data: ?*const lxb_char_t, length: usize) ?*lxb_char_t;
+pub extern fn lexbor_str_init_append(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, data: ?*const lxb_char_t, length: usize) ?*lxb_char_t;
+pub extern fn lexbor_str_clean(str: ?*lexbor_str_t) void;
+pub extern fn lexbor_str_clean_all(str: ?*lexbor_str_t) void;
+pub extern fn lexbor_str_destroy(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, destroy_obj: bool) ?*lexbor_str_t;
+pub extern fn lexbor_str_realloc(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, new_size: usize) ?*lxb_char_t;
+pub extern fn lexbor_str_chunk_size(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, plus_len: usize) ?*lxb_char_t;
+pub extern fn lexbor_str_append(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, data: ?*const lxb_char_t, length: usize) ?*lxb_char_t;
+pub extern fn lexbor_str_append_before(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, buff: ?*const lxb_char_t, length: usize) ?*lxb_char_t;
+pub extern fn lexbor_str_append_one(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, data: lxb_char_t) ?*lxb_char_t;
+pub extern fn lexbor_str_append_lowercase(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, data: ?*const lxb_char_t, length: usize) ?*lxb_char_t;
+pub extern fn lexbor_str_append_with_rep_null_lxb_char_ts(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, buff: ?*const lxb_char_t, length: usize) ?*lxb_char_t;
+pub extern fn lexbor_str_copy(dest: ?*lexbor_str_t, target: ?*const lxb_char_t, mraw: ?*lexbor_mraw_t) ?*lxb_char_t;
+pub extern fn lexbor_str_stay_only_whitespace(target: ?*lexbor_str_t) void;
+pub extern fn lexbor_str_strip_collapse_whitespace(target: ?*lexbor_str_t) void;
+pub extern fn lexbor_str_crop_whitespace_from_begin(target: ?*lexbor_str_t) usize;
+pub extern fn lexbor_str_whitespace_from_begin(target: ?*lexbor_str_t) usize;
+pub extern fn lexbor_str_whitespace_from_end(target: ?*lexbor_str_t) usize;
 // Data utils
-extern fn lexbor_str_data_ncasecmp_first(first: ?*const lxb_char_t, sec: ?*const lxb_char_t, sec_size: usize) ?*lxb_char_t;
-extern fn lexbor_str_data_ncasecmp_end(first: ?*const lxb_char_t, sec: ?*const lxb_char_t, size: usize) bool;
-extern fn lexbor_str_data_ncasecmp_contain(where: ?*const lxb_char_t, where_size: usize, what: ?*const lxb_char_t, what_size: usize) bool;
-extern fn lexbor_str_data_ncasecmp(first: ?*const lxb_char_t, sec: ?*const lxb_char_t, size: usize) bool;
-extern fn lexbor_str_data_nlocmp_right(first: ?*const lxb_char_t, sec: ?*const lxb_char_t, size: usize) bool;
-extern fn lexbor_str_data_nupcmp_right(first: ?*const lxb_char_t, sec: ?*const lxb_char_t, size: usize) bool;
-extern fn lexbor_str_data_casecmp(first: ?*const lxb_char_t, sec: ?*const lxb_char_t) bool;
-extern fn lexbor_str_data_ncmp_end(first: ?*const lxb_char_t, sec: ?*const lxb_char_t) bool;
-extern fn lexbor_str_data_ncmp_contain(where: ?*const lxb_char_t, where_size: usize, what: ?*const lxb_char_t, what_size: usize) bool;
-extern fn lexbor_str_data_ncmp(first: ?*const lxb_char_t, sec: ?*const lxb_char_t, size: usize) bool;
-extern fn lexbor_str_data_cmp(first: ?*const lxb_char_t, sec: ?*const lxb_char_t) bool;
-extern fn lexbor_str_data_cmp_ws(first: ?*const lxb_char_t, sec: ?*const lxb_char_t) bool;
-extern fn lexbor_str_data_to_lowercase(to: ?*lxb_char_t, from: ?*const lxb_char_t, len: usize) void;
-extern fn lexbor_str_data_to_uppercase(to: ?*lxb_char_t, from: ?*const lxb_char_t, len: usize) void;
-extern fn lexbor_str_data_find_lowercase(data: ?*const lxb_char_t, len: usize) ?*lxb_char_t;
-extern fn lexbor_str_data_find_uppercase(data: ?*const lxb_char_t, len: usize) ?*lxb_char_t;
-extern fn lexbor_str_data_noi(str: ?*lexbor_str_t) ?*lxb_char_t;
-extern fn lexbor_str_length_noi(str: ?*lexbor_str_t) usize;
-extern fn lexbor_str_size_noi(str: ?*lexbor_str_t) usize;
-extern fn lexbor_str_data_set_noi(str: ?*lexbor_str_t, data: ?*lxb_char_t) usize;
-extern fn lexbor_str_length_set_noi(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, length: usize) ?*lxb_char_t;
+pub extern fn lexbor_str_data_ncasecmp_first(first: ?*const lxb_char_t, sec: ?*const lxb_char_t, sec_size: usize) ?*lxb_char_t;
+pub extern fn lexbor_str_data_ncasecmp_end(first: ?*const lxb_char_t, sec: ?*const lxb_char_t, size: usize) bool;
+pub extern fn lexbor_str_data_ncasecmp_contain(where: ?*const lxb_char_t, where_size: usize, what: ?*const lxb_char_t, what_size: usize) bool;
+pub extern fn lexbor_str_data_ncasecmp(first: ?*const lxb_char_t, sec: ?*const lxb_char_t, size: usize) bool;
+pub extern fn lexbor_str_data_nlocmp_right(first: ?*const lxb_char_t, sec: ?*const lxb_char_t, size: usize) bool;
+pub extern fn lexbor_str_data_nupcmp_right(first: ?*const lxb_char_t, sec: ?*const lxb_char_t, size: usize) bool;
+pub extern fn lexbor_str_data_casecmp(first: ?*const lxb_char_t, sec: ?*const lxb_char_t) bool;
+pub extern fn lexbor_str_data_ncmp_end(first: ?*const lxb_char_t, sec: ?*const lxb_char_t) bool;
+pub extern fn lexbor_str_data_ncmp_contain(where: ?*const lxb_char_t, where_size: usize, what: ?*const lxb_char_t, what_size: usize) bool;
+pub extern fn lexbor_str_data_ncmp(first: ?*const lxb_char_t, sec: ?*const lxb_char_t, size: usize) bool;
+pub extern fn lexbor_str_data_cmp(first: ?*const lxb_char_t, sec: ?*const lxb_char_t) bool;
+pub extern fn lexbor_str_data_cmp_ws(first: ?*const lxb_char_t, sec: ?*const lxb_char_t) bool;
+pub extern fn lexbor_str_data_to_lowercase(to: ?*lxb_char_t, from: ?*const lxb_char_t, len: usize) void;
+pub extern fn lexbor_str_data_to_uppercase(to: ?*lxb_char_t, from: ?*const lxb_char_t, len: usize) void;
+pub extern fn lexbor_str_data_find_lowercase(data: ?*const lxb_char_t, len: usize) ?*lxb_char_t;
+pub extern fn lexbor_str_data_find_uppercase(data: ?*const lxb_char_t, len: usize) ?*lxb_char_t;
+pub extern fn lexbor_str_data_noi(str: ?*lexbor_str_t) ?*lxb_char_t;
+pub extern fn lexbor_str_length_noi(str: ?*lexbor_str_t) usize;
+pub extern fn lexbor_str_size_noi(str: ?*lexbor_str_t) usize;
+pub extern fn lexbor_str_data_set_noi(str: ?*lexbor_str_t, data: ?*lxb_char_t) usize;
+pub extern fn lexbor_str_length_set_noi(str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, length: usize) ?*lxb_char_t;
 
 pub inline fn lexbor_str_data(str_: ?*lexbor_str_t) ?[*]lxb_char_t {
     return str_.?.data;
@@ -1014,7 +1014,7 @@ pub const LEXBOR_STR_RES_SLIP = 0xFF;
 
 // core/strtod.h
 
-extern fn lexbor_strtod_internal(start: ?*const lxb_char_t, length: usize, exp: c_int) f64;
+pub extern fn lexbor_strtod_internal(start: ?*const lxb_char_t, length: usize, exp: c_int) f64;
 
 // TODO: core/swar.h
 
@@ -1030,5 +1030,5 @@ pub const lexbor_callback_f = ?*const fn (buffer: ?*lxb_char_t, size: usize, ctx
 
 // TODO: #define lexbor_utils_whitespace(onechar, action, logic)
 
-extern fn lexbor_utils_power(t: usize, k: usize) usize;
-extern fn lexbor_utils_hash_hash(key: ?*const lxb_char_t, key_size: usize) usize;
+pub extern fn lexbor_utils_power(t: usize, k: usize) usize;
+pub extern fn lexbor_utils_hash_hash(key: ?*const lxb_char_t, key_size: usize) usize;

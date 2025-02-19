@@ -70,7 +70,7 @@ pub extern fn lxb_html_document_parse(document: ?*lxb_html_document_t, html: ?*c
 
 // title
 pub extern fn lxb_html_document_title(document: ?*lxb_html_document_t, len: ?*usize) ?*lxb_char_t;
-pub extern fn lxb_html_document_title_set(document: ?*lxb_html_document_t, title: ?*const lxb_char_t, len: ?*usize) lxb_status_t;
+pub extern fn lxb_html_document_title_set(document: ?*lxb_html_document_t, title: ?*const lxb_char_t, len: usize) lxb_status_t;
 pub extern fn lxb_html_document_title_raw(document: ?*lxb_html_document_t, len: ?*usize) ?*lxb_char_t;
 
 // html/interface.h
