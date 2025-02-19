@@ -16,13 +16,13 @@ pub const lxb_selectors_t = lxb_selectors;
 pub const lxb_selectors_entry_t = lxb_selectors_entry;
 pub const lxb_selectors_nested_t = lxb_selectors_nested;
 
-pub const lxb_selectors_cb_f = ?*const fn (node: ?*lxb_dom_node_t, spec: lxb_css_selector_specificity_t, ctx: ?*anyopaque) lxb_status_t;
+pub const lxb_selectors_cb_f = ?*const fn (node: ?*lxb_dom_node_t, spec: lxb_css_selector_specificity_t, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
 
 // error: dependency loop detected
 // pub const lxb_selectors_state_cb_f = ?*const fn (selectors: ?*lxb_selectors_t, entry: ?*lxb_selectors_entry_t) ?*lxb_selectors_entry_t;
 
 // fixed(??)...
-pub const lxb_selectors_state_cb_f = ?*const fn (selectors: ?*lxb_selectors_t, entry: ?*anyopaque) ?*anyopaque;
+pub const lxb_selectors_state_cb_f = ?*const fn (selectors: ?*lxb_selectors_t, entry: ?*anyopaque) callconv(.C) ?*anyopaque;
 
 pub const lxb_selectors_entry = extern struct {
     id: usize,

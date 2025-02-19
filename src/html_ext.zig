@@ -20,6 +20,7 @@ const lxb_dom_document_t = @import("./dom_ext.zig").lxb_dom_document_t;
 const lxb_dom_document_fragment_t = @import("./dom_ext.zig").lxb_dom_document_fragment_t;
 const lxb_dom_element_t = @import("./dom_ext.zig").lxb_dom_element_t;
 const lxb_dom_event_target_t = @import("./dom_ext.zig").lxb_dom_event_target_t;
+const lxb_dom_node_t = @import("./dom_ext.zig").lxb_dom_node_t;
 
 // html/interfaces/document.h
 
@@ -67,8 +68,10 @@ pub extern fn lxb_html_document_create() ?*lxb_html_document_t;
 pub extern fn lxb_html_document_clean(document: ?*lxb_html_document_t) void;
 pub extern fn lxb_html_document_destroy(document: ?*lxb_html_document_t) ?*lxb_html_document_t;
 pub extern fn lxb_html_document_parse(document: ?*lxb_html_document_t, html: ?*const lxb_char_t, size: usize) lxb_status_t;
+pub extern fn lxb_html_document_parse_chunk_begin(document: ?*lxb_html_document_t) lxb_status_t;
+pub extern fn lxb_html_document_parse_chunk(document: ?*lxb_html_document_t, html: ?*const lxb_char_t, size: usize) lxb_status_t;
+pub extern fn lxb_html_document_parse_chunk_end(document: ?*lxb_html_document_t) lxb_status_t;
 
-// title
 pub extern fn lxb_html_document_title(document: ?*lxb_html_document_t, len: ?*usize) ?*lxb_char_t;
 pub extern fn lxb_html_document_title_set(document: ?*lxb_html_document_t, title: ?*const lxb_char_t, len: usize) lxb_status_t;
 pub extern fn lxb_html_document_title_raw(document: ?*lxb_html_document_t, len: ?*usize) ?*lxb_char_t;
@@ -251,7 +254,7 @@ pub const lxb_html_element_style_opt_t = enum(c_int) {
     LXB_HTML_ELEMENT_OPT_UNDEF = 0x00,
 };
 
-pub const lxb_html_element_style_cb_f = ?*const fn (element: ?*lxb_html_element_t, declr: ?*const lxb_css_rule_declaration_t, ctx: ?*anyopaque, spec: lxb_css_selector_specificity_t, is_weak: bool) lxb_status_t;
+pub const lxb_html_element_style_cb_f = ?*const fn (element: ?*lxb_html_element_t, declr: ?*const lxb_css_rule_declaration_t, ctx: ?*anyopaque, spec: lxb_css_selector_specificity_t, is_weak: bool) callconv(.C) lxb_status_t;
 
 // html/interfaces/embed_element.h
 
@@ -594,3 +597,21 @@ pub const lxb_html_video_element = extern struct {
 pub const lxb_html_window = extern struct {
     event_target: lxb_dom_event_target_t,
 };
+
+// html/serialize.h
+
+pub const lxb_html_serialize_opt_t = c_int;
+pub const lxb_html_serialize_opt = enum(c_int) {
+    LXB_HTML_SERIALIZE_OPT_UNDEF = 0x00,
+    LXB_HTML_SERIALIZE_OPT_SKIP_WS_NODES = 0x01,
+    LXB_HTML_SERIALIZE_OPT_SKIP_COMMENT = 0x02,
+    LXB_HTML_SERIALIZE_OPT_RAW = 0x04,
+    LXB_HTML_SERIALIZE_OPT_WITHOUT_CLOSING = 0x08,
+    LXB_HTML_SERIALIZE_OPT_TAG_WITH_NS = 0x10,
+    LXB_HTML_SERIALIZE_OPT_WITHOUT_TEXT_INDENT = 0x20,
+    LXB_HTML_SERIALIZE_OPT_FULL_DOCTYPE = 0x40,
+};
+
+pub const lxb_html_serialize_cb_f = ?*const fn (data: ?[*:0]const lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
+
+pub extern fn lxb_html_serialize_pretty_tree_cb(node: ?*lxb_dom_node_t, opt: lxb_html_serialize_opt_t, indent: usize, cb: lxb_html_serialize_cb_f, ctx: ?*anyopaque) lxb_status_t;

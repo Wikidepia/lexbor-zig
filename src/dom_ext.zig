@@ -68,7 +68,7 @@ pub const lxb_dom_document = extern struct {
 
 // dom/interfaces/node.h
 
-pub const lxb_dom_node_simple_walker_f = ?*const fn (node: ?*lxb_dom_node_t, ctx: ?*anyopaque) lexbor_action_t;
+pub const lxb_dom_node_simple_walker_f = ?*const fn (node: ?*lxb_dom_node_t, ctx: ?*anyopaque) callconv(.C) lexbor_action_t;
 
 pub const lxb_dom_node_type_t = enum(c_int) {
     LXB_DOM_NODE_TYPE_UNDEF = 0x00,
@@ -128,23 +128,23 @@ pub const lxb_dom_comment_t = lxb_dom_comment;
 
 pub const lxb_dom_interface_t = void;
 
-pub const lxb_dom_interface_constructor_f = ?*const fn (document: ?*anyopaque) ?*anyopaque;
+pub const lxb_dom_interface_constructor_f = ?*const fn (document: ?*anyopaque) callconv(.C) ?*anyopaque;
 
-pub const lxb_dom_interface_destructor_f = ?*const fn (intrfc: ?*anyopaque) ?*anyopaque;
+pub const lxb_dom_interface_destructor_f = ?*const fn (intrfc: ?*anyopaque) callconv(.C) ?*anyopaque;
 
-pub const lxb_dom_interface_create_f = ?*const fn (document: ?*lxb_dom_document_t, tag_id: lxb_tag_id_t, ns: lxb_ns_id_t) ?*lxb_dom_interface_t;
+pub const lxb_dom_interface_create_f = ?*const fn (document: ?*lxb_dom_document_t, tag_id: lxb_tag_id_t, ns: lxb_ns_id_t) callconv(.C) ?*lxb_dom_interface_t;
 
-pub const lxb_dom_interface_clone_f = ?*const fn (document: ?*lxb_dom_document_t, intrfc: ?*const lxb_dom_interface_t) ?*lxb_dom_interface_t;
+pub const lxb_dom_interface_clone_f = ?*const fn (document: ?*lxb_dom_document_t, intrfc: ?*const lxb_dom_interface_t) callconv(.C) ?*lxb_dom_interface_t;
 
-pub const lxb_dom_interface_destroy_f = ?*const fn (intrfc: ?*lxb_dom_interface_t) ?*lxb_dom_interface_t;
+pub const lxb_dom_interface_destroy_f = ?*const fn (intrfc: ?*lxb_dom_interface_t) callconv(.C) ?*lxb_dom_interface_t;
 
-pub const lxb_dom_event_insert_f = ?*const fn (node: ?*lxb_dom_node_t) lxb_status_t;
+pub const lxb_dom_event_insert_f = ?*const fn (node: ?*lxb_dom_node_t) callconv(.C) lxb_status_t;
 
-pub const lxb_dom_event_remove_f = ?*const fn (node: ?*lxb_dom_node_t) lxb_status_t;
+pub const lxb_dom_event_remove_f = ?*const fn (node: ?*lxb_dom_node_t) callconv(.C) lxb_status_t;
 
-pub const lxb_dom_event_destroy_f = ?*const fn (node: ?*lxb_dom_node_t) lxb_status_t;
+pub const lxb_dom_event_destroy_f = ?*const fn (node: ?*lxb_dom_node_t) callconv(.C) lxb_status_t;
 
-pub const lxb_dom_event_set_value_f = ?*const fn (node: ?*lxb_dom_node_t, value: ?*const lxb_char_t, length: usize) lxb_status_t;
+pub const lxb_dom_event_set_value_f = ?*const fn (node: ?*lxb_dom_node_t, value: ?*const lxb_char_t, length: usize) callconv(.C) lxb_status_t;
 
 // dom/interfaces/event_target.h
 
