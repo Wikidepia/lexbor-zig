@@ -1,9 +1,11 @@
 const std = @import("std");
 const expectEqual = std.testing.expectEqual;
 const expectEqualSlices = std.testing.expectEqualSlices;
+const panic = std.debug.panic;
 
 const html = @import("lexbor").html;
 const tag = @import("lexbor").tag;
+const dom = @import("lexbor").dom;
 
 test "document_title" {
     const input = "<head><title>  Oh,    my...   </title></head>";
@@ -96,21 +98,18 @@ test "document_create" {
     const body = doc.bodyElement();
     _ = body;
 
-    // const t = tag.IdEnum.create(.LXB_TAG_A);
-    // const t = tag.Id.create(.LXB_TAG_A);
-    // _ = t;
-
-    var cur: tag.Id = .LXB_TAG_A;
-    const last: tag.Id = .LXB_TAG__LAST_ENTRY;
+    var cur: tag.IdEnum = .LXB_TAG_A;
+    const last: tag.IdEnum = .LXB_TAG__LAST_ENTRY;
 
     while (@intFromEnum(cur) < @intFromEnum(last)) : (cur = @enumFromInt(@intFromEnum(cur) + 1)) {
-        // const tag_name = cur.tagNameById(&tag_name_len);
         const tag_name = tag.nameById(cur, &tag_name_len);
-        // std.debug.print("{s}\n", .{(tag_name.?)});
-        std.debug.print("{s}\n", .{(@as([*:0]const u8, @ptrCast(tag_name.?)))});
-        std.debug.print("{d}\n", .{tag_name_len});
+        if (tag_name == null) {
+            panic("Failed to get tag name by id\n", .{});
+        }
+        const element = lxb_dom_document_create_element(&document->dom_document, tag_name, tag_name_len, null);
     }
 
+    // std.debug.print("{d}: {s}\n", .{ tag_name_len, tag_name.? });
     // status = doc.parseChunkBegin();
     // try expectEqual(status, .LXB_STATUS_OK);
     //

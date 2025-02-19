@@ -1,9 +1,9 @@
 const std = @import("std");
 // const sliceTo = std.mem.sliceTo;
 
-pub const core = @import("../core_ext.zig");
+// pub const core = @import("../core_ext.zig");
+// pub const dom = @import("../dom_ext.zig");
 pub const html = @import("../html_ext.zig");
-pub const dom = @import("../dom_ext.zig");
 pub const Document = @import("Document.zig");
 
 pub const errors = @import("../errors.zig");

@@ -557,11 +557,11 @@ pub inline fn lexbor_hash_mraw(hash: ?*lexbor_hash_t) ?*lexbor_mraw_t {
     return hash.?.mraw;
 }
 
-pub inline fn lexbor_hash_entry_str(entry: ?*lexbor_hash_entry_t) ?*lxb_char_t {
+pub inline fn lexbor_hash_entry_str(entry: ?*lexbor_hash_entry_t) ?[*:0]lxb_char_t {
     if (entry.?.length <= LEXBOR_HASH_SHORT_SIZE) {
-        return &entry.?.u.short_str[0];
+        return @ptrCast(&entry.?.u.short_str[0]);
     }
-    return entry.?.u.long_str;
+    return @ptrCast(entry.?.u.long_str);
 }
 
 pub inline fn lexbor_hash_entry_str_set(entry: ?*lexbor_hash_entry_t, data: ?*lxb_char_t, length: usize) ?*lxb_char_t {
