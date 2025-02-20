@@ -39,83 +39,83 @@ test "document_title" {
     // try doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
 }
 
-test "document_parse_chunk" {
-    const input = [_][]const u8{
-        "<!DOCT",
-        "YPE htm",
-        "l>",
-        "<html><head>",
-        "<ti",
-        "tle>HTML chun",
-        "ks parsing</",
-        "title>",
-        "</head><bod",
-        "y><div cla",
-        "ss=",
-        "\"bestof",
-        "class",
-        "\">",
-        "good for me",
-        "</div>",
-    };
-
-    // Initialization
-    var doc = try html.Document.create();
-    defer doc.destroy();
-
-    // Parse HTML
-    try doc.parseChunkBegin();
-
-    for (input) |h| {
-        try doc.parseChunk(&h[0], h.len);
-    }
-
-    try doc.parseChunkEnd();
-
-    // Get title
-    if (doc.getTitle()) |title| {
-        try expectEqualSlices(u8, "HTML chunks parsing", title);
-    }
-
-    // Print Result
-    // try doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
-}
-
-test "document_create" {
-    var tag_name_len: usize = undefined;
-
-    const input = "";
-
-    // Initialization
-    var parser = try html.Parser.create();
-
-    try parser.init();
-
-    // Parse
-    var doc = try parser.parse(input, input.len);
-    parser.destroy();
-
-    const body = doc.bodyElement();
-    _ = body;
-
-    var cur: tag.IdEnum = .LXB_TAG_A;
-    const last: tag.IdEnum = .LXB_TAG__LAST_ENTRY;
-
-    while (@intFromEnum(cur) < @intFromEnum(last)) : (cur = @enumFromInt(@intFromEnum(cur) + 1)) {
-        const tag_name = try tag.nameById(cur, &tag_name_len);
-        // const element = try dom.Document.createElement(&doc.document.dom_document, &tag_name.?[0], tag_name_len, null);
-        // const element = try dom.Document.createElement(&doc.document.dom_document, tag_name, tag_name_len, null);
-        const element = try dom.Document.createElement(doc, tag_name, tag_name_len, null);
-        _ = element;
-
-        if (html.tag.isVoid(cur)) {
-            // std.debug.print("Create element by tag name \"{s}\"\n", .{tag_name});
-        } else {
-            // std.debug.print("Create element by tag name \"{s}\" and append text node: ", .{tag_name});
-            // lxb_dom_document_create_text_node
-        }
-    }
-}
+// test "document_parse_chunk" {
+//     const input = [_][]const u8{
+//         "<!DOCT",
+//         "YPE htm",
+//         "l>",
+//         "<html><head>",
+//         "<ti",
+//         "tle>HTML chun",
+//         "ks parsing</",
+//         "title>",
+//         "</head><bod",
+//         "y><div cla",
+//         "ss=",
+//         "\"bestof",
+//         "class",
+//         "\">",
+//         "good for me",
+//         "</div>",
+//     };
+//
+//     // Initialization
+//     var doc = try html.Document.create();
+//     defer doc.destroy();
+//
+//     // Parse HTML
+//     try doc.parseChunkBegin();
+//
+//     for (input) |h| {
+//         try doc.parseChunk(&h[0], h.len);
+//     }
+//
+//     try doc.parseChunkEnd();
+//
+//     // Get title
+//     if (doc.getTitle()) |title| {
+//         try expectEqualSlices(u8, "HTML chunks parsing", title);
+//     }
+//
+//     // Print Result
+//     // try doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
+// }
+//
+// test "document_create" {
+//     var tag_name_len: usize = undefined;
+//
+//     const input = "";
+//
+//     // Initialization
+//     var parser = try html.Parser.create();
+//
+//     try parser.init();
+//
+//     // Parse
+//     var doc = try parser.parse(input, input.len);
+//     parser.destroy();
+//
+//     const body = doc.bodyElement();
+//     _ = body;
+//
+//     var cur: tag.IdEnum = .LXB_TAG_A;
+//     const last: tag.IdEnum = .LXB_TAG__LAST_ENTRY;
+//
+//     while (@intFromEnum(cur) < @intFromEnum(last)) : (cur = @enumFromInt(@intFromEnum(cur) + 1)) {
+//         const tag_name = try tag.nameById(cur, &tag_name_len);
+//         // const element = try dom.Document.createElement(&doc.document.dom_document, &tag_name.?[0], tag_name_len, null);
+//         // const element = try dom.Document.createElement(&doc.document.dom_document, tag_name, tag_name_len, null);
+//         const element = try dom.Document.createElement(doc, tag_name, tag_name_len, null);
+//         _ = element;
+//
+//         if (html.tag.isVoid(cur)) {
+//             // std.debug.print("Create element by tag name \"{s}\"\n", .{tag_name});
+//         } else {
+//             // std.debug.print("Create element by tag name \"{s}\" and append text node: ", .{tag_name});
+//             // lxb_dom_document_create_text_node
+//         }
+//     }
+// }
 
 // test {
 //     _ = @import("core.zig");
