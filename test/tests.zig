@@ -102,32 +102,19 @@ test "document_create" {
     const last: tag.IdEnum = .LXB_TAG__LAST_ENTRY;
 
     while (@intFromEnum(cur) < @intFromEnum(last)) : (cur = @enumFromInt(@intFromEnum(cur) + 1)) {
-        const tag_name = tag.nameById(cur, &tag_name_len);
-        if (tag_name == null) {
-            panic("Failed to get tag name by id\n", .{});
+        const tag_name = try tag.nameById(cur, &tag_name_len);
+        // const element = try dom.Document.createElement(&doc.document.dom_document, &tag_name.?[0], tag_name_len, null);
+        // const element = try dom.Document.createElement(&doc.document.dom_document, tag_name, tag_name_len, null);
+        const element = try dom.Document.createElement(doc, tag_name, tag_name_len, null);
+        _ = element;
+
+        if (html.tag.isVoid(cur)) {
+            // std.debug.print("Create element by tag name \"{s}\"\n", .{tag_name});
+        } else {
+            // std.debug.print("Create element by tag name \"{s}\" and append text node: ", .{tag_name});
+            // lxb_dom_document_create_text_node
         }
-        const element = lxb_dom_document_create_element(&document->dom_document, tag_name, tag_name_len, null);
     }
-
-    // std.debug.print("{d}: {s}\n", .{ tag_name_len, tag_name.? });
-    // status = doc.parseChunkBegin();
-    // try expectEqual(status, .LXB_STATUS_OK);
-    //
-    // for (html) |h| {
-    //     status = doc.parseChunk(&h[0], h.len);
-    //     try expectEqual(status, .LXB_STATUS_OK);
-    // }
-    //
-    // status = doc.parseChunkEnd();
-    // try expectEqual(status, .LXB_STATUS_OK);
-    //
-    // // Get title
-    // if (doc.getTitle()) |title| {
-    //     try expectEqualSlices(u8, "HTML chunks parsing", title);
-    // }
-
-    // Print Result
-    // try doc.serialize(.LXB_HTML_SERIALIZE_OPT_UNDEF);
 }
 
 // test {

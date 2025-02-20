@@ -27,6 +27,9 @@ const lxb_dom_attr_t = @import("./dom_ext.zig").lxb_dom_attr_t;
 const lxb_dom_attr_data_t = @import("./dom_ext.zig").lxb_dom_attr_data_t;
 const lxb_tag_id_t = @import("./tag_ext.zig").lxb_tag_id_t;
 
+const tag = @import("./tag_ext.zig");
+const ns = @import("./ns_ext.zig");
+
 // html/interfaces/document.h
 
 pub const lxb_html_document_done_cb_f = ?*const fn (document: ?*lxb_html_document_t) callconv(.C) lxb_status_t;
@@ -800,3 +803,42 @@ pub const lxb_html_token_attr = extern struct {
     prev: ?*lxb_html_token_attr_t,
     type: lxb_html_token_attr_type_t,
 };
+
+// html/tag.h
+
+pub const lxb_html_tag_category_t = c_int;
+
+pub const lxb_html_tag_category = enum(c_int) {
+    LXB_HTML_TAG_CATEGORY__UNDEF = 0x0000,
+    LXB_HTML_TAG_CATEGORY_ORDINARY = 0x0001,
+    LXB_HTML_TAG_CATEGORY_SPECIAL = 0x0002,
+    LXB_HTML_TAG_CATEGORY_FORMATTING = 0x0004,
+    LXB_HTML_TAG_CATEGORY_SCOPE = 0x0008,
+    LXB_HTML_TAG_CATEGORY_SCOPE_LIST_ITEM = 0x0010,
+    LXB_HTML_TAG_CATEGORY_SCOPE_BUTTON = 0x0020,
+    LXB_HTML_TAG_CATEGORY_SCOPE_TABLE = 0x0040,
+    LXB_HTML_TAG_CATEGORY_SCOPE_SELECT = 0x0080,
+};
+
+pub const lxb_html_tag_fixname_t = extern struct {
+    name: ?*const lxb_char_t,
+    len: c_uint,
+};
+
+// TODO: #define LXB_HTML_TAG_RES_CATS
+// TODO: #define LXB_HTML_TAG_RES_FIXNAME_SVG
+
+// pub inline fn lxb_html_tag_is_category(tag_id:lxb_tag_id_t , ns_:ns.lxb_ns_id_t , cat:lxb_html_tag_category_t ) bool {
+//     if (tag_id < tag.lxb_tag_id_enum_t.LXB_TAG__LAST_ENTRY and ns_ < tag.lxb_tag_id_enum_t.LXB_NS__LAST_ENTRY) {
+//         return lxb_html_tag_res_cats[tag_id][ns_] & cat;
+//     }
+//
+//     return (tag.lxb_tag_id_enum_t.LXB_HTML_TAG_CATEGORY_ORDINARY|tag.lxb_tag_id_enum_t.LXB_HTML_TAG_CATEGORY_SCOPE_SELECT) & cat;
+// }
+pub inline fn lxb_html_tag_is_void(tag_id: lxb_tag_id_t) bool {
+    switch (@as(tag.lxb_tag_id_enum_t, @enumFromInt(tag_id))) {
+        .LXB_TAG_AREA, .LXB_TAG_BASE, .LXB_TAG_BR, .LXB_TAG_COL, .LXB_TAG_EMBED, .LXB_TAG_HR, .LXB_TAG_IMG, .LXB_TAG_INPUT, .LXB_TAG_LINK, .LXB_TAG_META, .LXB_TAG_SOURCE, .LXB_TAG_TRACK, .LXB_TAG_WBR => return true,
+        else => return false,
+    }
+    // return false;
+}

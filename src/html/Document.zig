@@ -12,11 +12,11 @@ const Document = @This();
 document: *html.lxb_html_document_t,
 
 const Error = error{
-    FailedToInitialize,
+    FailedToHtmlInitialize,
 };
 
 pub fn create() Error!Document {
-    const document = html.lxb_html_document_create() orelse return error.FailedToInitialize;
+    const document = html.lxb_html_document_create() orelse return error.FailedToHtmlInitialize;
     return Document{
         .document = document,
     };
@@ -49,6 +49,7 @@ pub fn parseChunkEnd(self: Document) errors.LxbStatusError!void {
 pub fn getTitle(self: Document) ?[]const u8 {
     var len: usize = undefined;
     const title = html.lxb_html_document_title(self.document, &len) orelse return null;
+    // TODO: unnesassaly cast?
     return sliceTo(@as([*:0]u8, @ptrCast(title)), 0);
 }
 

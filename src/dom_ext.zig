@@ -66,6 +66,10 @@ pub const lxb_dom_document = extern struct {
     scripting: bool,
 };
 
+pub extern fn lxb_dom_document_create_element(document: ?*lxb_dom_document_t, local_name: ?*const lxb_char_t, lname_len: usize, reserved_for_opt: ?*anyopaque) ?*lxb_dom_element_t;
+
+pub extern fn lxb_dom_document_create_text_node(document: ?*lxb_dom_document_t, data: ?*const lxb_char_t, len: usize) ?*lxb_dom_text_t;
+
 // dom/interfaces/node.h
 
 pub const lxb_dom_node_simple_walker_f = ?*const fn (node: ?*lxb_dom_node_t, ctx: ?*anyopaque) callconv(.C) lexbor_action_t;

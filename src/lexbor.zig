@@ -9,6 +9,7 @@
 // pub const Parser = @import("html/Parser.zig");
 
 pub const html = @import("html.zig");
+pub const dom = @import("dom.zig");
 pub const tag = @import("tag.zig");
 
 // pub const TagIdEnum = @import("tag_ext.zig").lxb_tag_id_enum_t;
