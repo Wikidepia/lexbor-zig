@@ -1,38 +1,14 @@
 // const std = @import("std");
-const lexbor_sbst_entry_static_t = @import("./core_ext.zig").lexbor_sbst_entry_static_t;
-const lexbor_array_obj_t = @import("./core_ext.zig").lexbor_array_obj_t;
-const lexbor_mraw_t = @import("./core_ext.zig").lexbor_mraw_t;
-const lexbor_str_t = @import("./core_ext.zig").lexbor_str_t;
-const lxb_status_t = @import("./core_ext.zig").lxb_status_t;
-const lexbor_avl_t = @import("./core_ext.zig").lexbor_avl_t;
-const lexbor_avl_node_t = @import("./core_ext.zig").lexbor_avl_node_t;
-const lexbor_array_t = @import("./core_ext.zig").lexbor_array_t;
-const lexbor_hash_t = @import("./core_ext.zig").lexbor_hash_t;
-const lexbor_dobject_t = @import("./core_ext.zig").lexbor_dobject_t;
-const lxb_char_t = @import("./core_ext.zig").lxb_char_t;
-const lxb_css_memory_t = @import("./css_ext.zig").lxb_css_memory_t;
-const lxb_css_selectors_t = @import("./css_ext.zig").lxb_css_selectors_t;
-const lxb_css_parser_t = @import("./css_ext.zig").lxb_css_parser_t;
-const lxb_css_rule_declaration_t = @import("./css_ext.zig").lxb_css_rule_declaration_t;
-const lxb_css_rule_declaration_list_t = @import("./css_ext.zig").lxb_css_rule_declaration_list_t;
-const lxb_css_selector_specificity_t = @import("./css_ext.zig").lxb_css_selector_specificity_t;
-const lxb_css_stylesheet_t = @import("./css_ext.zig").xb_css_stylesheet_t;
-const lxb_selectors_t = @import("./selectors_ext.zig").lxb_selectors_t;
-const lxb_dom_document_t = @import("./dom_ext.zig").lxb_dom_document_t;
-const lxb_dom_document_fragment_t = @import("./dom_ext.zig").lxb_dom_document_fragment_t;
-const lxb_dom_element_t = @import("./dom_ext.zig").lxb_dom_element_t;
-const lxb_dom_event_target_t = @import("./dom_ext.zig").lxb_dom_event_target_t;
-const lxb_dom_node_t = @import("./dom_ext.zig").lxb_dom_node_t;
-const lxb_dom_attr_t = @import("./dom_ext.zig").lxb_dom_attr_t;
-const lxb_dom_attr_data_t = @import("./dom_ext.zig").lxb_dom_attr_data_t;
-const lxb_tag_id_t = @import("./tag_ext.zig").lxb_tag_id_t;
 
-const tag = @import("./tag_ext.zig");
-const ns = @import("./ns_ext.zig");
+const core = @import("core_ext.zig");
+const css = @import("css_ext.zig");
+const dom = @import("dom_ext.zig");
+const selectors = @import("selectors_ext.zig");
+const tag = @import("tag_ext.zig");
 
 // html/interfaces/document.h
 
-pub const lxb_html_document_done_cb_f = ?*const fn (document: ?*lxb_html_document_t) callconv(.C) lxb_status_t;
+pub const lxb_html_document_done_cb_f = ?*const fn (document: ?*lxb_html_document_t) callconv(.C) core.lxb_status_t;
 
 pub const lxb_html_document_opt_t = c_uint;
 
@@ -49,19 +25,19 @@ pub const lxb_html_document_opt = enum(c_int) {
 };
 
 pub const lxb_html_document_css_t = extern struct {
-    memory: ?*lxb_css_memory_t,
-    css_selectors: ?*lxb_css_selectors_t,
-    parser: ?*lxb_css_parser_t,
-    selectors: ?*lxb_selectors_t,
-    styles: ?*lexbor_avl_t,
-    stylesheets: ?*lexbor_array_t,
-    weak: ?*lexbor_dobject_t,
-    customs: ?*lexbor_hash_t,
+    memory: ?*css.lxb_css_memory_t,
+    css_selectors: ?*css.lxb_css_selectors_t,
+    parser: ?*css.lxb_css_parser_t,
+    selectors: ?*selectors.lxb_selectors_t,
+    styles: ?*core.lexbor_avl_t,
+    stylesheets: ?*core.lexbor_array_t,
+    weak: ?*core.lexbor_dobject_t,
+    customs: ?*core.lexbor_hash_t,
     customs_id: usize,
 };
 
 pub const lxb_html_document = extern struct {
-    dom_document: lxb_dom_document_t,
+    dom_document: dom.lxb_dom_document_t,
     iframe_srcdoc: ?*anyopaque,
     head: ?*lxb_html_head_element_t,
     body: ?*lxb_html_body_element_t,
@@ -75,14 +51,14 @@ pub const lxb_html_document = extern struct {
 pub extern fn lxb_html_document_create() ?*lxb_html_document_t;
 pub extern fn lxb_html_document_clean(document: ?*lxb_html_document_t) void;
 pub extern fn lxb_html_document_destroy(document: ?*lxb_html_document_t) ?*lxb_html_document_t;
-pub extern fn lxb_html_document_parse(document: ?*lxb_html_document_t, html: ?*const lxb_char_t, size: usize) lxb_status_t;
-pub extern fn lxb_html_document_parse_chunk_begin(document: ?*lxb_html_document_t) lxb_status_t;
-pub extern fn lxb_html_document_parse_chunk(document: ?*lxb_html_document_t, html: ?*const lxb_char_t, size: usize) lxb_status_t;
-pub extern fn lxb_html_document_parse_chunk_end(document: ?*lxb_html_document_t) lxb_status_t;
+pub extern fn lxb_html_document_parse(document: ?*lxb_html_document_t, html: ?*const core.lxb_char_t, size: usize) core.lxb_status_t;
+pub extern fn lxb_html_document_parse_chunk_begin(document: ?*lxb_html_document_t) core.lxb_status_t;
+pub extern fn lxb_html_document_parse_chunk(document: ?*lxb_html_document_t, html: ?*const core.lxb_char_t, size: usize) core.lxb_status_t;
+pub extern fn lxb_html_document_parse_chunk_end(document: ?*lxb_html_document_t) core.lxb_status_t;
 
-pub extern fn lxb_html_document_title(document: ?*lxb_html_document_t, len: ?*usize) ?*lxb_char_t;
-pub extern fn lxb_html_document_title_set(document: ?*lxb_html_document_t, title: ?*const lxb_char_t, len: usize) lxb_status_t;
-pub extern fn lxb_html_document_title_raw(document: ?*lxb_html_document_t, len: ?*usize) ?*lxb_char_t;
+pub extern fn lxb_html_document_title(document: ?*lxb_html_document_t, len: ?*usize) ?*core.lxb_char_t;
+pub extern fn lxb_html_document_title_set(document: ?*lxb_html_document_t, title: ?*const core.lxb_char_t, len: usize) core.lxb_status_t;
+pub extern fn lxb_html_document_title_raw(document: ?*lxb_html_document_t, len: ?*usize) ?*core.lxb_char_t;
 
 // inline functions
 pub inline fn lxb_html_document_body_element(document: ?*lxb_html_document_t) ?*lxb_html_body_element_t {
@@ -258,16 +234,16 @@ pub const lxb_html_div_element = extern struct {
 // html/interfaces/element.h
 
 pub const lxb_html_element = extern struct {
-    element: lxb_dom_element_t,
-    style: ?*lexbor_avl_node_t,
-    list: ?*lxb_css_rule_declaration_list_t,
+    element: dom.lxb_dom_element_t,
+    style: ?*core.lexbor_avl_node_t,
+    list: ?*css.lxb_css_rule_declaration_list_t,
 };
 
 pub const lxb_html_element_style_opt_t = enum(c_int) {
     LXB_HTML_ELEMENT_OPT_UNDEF = 0x00,
 };
 
-pub const lxb_html_element_style_cb_f = ?*const fn (element: ?*lxb_html_element_t, declr: ?*const lxb_css_rule_declaration_t, ctx: ?*anyopaque, spec: lxb_css_selector_specificity_t, is_weak: bool) callconv(.C) lxb_status_t;
+pub const lxb_html_element_style_cb_f = ?*const fn (element: ?*lxb_html_element_t, declr: ?*const css.lxb_css_rule_declaration_t, ctx: ?*anyopaque, spec: css.lxb_css_selector_specificity_t, is_weak: bool) callconv(.C) core.lxb_status_t;
 
 // html/interfaces/embed_element.h
 
@@ -516,7 +492,7 @@ pub const lxb_html_span_element = extern struct {
 
 pub const lxb_html_style_element = extern struct {
     element: lxb_html_element_t,
-    stylesheet: ?*lxb_css_stylesheet_t,
+    stylesheet: ?*css.lxb_css_stylesheet_t,
 };
 
 // html/interfaces/table_caption_element.h
@@ -559,7 +535,7 @@ pub const lxb_html_table_section_element = extern struct {
 
 pub const lxb_html_template_element = extern struct {
     element: lxb_html_element_t,
-    content: ?*lxb_dom_document_fragment_t,
+    content: ?*dom.lxb_dom_document_fragment_t,
 };
 
 // html/interfaces/text_area_element.h
@@ -578,7 +554,7 @@ pub const lxb_html_time_element = extern struct {
 
 pub const lxb_html_title_element = extern struct {
     element: lxb_html_element_t,
-    strict_text: ?*lexbor_str_t,
+    strict_text: ?*core.lexbor_str_t,
 };
 
 // html/interfaces/track_element.h
@@ -608,7 +584,7 @@ pub const lxb_html_video_element = extern struct {
 // html/interfaces/window.h
 
 pub const lxb_html_window = extern struct {
-    event_target: lxb_dom_event_target_t,
+    event_target: dom.lxb_dom_event_target_t,
 };
 
 // html/serialize.h
@@ -625,9 +601,9 @@ pub const lxb_html_serialize_opt = enum(c_int) {
     LXB_HTML_SERIALIZE_OPT_FULL_DOCTYPE = 0x40,
 };
 
-pub const lxb_html_serialize_cb_f = ?*const fn (data: ?[*:0]const lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
+pub const lxb_html_serialize_cb_f = ?*const fn (data: ?[*:0]const core.lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) core.lxb_status_t;
 
-pub extern fn lxb_html_serialize_pretty_tree_cb(node: ?*lxb_dom_node_t, opt: lxb_html_serialize_opt_t, indent: usize, cb: lxb_html_serialize_cb_f, ctx: ?*anyopaque) lxb_status_t;
+pub extern fn lxb_html_serialize_pretty_tree_cb(node: ?*dom.lxb_dom_node_t, opt: lxb_html_serialize_opt_t, indent: usize, cb: lxb_html_serialize_cb_f, ctx: ?*anyopaque) core.lxb_status_t;
 
 // html/parser.h
 
@@ -643,24 +619,22 @@ pub const lxb_html_parser_t = extern struct {
     tkz: ?*lxb_html_tokenizer_t,
     tree: ?*lxb_html_tree_t,
     original_tree: ?*lxb_html_tree_t,
-    root: ?*lxb_dom_node_t,
-    form: ?*lxb_dom_node_t,
+    root: ?*dom.lxb_dom_node_t,
+    form: ?*dom.lxb_dom_node_t,
     state: lxb_html_parser_state_t,
-    status: lxb_status_t,
+    status: core.lxb_status_t,
     ref_count: usize,
 };
 
 pub extern fn lxb_html_parser_create() ?*lxb_html_parser_t;
-pub extern fn lxb_html_parser_init(parser: ?*lxb_html_parser_t) lxb_status_t;
+pub extern fn lxb_html_parser_init(parser: ?*lxb_html_parser_t) core.lxb_status_t;
 pub extern fn lxb_html_parser_destroy(parser: ?*lxb_html_parser_t) ?*lxb_html_parser_t;
 
-pub extern fn lxb_html_parse(parser: ?*lxb_html_parser_t, html: ?*const lxb_char_t, size: usize) ?*lxb_html_document_t;
+pub extern fn lxb_html_parse(parser: ?*lxb_html_parser_t, html: ?*const core.lxb_char_t, size: usize) ?*lxb_html_document_t;
 
 // html/tokenizer.h
 
-// pub const lxb_html_serialize_cb_f = ?*const fn (data: ?[*:0]const lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
-
-pub const lxb_html_tokenizer_state_f = ?*const fn (tkz: ?*lxb_html_tokenizer_t, data: ?*const lxb_char_t, end: ?*const lxb_char_t) callconv(.C) ?*lxb_char_t;
+pub const lxb_html_tokenizer_state_f = ?*const fn (tkz: ?*lxb_html_tokenizer_t, data: ?*const core.lxb_char_t, end: ?*const core.lxb_char_t) callconv(.C) ?*core.lxb_char_t;
 
 pub const lxb_html_tokenizer_token_f = ?*const fn (tkz: ?*lxb_html_tokenizer_t, token: ?*lxb_html_token_t, ctx: ?*anyopaque) callconv(.C) ?*lxb_html_token_t;
 
@@ -669,39 +643,39 @@ pub const lxb_html_tokenizer = extern struct {
     state_return: lxb_html_tokenizer_state_f,
     callback_token_done: lxb_html_tokenizer_token_f,
     callback_token_ctx: ?*anyopaque,
-    tags: ?*lexbor_hash_t,
-    attrs: ?*lexbor_hash_t,
-    attrs_mraw: ?*lexbor_mraw_t,
-    mraw: ?*lexbor_mraw_t,
+    tags: ?*core.lexbor_hash_t,
+    attrs: ?*core.lexbor_hash_t,
+    attrs_mraw: ?*core.lexbor_mraw_t,
+    mraw: ?*core.lexbor_mraw_t,
     token: ?*lxb_html_token_t,
-    dobj_token: ?*lexbor_dobject_t,
-    dobj_token_attr: ?*lexbor_dobject_t,
-    parse_errors: ?*lexbor_array_obj_t,
+    dobj_token: ?*core.lexbor_dobject_t,
+    dobj_token_attr: ?*core.lexbor_dobject_t,
+    parse_errors: ?*core.lexbor_array_obj_t,
     tree: ?*lxb_html_tree_t,
-    markup: ?*const lxb_char_t,
-    temp: ?*const lxb_char_t,
-    tmp_tag_id: lxb_tag_id_t,
-    start: ?*lxb_char_t,
-    pos: ?*lxb_char_t,
-    end: ?*const lxb_char_t,
-    begin: ?*const lxb_char_t,
-    last: ?*const lxb_char_t,
-    entity: ?*const lexbor_sbst_entry_static_t,
-    entity_match: ?*const lexbor_sbst_entry_static_t,
+    markup: ?*const core.lxb_char_t,
+    temp: ?*const core.lxb_char_t,
+    tmp_tag_id: tag.lxb_tag_id_t,
+    start: ?*core.lxb_char_t,
+    pos: ?*core.lxb_char_t,
+    end: ?*const core.lxb_char_t,
+    begin: ?*const core.lxb_char_t,
+    last: ?*const core.lxb_char_t,
+    entity: ?*const core.lexbor_sbst_entry_static_t,
+    entity_match: ?*const core.lexbor_sbst_entry_static_t,
     entity_start: usize,
     entity_end: usize,
     entity_length: u32,
     entity_number: u32,
     is_attribute: bool,
     opt: lxb_html_tokenizer_opt_t,
-    status: lxb_status_t,
+    status: core.lxb_status_t,
     is_eof: bool,
 
     base: ?*lxb_html_tokenizer_t,
     ref_count: usize,
 };
 
-pub const lxb_html_tokenizer_eof = @extern(**const lxb_char_t, .{ .name = "lxb_html_tokenizer_eof" });
+pub const lxb_html_tokenizer_eof = @extern(**const core.lxb_char_t, .{ .name = "lxb_html_tokenizer_eof" });
 
 // html/base.h
 
@@ -731,16 +705,16 @@ pub const lxb_html_token_type = enum(c_int) {
 };
 
 pub const lxb_html_token_t = extern struct {
-    begin: ?*const lxb_char_t,
-    end: ?*const lxb_char_t,
-    text_start: ?*const lxb_char_t,
-    text_end: ?*const lxb_char_t,
+    begin: ?*const core.lxb_char_t,
+    end: ?*const core.lxb_char_t,
+    text_start: ?*const core.lxb_char_t,
+    text_end: ?*const core.lxb_char_t,
     attr_first: ?*lxb_html_token_attr_t,
     attr_last: ?*lxb_html_token_attr_t,
     base_element: ?*anyopaque,
 
     null_count: usize,
-    tag_id: lxb_tag_id_t,
+    tag_id: tag.lxb_tag_id_t,
     type: lxb_html_token_type_t,
 };
 
@@ -748,30 +722,30 @@ pub const lxb_html_token_t = extern struct {
 
 pub const lxb_html_tree_insertion_mode_f = ?*const fn (tree: ?*lxb_html_tree_t, token: ?*lxb_html_token_t) callconv(.C) bool;
 
-pub const lxb_html_tree_append_attr_f = ?*const fn (tree: ?*lxb_html_tree_t, attr: ?*lxb_dom_attr_t, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
+pub const lxb_html_tree_append_attr_f = ?*const fn (tree: ?*lxb_html_tree_t, attr: ?*dom.lxb_dom_attr_t, ctx: ?*anyopaque) callconv(.C) core.lxb_status_t;
 
 pub const lxb_html_tree_pending_table_t = extern struct {
-    text_list: ?*lexbor_array_obj_t,
+    text_list: ?*core.lexbor_array_obj_t,
     have_non_ws: bool,
 };
 
 pub const lxb_html_tree = extern struct {
     tkz_ref: ?*lxb_html_tokenizer_t,
     document: ?*lxb_html_document_t,
-    fragment: ?*lxb_dom_node_t,
+    fragment: ?*dom.lxb_dom_node_t,
     form: ?*lxb_html_form_element_t,
-    open_elements: ?*lexbor_array_t,
-    active_formatting: ?*lexbor_array_t,
-    template_insertion_modes: ?*lexbor_array_obj_t,
+    open_elements: ?*core.lexbor_array_t,
+    active_formatting: ?*core.lexbor_array_t,
+    template_insertion_modes: ?*core.lexbor_array_obj_t,
     pending_table: lxb_html_tree_pending_table_t,
-    parse_errors: ?*lexbor_array_obj_t,
+    parse_errors: ?*core.lexbor_array_obj_t,
     foster_parenting: bool,
     frameset_ok: bool,
     scripting: bool,
     mode: lxb_html_tree_insertion_mode_f,
     original_mode: lxb_html_tree_insertion_mode_f,
     before_append_attr: lxb_html_tree_append_attr_f,
-    status: lxb_status_t,
+    status: core.lxb_status_t,
     ref_count: usize,
 };
 
@@ -792,12 +766,12 @@ pub const lxb_html_token_attr_type = enum(c_int) {
 };
 
 pub const lxb_html_token_attr = extern struct {
-    name_begin: ?*const lxb_char_t,
-    name_end: ?*const lxb_char_t,
-    value_begin: ?*const lxb_char_t,
-    value_end: ?*const lxb_char_t,
-    name: ?*const lxb_dom_attr_data_t,
-    value: ?*lxb_char_t,
+    name_begin: ?*const core.lxb_char_t,
+    name_end: ?*const core.lxb_char_t,
+    value_begin: ?*const core.lxb_char_t,
+    value_end: ?*const core.lxb_char_t,
+    name: ?*const dom.lxb_dom_attr_data_t,
+    value: ?*core.lxb_char_t,
     value_size: usize,
     next: ?*lxb_html_token_attr_t,
     prev: ?*lxb_html_token_attr_t,
@@ -821,24 +795,29 @@ pub const lxb_html_tag_category = enum(c_int) {
 };
 
 pub const lxb_html_tag_fixname_t = extern struct {
-    name: ?*const lxb_char_t,
+    name: ?*const core.lxb_char_t,
     len: c_uint,
 };
 
 // TODO: #define LXB_HTML_TAG_RES_CATS
 // TODO: #define LXB_HTML_TAG_RES_FIXNAME_SVG
 
-// pub inline fn lxb_html_tag_is_category(tag_id:lxb_tag_id_t , ns_:ns.lxb_ns_id_t , cat:lxb_html_tag_category_t ) bool {
-//     if (tag_id < tag.lxb_tag_id_enum_t.LXB_TAG__LAST_ENTRY and ns_ < tag.lxb_tag_id_enum_t.LXB_NS__LAST_ENTRY) {
-//         return lxb_html_tag_res_cats[tag_id][ns_] & cat;
-//     }
-//
-//     return (tag.lxb_tag_id_enum_t.LXB_HTML_TAG_CATEGORY_ORDINARY|tag.lxb_tag_id_enum_t.LXB_HTML_TAG_CATEGORY_SCOPE_SELECT) & cat;
-// }
-pub inline fn lxb_html_tag_is_void(tag_id: lxb_tag_id_t) bool {
+pub inline fn lxb_html_tag_is_void(tag_id: tag.lxb_tag_id_t) bool {
     switch (@as(tag.lxb_tag_id_enum_t, @enumFromInt(tag_id))) {
-        .LXB_TAG_AREA, .LXB_TAG_BASE, .LXB_TAG_BR, .LXB_TAG_COL, .LXB_TAG_EMBED, .LXB_TAG_HR, .LXB_TAG_IMG, .LXB_TAG_INPUT, .LXB_TAG_LINK, .LXB_TAG_META, .LXB_TAG_SOURCE, .LXB_TAG_TRACK, .LXB_TAG_WBR => return true,
+        .LXB_TAG_AREA,
+        .LXB_TAG_BASE,
+        .LXB_TAG_BR,
+        .LXB_TAG_COL,
+        .LXB_TAG_EMBED,
+        .LXB_TAG_HR,
+        .LXB_TAG_IMG,
+        .LXB_TAG_INPUT,
+        .LXB_TAG_LINK,
+        .LXB_TAG_META,
+        .LXB_TAG_SOURCE,
+        .LXB_TAG_TRACK,
+        .LXB_TAG_WBR,
+        => return true,
         else => return false,
     }
-    // return false;
 }

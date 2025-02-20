@@ -1,10 +1,6 @@
-const lexbor_dobject_t = @import("./core_ext.zig").lexbor_dobject_t;
-const lexbor_mraw_t = @import("./core_ext.zig").lexbor_mraw_t;
-const lexbor_str_t = @import("./core_ext.zig").lexbor_str_t;
-const lxb_status_t = @import("./core_ext.zig").lxb_status_t;
-const lxb_char_t = @import("./core_ext.zig").lxb_char_t;
-const lexbor_array_obj_t = @import("./core_ext.zig").lexbor_array_obj_t;
-const lexbor_serialize_cb_f = @import("./core_ext.zig").lexbor_serialize_cb_f;
+// const std = @import("std");
+
+const core = @import("core_ext.zig");
 
 // css/base.h
 
@@ -14,9 +10,9 @@ pub const LEXBOR_CSS_VERSION_PATCH = 0;
 pub const LEXBOR_CSS_VERSION_STRING = "1.2.0";
 
 pub const lxb_css_memory_t = extern struct {
-    objs: ?*lexbor_dobject_t,
-    mraw: ?*lexbor_mraw_t,
-    tree: ?*lexbor_mraw_t,
+    objs: ?*core.lexbor_dobject_t,
+    mraw: ?*core.lexbor_mraw_t,
+    tree: ?*core.lexbor_mraw_t,
 };
 
 pub const lxb_css_type_t = u32;
@@ -32,7 +28,7 @@ pub const lxb_css_parser_state_f = ?*const fn (parser: ?*lxb_css_parser_t, token
 
 pub const lxb_css_style_create_f = ?*const fn (memory: ?*lxb_css_memory_t) callconv(.C) ?*anyopaque;
 
-pub const lxb_css_style_serialize_f = ?*const fn (style: ?*const anyopaque, cb: lexbor_serialize_cb_f, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
+pub const lxb_css_style_serialize_f = ?*const fn (style: ?*const anyopaque, cb: core.lexbor_serialize_cb_f, ctx: ?*anyopaque) callconv(.C) core.lxb_status_t;
 
 pub const lxb_css_style_destroy_f = ?*const fn (memory: ?*lxb_css_memory_t, style: ?*anyopaque, self_destroy: bool) callconv(.C) ?*anyopaque;
 
@@ -45,7 +41,7 @@ pub const lxb_css_rule_declaration_t = lxb_css_rule_declaration;
 pub const lxb_css_rule_at_t = lxb_css_rule_at;
 
 pub const lxb_css_entry_data_t = extern struct {
-    name: lxb_char_t,
+    name: core.lxb_char_t,
     length: usize,
     unique: usize,
     state: lxb_css_parser_state_f,
@@ -56,7 +52,7 @@ pub const lxb_css_entry_data_t = extern struct {
 };
 
 pub const lxb_css_data_t = extern struct {
-    name: ?*lxb_char_t,
+    name: ?*core.lxb_char_t,
     length: usize,
     unique: usize,
 };
@@ -127,7 +123,7 @@ pub const lxb_css_selector_modifier_t = enum(c_int) {
 pub const lxb_css_selector_attribute_t = extern struct {
     match: lxb_css_selector_match_t,
     modifier: lxb_css_selector_modifier_t,
-    value: lexbor_str_t,
+    value: core.lexbor_str_t,
 };
 
 pub const lxb_css_selector_pseudo_t = extern struct {
@@ -138,8 +134,8 @@ pub const lxb_css_selector_pseudo_t = extern struct {
 pub const lxb_css_selector = extern struct {
     type: lxb_css_selector_type_t,
     combinator: lxb_css_selector_combinator_t,
-    name: lexbor_str_t,
-    ns: lexbor_str_t,
+    name: core.lexbor_str_t,
+    ns: core.lexbor_str_t,
     u: extern union {
         attribute: lxb_css_selector_attribute_t,
         pseudo: lxb_css_selector_pseudo_t,
@@ -210,14 +206,14 @@ pub const lxb_css_parser_state = extern struct {
 };
 
 pub const lxb_css_parser_error = extern struct {
-    message: lexbor_str_t,
+    message: core.lexbor_str_t,
 };
 
 // css/syntax/tokenizer.h
 
-pub const lxb_css_syntax_tokenizer_state_f = ?*const fn (tkz: ?*lxb_css_syntax_tokenizer_t, token: ?*lxb_css_syntax_token_t, data: ?*const lxb_char_t, end: ?*const lxb_char_t) callconv(.C) ?*lxb_char_t;
+pub const lxb_css_syntax_tokenizer_state_f = ?*const fn (tkz: ?*lxb_css_syntax_tokenizer_t, token: ?*lxb_css_syntax_token_t, data: ?*const core.lxb_char_t, end: ?*const core.lxb_char_t) callconv(.C) ?*core.lxb_char_t;
 
-pub const lxb_css_syntax_tokenizer_chunk_f = ?*const fn (tkz: ?*lxb_css_syntax_tokenizer_t, data: ?*const ?*lxb_char_t, end: ?*const ?*lxb_char_t, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
+pub const lxb_css_syntax_tokenizer_chunk_f = ?*const fn (tkz: ?*lxb_css_syntax_tokenizer_t, data: ?*const ?*core.lxb_char_t, end: ?*const ?*core.lxb_char_t, ctx: ?*anyopaque) callconv(.C) core.lxb_status_t;
 
 pub const lxb_css_syntax_tokenizer_opt = enum(c_int) {
     LXB_CSS_SYNTAX_TOKENIZER_OPT_UNDEF = 0x00,
@@ -231,24 +227,24 @@ pub const lxb_css_syntax_tokenizer_cache_t = extern struct {
 
 pub const lxb_css_syntax_tokenizer = extern struct {
     cache: ?*lxb_css_syntax_tokenizer_cache_t,
-    tokens: ?*lexbor_dobject_t,
-    parse_errors: lexbor_array_obj_t,
-    in_begin: ?*const lxb_char_t,
-    in_end: ?*const lxb_char_t,
-    begin: ?*const lxb_char_t,
+    tokens: ?*core.lexbor_dobject_t,
+    parse_errors: core.lexbor_array_obj_t,
+    in_begin: ?*const core.lxb_char_t,
+    in_end: ?*const core.lxb_char_t,
+    begin: ?*const core.lxb_char_t,
     offset: usize,
     cache_pos: usize,
     prepared: usize,
-    mraw: ?*lexbor_mraw_t,
+    mraw: ?*core.lexbor_mraw_t,
     chunk_cb: lxb_css_syntax_tokenizer_chunk_f,
     chunk_ctx: ?*anyopaque,
-    start: ?*lxb_char_t,
-    pos: ?*lxb_char_t,
-    end: ?*const lxb_char_t,
-    buffer: [128]lxb_char_t,
+    start: ?*core.lxb_char_t,
+    pos: ?*core.lxb_char_t,
+    end: ?*const core.lxb_char_t,
+    buffer: [128]core.lxb_char_t,
     token_data: lxb_css_syntax_token_data_t,
     opt: c_uint,
-    status: lxb_status_t,
+    status: core.lxb_status_t,
     eof: bool,
     with_comment: bool,
 };
@@ -257,13 +253,13 @@ pub const lxb_css_syntax_tokenizer = extern struct {
 
 pub const lxb_css_syntax_token_data_t = lxb_css_syntax_token_data;
 
-pub const lxb_css_syntax_token_data_cb_f = ?*const fn (begin: ?*const lxb_char_t, end: ?*const ?*lxb_char_t, str: ?*lexbor_str_t, mraw: ?*lexbor_mraw_t, td: ?*lxb_css_syntax_token_data_t) callconv(.C) ?*lxb_char_t;
+pub const lxb_css_syntax_token_data_cb_f = ?*const fn (begin: ?*const core.lxb_char_t, end: ?*const ?*core.lxb_char_t, str: ?*core.lexbor_str_t, mraw: ?*core.lexbor_mraw_t, td: ?*lxb_css_syntax_token_data_t) callconv(.C) ?*core.lxb_char_t;
 
-pub const lxb_css_syntax_token_cb_f = ?*const fn (data: ?*const lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
+pub const lxb_css_syntax_token_cb_f = ?*const fn (data: ?*const core.lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) core.lxb_status_t;
 
 pub const lxb_css_syntax_token_data = extern struct {
     cb: lxb_css_syntax_token_data_cb_f,
-    status: lxb_status_t,
+    status: core.lxb_status_t,
     count: c_int,
     num: u32,
     is_last: bool,
@@ -309,7 +305,7 @@ pub const lxb_css_syntax_token_type_t = enum(c_int) {
 };
 
 pub const lxb_css_syntax_token_base_t = extern struct {
-    begin: ?*const lxb_char_t,
+    begin: ?*const core.lxb_char_t,
     length: usize,
     user_id: usize,
 };
@@ -323,7 +319,7 @@ pub const lxb_css_syntax_token_number_t = extern struct {
 
 pub const lxb_css_syntax_token_string_t = extern struct {
     base: lxb_css_syntax_token_base_t,
-    data: ?*const lxb_char_t,
+    data: ?*const core.lxb_char_t,
     length: usize,
 };
 
@@ -334,7 +330,7 @@ pub const lxb_css_syntax_token_dimension_t = extern struct {
 
 pub const lxb_css_syntax_token_delim_t = extern struct {
     base: lxb_css_syntax_token_base_t,
-    character: ?*const lxb_char_t,
+    character: ?*const core.lxb_char_t,
 };
 
 pub const lxb_css_syntax_token_ident_t = lxb_css_syntax_token_string_t;
@@ -388,9 +384,9 @@ pub const lxb_css_syntax_rule_t = lxb_css_syntax_rule;
 
 pub const lxb_css_syntax_state_f = ?*const fn (parser: ?*lxb_css_parser_t, token: ?*const ?*lxb_css_syntax_token_t, rule: ?*lxb_css_syntax_rule) callconv(.C) ?*lxb_css_syntax_token_t;
 
-pub const lxb_css_syntax_declaration_end_f = ?*const fn (parser: ?*lxb_css_parser_t, ctx: ?*anyopaque, important: bool, failed: bool) callconv(.C) ?*lxb_status_t;
+pub const lxb_css_syntax_declaration_end_f = ?*const fn (parser: ?*lxb_css_parser_t, ctx: ?*anyopaque, important: bool, failed: bool) callconv(.C) ?*core.lxb_status_t;
 
-pub const lxb_css_syntax_cb_done_f = ?*const fn (parser: ?*lxb_css_parser_t, token: ?*const lxb_css_syntax_token_t, ctx: ?*anyopaque, failed: bool) callconv(.C) ?*lxb_status_t;
+pub const lxb_css_syntax_cb_done_f = ?*const fn (parser: ?*lxb_css_parser_t, token: ?*const lxb_css_syntax_token_t, ctx: ?*anyopaque, failed: bool) callconv(.C) ?*core.lxb_status_t;
 
 pub const lxb_css_syntax_list_rules_offset_t = extern struct {
     begin: usize,
@@ -478,7 +474,7 @@ pub const lxb_css_syntax_rule = extern struct {
     u: extern union {
         parser: ?*lxb_css_parser_t,
         cb: ?*const lxb_css_syntax_cb_list_rules_t,
-        data: ?*const lxb_char_t,
+        data: ?*const core.lxb_char_t,
         length: usize,
         ctx: ?*anyopaque,
         top_level: bool,
@@ -513,8 +509,8 @@ pub const lxb_css_rule = extern struct {
     next: ?*lxb_css_rule_t,
     prev: ?*lxb_css_rule_t,
     parent: ?*lxb_css_rule_t,
-    begin: ?*const lxb_char_t,
-    end: ?*const lxb_char_t,
+    begin: ?*const core.lxb_char_t,
+    end: ?*const core.lxb_char_t,
     memory: ?*lxb_css_memory_t,
     ref_count: usize,
 };
@@ -545,7 +541,7 @@ pub const lxb_css_rule_style = extern struct {
 
 pub const lxb_css_rule_bad_style = extern struct {
     rule: lxb_css_rule_t,
-    selector: lexbor_str_t,
+    selector: core.lexbor_str_t,
     declarations: ?*lxb_css_rule_declaration_list_t,
 };
 
@@ -567,14 +563,14 @@ pub const lxb_css_rule_declaration = extern struct {
 
 pub const lxb_css_at_rule__undef_t = extern struct {
     type: lxb_css_at_rule_type_t,
-    prelude: lexbor_str_t,
-    block: lexbor_str_t,
+    prelude: core.lexbor_str_t,
+    block: core.lexbor_str_t,
 };
 
 pub const lxb_css_at_rule__custom_t = extern struct {
-    name: lexbor_str_t,
-    prelude: lexbor_str_t,
-    block: lexbor_str_t,
+    name: core.lexbor_str_t,
+    prelude: core.lexbor_str_t,
+    block: core.lexbor_str_t,
 };
 
 pub const lxb_css_at_rule_media_t = extern struct {
@@ -599,12 +595,12 @@ pub const lxb_css_at_rule_type_t = usize;
 
 pub const lxb_css_property__undef_t = extern struct {
     type: lxb_css_property_type_t,
-    value: lexbor_str_t,
+    value: core.lexbor_str_t,
 };
 
 pub const lxb_css_property__custom_t = extern struct {
-    name: lexbor_str_t,
-    value: lexbor_str_t,
+    name: core.lexbor_str_t,
+    value: core.lexbor_str_t,
 };
 pub const lxb_css_property_display_t = extern struct {
     a: lxb_css_display_type_t,
@@ -756,7 +752,7 @@ pub const lxb_css_property_family_name = extern struct {
     generic: bool,
     u: extern union {
         type: lxb_css_font_family_type_t,
-        str: lexbor_str_t,
+        str: core.lexbor_str_t,
     },
     next: ?*lxb_css_property_family_name_t,
     prev: ?*lxb_css_property_family_name_t,

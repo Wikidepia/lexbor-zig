@@ -1,23 +1,8 @@
-const lexbor_str_t = @import("./core_ext.zig").lexbor_str_t;
-const lxb_status_t = @import("./core_ext.zig").lxb_status_t;
-const lxb_char_t = @import("./core_ext.zig").lxb_char_t;
-const lexbor_mraw_t = @import("./core_ext.zig").lexbor_mraw_t;
-const lexbor_action_t = @import("./core_ext.zig").lexbor_action_t;
-const lexbor_hash_t = @import("./core_ext.zig").lexbor_hash_t;
-const lexbor_hash_entry_t = @import("./core_ext.zig").lexbor_hash_entry_t;
-// const lexbor_avl_t = @import("./core_ext.zig").lexbor_avl_t;
-// const lexbor_array_t = @import("./core_ext.zig").lexbor_array_t;
-// const lexbor_hash_t = @import("./core_ext.zig").lexbor_hash_t;
-// const lexbor_dobject_t = @import("./core_ext.zig").lexbor_dobject_t;
-// const lxb_css_memory_t = @import("./css_ext.zig").lxb_css_memory_t;
-// const lxb_css_selectors_t = @import("./css_ext.zig").lxb_css_selectors_t;
-// const lxb_css_parser_t = @import("./css_ext.zig").lxb_css_parser_t;
-// const lxb_css_rule_declaration_t = @import("./css_ext.zig").lxb_css_rule_declaration_t;
-// const lxb_css_selector_specificity_t= @import("./css_ext.zig").lxb_css_selector_specificity_t;
-// const lxb_css_stylesheet_t= @import("./css_ext.zig").xb_css_stylesheet_t;
-// const lxb_selectors_t = @import("./selectors_ext.zig").lxb_selectors_t;
-const lxb_tag_id_t = @import("./tag_ext.zig").lxb_tag_id_t;
-const lxb_ns_id_t = @import("./ns_ext.zig").lxb_ns_id_t;
+// const std = @import("std");
+
+const core = @import("core_ext.zig");
+const ns = @import("ns_ext.zig");
+const tag = @import("tag_ext.zig");
 
 // dom/interfaces/document.h
 
@@ -51,12 +36,12 @@ pub const lxb_dom_document = extern struct {
     ev_destroy: lxb_dom_event_destroy_f,
     ev_set_value: lxb_dom_event_set_value_f,
 
-    mraw: ?*lexbor_mraw_t,
-    text: ?*lexbor_mraw_t,
-    tags: ?*lexbor_hash_t,
-    attrs: ?*lexbor_hash_t,
-    prefix: ?*lexbor_hash_t,
-    ns: ?*lexbor_hash_t,
+    mraw: ?*core.lexbor_mraw_t,
+    text: ?*core.lexbor_mraw_t,
+    tags: ?*core.lexbor_hash_t,
+    attrs: ?*core.lexbor_hash_t,
+    prefix: ?*core.lexbor_hash_t,
+    ns: ?*core.lexbor_hash_t,
     parser: ?*anyopaque,
     user: ?*anyopaque,
 
@@ -66,13 +51,13 @@ pub const lxb_dom_document = extern struct {
     scripting: bool,
 };
 
-pub extern fn lxb_dom_document_create_element(document: ?*lxb_dom_document_t, local_name: ?*const lxb_char_t, lname_len: usize, reserved_for_opt: ?*anyopaque) ?*lxb_dom_element_t;
+pub extern fn lxb_dom_document_create_element(document: ?*lxb_dom_document_t, local_name: ?*const core.lxb_char_t, lname_len: usize, reserved_for_opt: ?*anyopaque) ?*lxb_dom_element_t;
 
-pub extern fn lxb_dom_document_create_text_node(document: ?*lxb_dom_document_t, data: ?*const lxb_char_t, len: usize) ?*lxb_dom_text_t;
+pub extern fn lxb_dom_document_create_text_node(document: ?*lxb_dom_document_t, data: ?*const core.lxb_char_t, len: usize) ?*lxb_dom_text_t;
 
 // dom/interfaces/node.h
 
-pub const lxb_dom_node_simple_walker_f = ?*const fn (node: ?*lxb_dom_node_t, ctx: ?*anyopaque) callconv(.C) lexbor_action_t;
+pub const lxb_dom_node_simple_walker_f = ?*const fn (node: ?*lxb_dom_node_t, ctx: ?*anyopaque) callconv(.C) core.lexbor_action_t;
 
 pub const lxb_dom_node_type_t = enum(c_int) {
     LXB_DOM_NODE_TYPE_UNDEF = 0x00,
@@ -136,19 +121,19 @@ pub const lxb_dom_interface_constructor_f = ?*const fn (document: ?*anyopaque) c
 
 pub const lxb_dom_interface_destructor_f = ?*const fn (intrfc: ?*anyopaque) callconv(.C) ?*anyopaque;
 
-pub const lxb_dom_interface_create_f = ?*const fn (document: ?*lxb_dom_document_t, tag_id: lxb_tag_id_t, ns: lxb_ns_id_t) callconv(.C) ?*lxb_dom_interface_t;
+pub const lxb_dom_interface_create_f = ?*const fn (document: ?*lxb_dom_document_t, tag_id: tag.lxb_tag_id_t, ns: ns.lxb_ns_id_t) callconv(.C) ?*lxb_dom_interface_t;
 
 pub const lxb_dom_interface_clone_f = ?*const fn (document: ?*lxb_dom_document_t, intrfc: ?*const lxb_dom_interface_t) callconv(.C) ?*lxb_dom_interface_t;
 
 pub const lxb_dom_interface_destroy_f = ?*const fn (intrfc: ?*lxb_dom_interface_t) callconv(.C) ?*lxb_dom_interface_t;
 
-pub const lxb_dom_event_insert_f = ?*const fn (node: ?*lxb_dom_node_t) callconv(.C) lxb_status_t;
+pub const lxb_dom_event_insert_f = ?*const fn (node: ?*lxb_dom_node_t) callconv(.C) core.lxb_status_t;
 
-pub const lxb_dom_event_remove_f = ?*const fn (node: ?*lxb_dom_node_t) callconv(.C) lxb_status_t;
+pub const lxb_dom_event_remove_f = ?*const fn (node: ?*lxb_dom_node_t) callconv(.C) core.lxb_status_t;
 
-pub const lxb_dom_event_destroy_f = ?*const fn (node: ?*lxb_dom_node_t) callconv(.C) lxb_status_t;
+pub const lxb_dom_event_destroy_f = ?*const fn (node: ?*lxb_dom_node_t) callconv(.C) core.lxb_status_t;
 
-pub const lxb_dom_event_set_value_f = ?*const fn (node: ?*lxb_dom_node_t, value: ?*const lxb_char_t, length: usize) callconv(.C) lxb_status_t;
+pub const lxb_dom_event_set_value_f = ?*const fn (node: ?*lxb_dom_node_t, value: ?*const core.lxb_char_t, length: usize) callconv(.C) core.lxb_status_t;
 
 // dom/interfaces/event_target.h
 
@@ -169,7 +154,7 @@ pub const lxb_dom_element = extern struct {
     node: lxb_dom_node_t,
     upper_name: lxb_dom_attr_id_t,
     qualified_name: lxb_dom_attr_id_t,
-    is_value: ?*lexbor_str_t,
+    is_value: ?*core.lexbor_str_t,
     first_attr: ?*lxb_dom_attr_t,
     last_attr: ?*lxb_dom_attr_t,
     attr_id: ?*lxb_dom_attr_t,
@@ -180,7 +165,7 @@ pub const lxb_dom_element = extern struct {
 // dom/interfaces/attr.h
 
 pub const lxb_dom_attr_data_t = extern struct {
-    entry: lexbor_hash_entry_t,
+    entry: core.lexbor_hash_entry_t,
     attr_id: lxb_dom_attr_id_t,
     ref_count: usize,
     read_only: bool,
@@ -190,7 +175,7 @@ pub const lxb_dom_attr = extern struct {
     node: lxb_dom_node_t,
     upper_name: lxb_dom_attr_id_t,
     qualified_name: lxb_dom_attr_id_t,
-    value: ?*lexbor_str_t,
+    value: ?*core.lexbor_str_t,
     owner: ?*lxb_dom_element_t,
     next: ?*lxb_dom_attr_t,
     prev: ?*lxb_dom_attr_t,
@@ -245,8 +230,8 @@ pub const lxb_dom_attr_id_enum_t = enum(c_int) {
 pub const lxb_dom_document_type = extern struct {
     node: lxb_dom_node_t,
     name: lxb_dom_attr_id_t,
-    public_id: lexbor_str_t,
-    system_id: lexbor_str_t,
+    public_id: core.lexbor_str_t,
+    system_id: core.lexbor_str_t,
 };
 
 // dom/interfaces/document_fragment.h
@@ -260,7 +245,7 @@ pub const lxb_dom_document_fragment = extern struct {
 
 pub const lxb_dom_character_data = extern struct {
     node: lxb_dom_node_t,
-    data: lexbor_str_t,
+    data: core.lexbor_str_t,
 };
 
 // dom/interfaces/cdata_section.h
@@ -298,5 +283,5 @@ pub const lxb_dom_text = extern struct {
 
 pub const lxb_dom_processing_instruction = extern struct {
     char_data: lxb_dom_character_data_t,
-    target: lexbor_str_t,
+    target: core.lexbor_str_t,
 };

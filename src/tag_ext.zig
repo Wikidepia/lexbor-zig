@@ -1,22 +1,12 @@
-// const lexbor_str_t  = @import("./core_ext.zig").lexbor_str_t;
-// const lxb_status_t = @import("./core_ext.zig").lxb_status_t;
-const lxb_char_t = @import("./core_ext.zig").lxb_char_t;
-// const lexbor_mraw_t = @import("./core_ext.zig").lexbor_mraw_t;
-// const lexbor_action_t = @import("./core_ext.zig").lexbor_action_t;
-const lexbor_hash_t = @import("./core_ext.zig").lexbor_hash_t;
-const lexbor_hash_entry_t = @import("./core_ext.zig").lexbor_hash_entry_t;
-const lexbor_hash_entry_str = @import("./core_ext.zig").lexbor_hash_entry_str;
-// const lexbor_avl_t = @import("./core_ext.zig").lexbor_avl_t;
-// const lexbor_array_t = @import("./core_ext.zig").lexbor_array_t;
-// const lexbor_hash_t = @import("./core_ext.zig").lexbor_hash_t;
-// const lexbor_dobject_t = @import("./core_ext.zig").lexbor_dobject_t;
-// const lxb_css_memory_t = @import("./css_ext.zig").lxb_css_memory_t;
-// const lxb_css_selectors_t = @import("./css_ext.zig").lxb_css_selectors_t;
-// const lxb_css_parser_t = @import("./css_ext.zig").lxb_css_parser_t;
-// const lxb_css_rule_declaration_t = @import("./css_ext.zig").lxb_css_rule_declaration_t;
-// const lxb_css_selector_specificity_t= @import("./css_ext.zig").lxb_css_selector_specificity_t;
-// const lxb_css_stylesheet_t= @import("./css_ext.zig").xb_css_stylesheet_t;
-// const lxb_selectors_t = @import("./selectors_ext.zig").lxb_selectors_t;
+const core = @import("core_ext.zig");
+
+// tag/base.h
+
+pub const LXB_TAG_VERSION_MAJOR = 1;
+pub const LXB_TAG_VERSION_MINOR = 3;
+pub const LXB_TAG_VERSION_PATCH = 0;
+
+pub const LXB_TAG_VERSION_STRING = "1.3.0";
 
 // tag/const.h
 
@@ -227,17 +217,17 @@ pub const lxb_tag_id_enum_t = enum(c_int) {
 // tag/tag.h
 
 pub const lxb_tag_data_t = extern struct {
-    entry: lexbor_hash_entry_t,
+    entry: core.lexbor_hash_entry_t,
     tag_id: lxb_tag_id_t,
     ref_count: usize,
     read_only: bool,
 };
 
 pub extern fn lxb_tag_data_by_id(tag_id: lxb_tag_id_t) ?*lxb_tag_data_t;
-pub extern fn lxb_tag_data_by_name(hash: ?*lexbor_hash_t, name: ?*const lxb_char_t, len: usize) ?*lxb_tag_data_t;
-pub extern fn lxb_tag_data_by_name_upper(hash: ?*lexbor_hash_t, name: ?*const lxb_char_t, len: usize) ?*lxb_tag_data_t;
+pub extern fn lxb_tag_data_by_name(hash: ?*core.lexbor_hash_t, name: ?*const core.lxb_char_t, len: usize) ?*lxb_tag_data_t;
+pub extern fn lxb_tag_data_by_name_upper(hash: ?*core.lexbor_hash_t, name: ?*const core.lxb_char_t, len: usize) ?*lxb_tag_data_t;
 
-pub inline fn lxb_tag_name_by_id(tag_id: lxb_tag_id_t, len: ?*usize) ?[*:0]lxb_char_t {
+pub inline fn lxb_tag_name_by_id(tag_id: lxb_tag_id_t, len: ?*usize) ?[*:0]core.lxb_char_t {
     const data = lxb_tag_data_by_id(tag_id);
     if (data == null) {
         if (len != null) {
@@ -251,5 +241,5 @@ pub inline fn lxb_tag_name_by_id(tag_id: lxb_tag_id_t, len: ?*usize) ?[*:0]lxb_c
         len.?.* = data.?.entry.length;
     }
 
-    return lexbor_hash_entry_str(&data.?.entry);
+    return core.lexbor_hash_entry_str(&data.?.entry);
 }

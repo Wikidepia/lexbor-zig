@@ -1,20 +1,4 @@
-// const lexbor_str_t  = @import("./core_ext.zig").lexbor_str_t;
-// const lxb_status_t = @import("./core_ext.zig").lxb_status_t;
-// const lxb_char_t = @import("./core_ext.zig").lxb_char_t;
-// const lexbor_mraw_t = @import("./core_ext.zig").lexbor_mraw_t;
-// const lexbor_action_t = @import("./core_ext.zig").lexbor_action_t;
-// const lexbor_hash_t = @import("./core_ext.zig").lexbor_hash_t;
-// const lexbor_avl_t = @import("./core_ext.zig").lexbor_avl_t;
-// const lexbor_array_t = @import("./core_ext.zig").lexbor_array_t;
-// const lexbor_hash_t = @import("./core_ext.zig").lexbor_hash_t;
-// const lexbor_dobject_t = @import("./core_ext.zig").lexbor_dobject_t;
-// const lxb_css_memory_t = @import("./css_ext.zig").lxb_css_memory_t;
-// const lxb_css_selectors_t = @import("./css_ext.zig").lxb_css_selectors_t;
-// const lxb_css_parser_t = @import("./css_ext.zig").lxb_css_parser_t;
-// const lxb_css_rule_declaration_t = @import("./css_ext.zig").lxb_css_rule_declaration_t;
-// const lxb_css_selector_specificity_t= @import("./css_ext.zig").lxb_css_selector_specificity_t;
-// const lxb_css_stylesheet_t= @import("./css_ext.zig").xb_css_stylesheet_t;
-// const lxb_selectors_t = @import("./selectors_ext.zig").lxb_selectors_t;
+// const std = @import("std");
 
 // ns/const.h
 
