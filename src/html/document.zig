@@ -24,8 +24,8 @@ pub fn parseChunkBegin(document: ?*html.lxb_html_document_t) core.lexbor_status_
     return @enumFromInt(status);
 }
 
-pub fn parseChunk(document: ?*html.lxb_html_document_t, data: ?*const core.lxb_char_t, size: usize) core.lexbor_status_t {
-    const status = html.lxb_html_document_parse_chunk(document, data, size);
+pub fn parseChunk(document: ?*html.lxb_html_document_t, data: []const u8, size: usize) core.lexbor_status_t {
+    const status = html.lxb_html_document_parse_chunk(document, @ptrCast(data.ptr), size);
     return @enumFromInt(status);
 }
 
@@ -54,7 +54,3 @@ pub fn setTitle(document: ?*html.lxb_html_document_t, new_title: []const u8) cor
 pub fn bodyElement(document: ?*html.lxb_html_document_t) ?*html.lxb_html_body_element_t {
     return document.?.body;
 }
-
-// test {
-//     @import("std").testing.refAllDeclsRecursive(@This());
-// }
