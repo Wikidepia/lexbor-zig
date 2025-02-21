@@ -118,21 +118,21 @@ test "document_create" {
         dom.node.insertChild(dom.interface.node(body), dom.interface.node(element));
     }
     // Print Result
-    // serialize(dom.interface.node(doc));
+    serialize(dom.interface.node(doc));
 }
 
 pub fn serialize(node: *dom.NodeType) void {
-    const status = html.serialize.prettyTreeCb(node, @intFromEnum(html.serialize.Opt.undef), 0, serializerCallback, null);
+    const status = html.serialize.prettyTreeCb(node, html.serialize.Opt.undef, 0, serializerCallback, null);
 
-    if (status != @intFromEnum(core.Status.ok)) {
+    if (status != core.Status.ok) {
         panic("Failed to serialization HTML tree", .{});
     }
 }
 
 pub fn serializeNode(node: *dom.NodeType) void {
-    const status = html.serialize.prettyCb(node, @intFromEnum(html.serialize.Opt.undef), 0, serializerCallback, null);
+    const status = html.serialize.prettyCb(node, html.serialize.Opt.undef, 0, serializerCallback, null);
 
-    if (status != @intFromEnum(core.Status.ok)) {
+    if (status != core.Status.ok) {
         panic("Failed to serialization HTML tree", .{});
     }
 }
