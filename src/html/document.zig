@@ -13,8 +13,8 @@ pub fn destroy(document: ?*html.lxb_html_document_t) ?*html.lxb_html_document_t 
     return html.lxb_html_document_destroy(document);
 }
 
-pub fn parse(document: ?*html.lxb_html_document_t, input: []const u8) core.lexbor_status_t {
-    const status = html.lxb_html_document_parse(document, @ptrCast(input.ptr), input.len);
+pub fn parse(document: ?*html.lxb_html_document_t, input: []const u8, input_len: usize) core.lexbor_status_t {
+    const status = html.lxb_html_document_parse(document, @ptrCast(input.ptr), input_len);
     return @enumFromInt(status);
 }
 
@@ -45,8 +45,8 @@ pub fn getRawTitle(document: ?*html.lxb_html_document_t) ?[]const u8 {
     return sliceTo(@as([*:0]u8, @ptrCast(raw_title)), 0);
 }
 
-pub fn setTitle(document: ?*html.lxb_html_document_t, new_title: []const u8) core.lexbor_status_t {
-    const status = html.lxb_html_document_title_set(document, @ptrCast(new_title.ptr), new_title.len);
+pub fn setTitle(document: ?*html.lxb_html_document_t, new_title: []const u8, new_title_len: usize) core.lexbor_status_t {
+    const status = html.lxb_html_document_title_set(document, @ptrCast(new_title.ptr), new_title_len);
     return @enumFromInt(status);
 }
 

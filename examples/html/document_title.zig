@@ -17,7 +17,7 @@ pub fn main() !void {
     defer _ = html.document.destroy(doc);
 
     // Parse HTML
-    status = html.document.parse(doc, input);
+    status = html.document.parse(doc, input, input.len);
     if (status != core.Status.ok) return error.FailedToParse;
 
     // Print HTML tree
@@ -42,7 +42,7 @@ pub fn main() !void {
     print("\nChange title to: {s}", .{new_title});
 
     // Set new title
-    status = html.document.setTitle(doc, new_title);
+    status = html.document.setTitle(doc, new_title, new_title.len);
     if (status != core.Status.ok) return error.FailedToChangeTitle;
 
     // Get new title
