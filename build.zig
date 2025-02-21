@@ -44,21 +44,8 @@ pub fn build(b: *Build) !void {
         .utils = b.option(bool, "utils", "Build a utils module") orelse defaults.utils,
     };
 
-    if (try testAndDOption(b.allocator, &options)) {
-        print("The test command does not accept the -D option; a full build is always performed.\n", .{});
-        print("You cannot select modules to build, and all modules are always built.\n", .{});
-        exit(1);
-    }
-
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
-
-    const tests = b.addTest(.{
-        .name = "tests",
-        .root_source_file = b.path("test/tests.zig"),
-        .target = target,
-        .optimize = optimize,
-    });
 
     parseOptions(&options);
 
@@ -68,10 +55,8 @@ pub fn build(b: *Build) !void {
         .optimize = optimize,
     });
 
-    var single_lib: *Compile = undefined;
-
     if (is_single) {
-        single_lib = compileSingle(b, .{
+        compileSingle(b, .{
             .name = "liblexbor",
             .root_module = lib_mod,
             .linkage = .static,
@@ -157,11 +142,6 @@ pub fn build(b: *Build) !void {
             });
     }
 
-    tests.root_module.addImport("lexbor", lib_mod);
-
-    const test_step = b.step("test", "Run lexbor tests");
-    test_step.dependOn(&b.addRunArtifact(tests).step);
-
     const examples_step = b.step("examples", "Builds all the examples");
 
     for (examples) |example| {
@@ -191,27 +171,6 @@ pub fn build(b: *Build) !void {
 
         examples_step.dependOn(&install_example.step);
     }
-}
-
-fn testAndDOption(allocator: Allocator, options: *Options) !bool {
-    const is_test = blk: {
-        for (try argsAlloc(allocator)) |arg| {
-            if (eql(u8, "test", arg)) {
-                break :blk true;
-            }
-        }
-        break :blk false;
-    };
-
-    if (is_test and (options.core or options.css or options.dom or
-        options.encoding or options.html or options.ns or
-        options.ports or options.punycode or options.selectors or
-        options.tag or options.unicode or options.url or
-        options.utils))
-    {
-        return true;
-    }
-    return false;
 }
 
 fn parseOptions(options: *Options) void {
@@ -540,7 +499,7 @@ fn compileUtils(b: *Build, static_options: LibraryOptions) void {
     b.installArtifact(lib);
 }
 
-fn compileSingle(b: *Build, static_options: LibraryOptions) *Compile {
+fn compileSingle(b: *Build, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     // core
@@ -610,7 +569,6 @@ fn compileSingle(b: *Build, static_options: LibraryOptions) *Compile {
     });
     lib.linkLibC();
     b.installArtifact(lib);
-    return lib;
 }
 
 const cflags = [_][]const u8{
