@@ -1,9 +1,5 @@
-const std = @import("std");
-// const sliceTo = std.mem.sliceTo;
-
 pub const core = @import("../core_ext.zig");
 pub const html = @import("../html_ext.zig");
-// pub const dom = @import("../dom_ext.zig");
 
 pub fn create() ?*html.lxb_html_parser_t {
     return html.lxb_html_parser_create();

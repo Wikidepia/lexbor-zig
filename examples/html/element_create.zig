@@ -24,14 +24,26 @@ pub fn main() !void {
     const last: tag.IdEnum = ._last_entry;
 
     while (@intFromEnum(cur) < @intFromEnum(last)) : (cur = @enumFromInt(@intFromEnum(cur) + 1)) {
-        const tag_name = try tag.nameById(cur, &tag_name_len);
-        const element = try dom.document.createElement(&doc.dom_document, tag_name, tag_name_len, null);
+        const tag_name = tag.nameById(cur, &tag_name_len);
+        if (tag_name == null) {
+            print("Failed to get tag name by id", .{});
+        }
+
+        const element = dom.document.createElement(&doc.dom_document, tag_name.?, tag_name_len, null);
+        if (element == null) {
+            print("Failed to create element for tag \"{s}\"", .{tag_name.?});
+        }
 
         if (html.tag.isVoid(cur)) {
-            print("Create element by tag name \"{s}\"\n", .{tag_name});
+            print("Create element by tag name \"{s}\"\n", .{tag_name.?});
         } else {
-            print("Create element by tag name \"{s}\" and append text node\n", .{tag_name});
-            const text = try dom.document.createTextNode(&doc.dom_document, tag_name, tag_name_len);
+            print("Create element by tag name \"{s}\" and append text node\n", .{tag_name.?});
+
+            const text = dom.document.createTextNode(&doc.dom_document, tag_name.?, tag_name_len);
+            if (text == null) {
+                print("Failed to create text node for \"{s}\"", .{tag_name.?});
+            }
+
             dom.node.insertChild(dom.interface.node(element), dom.interface.node(text));
         }
         serializeNode(dom.interface.node(element));

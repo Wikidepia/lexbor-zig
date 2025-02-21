@@ -6,8 +6,7 @@ pub const html = @import("../html_ext.zig");
 pub const dom = @import("../dom_ext.zig");
 
 pub fn create() ?*html.lxb_html_document_t {
-    const document = html.lxb_html_document_create();
-    return document;
+    return html.lxb_html_document_create();
 }
 
 pub fn destroy(document: ?*html.lxb_html_document_t) ?*html.lxb_html_document_t {

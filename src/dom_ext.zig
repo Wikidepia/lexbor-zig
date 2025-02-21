@@ -103,6 +103,10 @@ pub extern fn lxb_dom_node_insert_child(to: ?*lxb_dom_node_t, node: ?*lxb_dom_no
 
 // dom/interface.h
 
+pub inline fn lxb_dom_interface_node(obj: anytype) *lxb_dom_node_t {
+    return @as(*lxb_dom_node_t, @ptrCast(obj));
+}
+
 pub const lxb_dom_event_target_t = lxb_dom_event_target;
 pub const lxb_dom_node_t = lxb_dom_node;
 pub const lxb_dom_element_t = lxb_dom_element;
