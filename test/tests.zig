@@ -100,8 +100,8 @@ test "document_create" {
 
     const body = html.document.bodyElement(doc);
 
-    var cur: tag.IdEnum = .LXB_TAG_A;
-    const last: tag.IdEnum = .LXB_TAG__LAST_ENTRY;
+    var cur: tag.IdEnum = .a;
+    const last: tag.IdEnum = ._last_entry;
 
     while (@intFromEnum(cur) < @intFromEnum(last)) : (cur = @enumFromInt(@intFromEnum(cur) + 1)) {
         const tag_name = try tag.nameById(cur, &tag_name_len);
