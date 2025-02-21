@@ -6,7 +6,30 @@ const core = @import("lexbor").core;
 const html = @import("lexbor").html;
 const dom = @import("lexbor").dom;
 
-pub fn serialize(node: *dom.NodeType) void {
+pub fn parse(input: []const u8, input_len: usize) *html.Document {
+    var status: core.Status = undefined;
+
+    const parser = html.parser.create();
+    if (parser == null) {
+        panic("Failed to create", .{});
+    }
+
+    status = html.parser.init(parser);
+    if (status != core.Status.ok) {
+        panic("Failed to create HTML parser", .{});
+    }
+
+    const document = html.parser.parse(parser, input, input_len);
+    if (parser == null) {
+        panic("Failed to create Document object", .{});
+    }
+
+    _ = html.parser.destroy(parser);
+
+    return document.?;
+}
+
+pub fn serialize(node: *dom.Node) void {
     const status = html.serialize.prettyTreeCb(node, html.serialize.Opt.undef, 0, serializerCallback, null);
 
     if (status != core.Status.ok) {
@@ -14,7 +37,7 @@ pub fn serialize(node: *dom.NodeType) void {
     }
 }
 
-pub fn serializeNode(node: *dom.NodeType) void {
+pub fn serializeNode(node: *dom.Node) void {
     const status = html.serialize.prettyCb(node, html.serialize.Opt.undef, 0, serializerCallback, null);
 
     if (status != core.Status.ok) {

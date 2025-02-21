@@ -3,6 +3,7 @@ const print = std.debug.print;
 
 const serialize = @import("base.zig").serialize;
 
+const core = @import("lexbor").core;
 const dom = @import("lexbor").dom;
 const html = @import("lexbor").html;
 
@@ -25,19 +26,24 @@ pub fn main() !void {
         "good for me",
         "</div>",
     };
+    var status: core.Status = undefined;
 
     // Initialization
-    const doc = try html.document.create();
-    defer html.document.destroy(doc);
+    const doc = html.document.create();
+    if (doc == null) return error.FailedToCreate;
+    defer _ = html.document.destroy(doc);
 
     // Parse HTML
-    try html.document.parseChunkBegin(doc);
+    status = html.document.parseChunkBegin(doc);
+    if (status != core.Status.ok) return error.FailedToParseChunkBegin;
 
-    for (input) |h| {
-        try html.document.parseChunk(doc, &h[0], h.len);
+    for (input) |in| {
+        status = html.document.parseChunk(doc, &in[0], in.len);
+        if (status != core.Status.ok) return error.FailedToParseChunk;
     }
 
-    try html.document.parseChunkEnd(doc);
+    status = html.document.parseChunkEnd(doc);
+    if (status != core.Status.ok) return error.FailedToParseChunkEnd;
 
     // Print Result
     print("HTML Tree:\n", .{});

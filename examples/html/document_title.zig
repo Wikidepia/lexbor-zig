@@ -3,18 +3,22 @@ const print = std.debug.print;
 
 const serialize = @import("base.zig").serialize;
 
+const core = @import("lexbor").core;
 const dom = @import("lexbor").dom;
 const html = @import("lexbor").html;
 
 pub fn main() !void {
     const input = "<head><title>  Oh,    my...   </title></head>";
+    var status: core.Status = undefined;
 
     // Initialization
-    const doc = try html.document.create();
-    defer html.document.destroy(doc);
+    const doc = html.document.create();
+    if (doc == null) return error.FailedToCreate;
+    defer _ = html.document.destroy(doc);
 
     // Parse HTML
-    try html.document.parse(doc, input);
+    status = html.document.parse(doc, input);
+    if (status != core.Status.ok) return error.FailedToParse;
 
     // Print HTML tree
     print("HTML Tree:\n", .{});
@@ -34,10 +38,12 @@ pub fn main() !void {
         print("\nRaw title is empty", .{});
     }
 
-    // Set new title
     const new_title = "We change title";
     print("\nChange title to: {s}", .{new_title});
-    try html.document.setTitle(doc, new_title);
+
+    // Set new title
+    status = html.document.setTitle(doc, new_title);
+    if (status != core.Status.ok) return error.FailedToChangeTitle;
 
     // Get new title
     if (html.document.getTitle(doc)) |title| {

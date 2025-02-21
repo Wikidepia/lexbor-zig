@@ -3,25 +3,20 @@ const print = std.debug.print;
 
 const serialize = @import("base.zig").serialize;
 const serializeNode = @import("base.zig").serializeNode;
+const parse = @import("base.zig").parse;
 
+const core = @import("lexbor").core;
 const dom = @import("lexbor").dom;
 const html = @import("lexbor").html;
 const tag = @import("lexbor").tag;
 
 pub fn main() !void {
+    const input = "";
     var tag_name_len: usize = undefined;
 
-    const input = "";
-
-    // Initialization
-    const parser = try html.parser.create();
-    defer html.parser.destroy(parser);
-
-    try html.parser.init(parser);
-
     // Parse
-    const doc = try html.parser.parse(parser, input, input.len);
-    defer html.document.destroy(doc);
+    const doc = parse(input, input.len);
+    defer _ = html.document.destroy(doc);
 
     const body = html.document.bodyElement(doc);
 
