@@ -1,5 +1,6 @@
 const std = @import("std");
 const panic = std.debug.panic;
+const print = std.debug.print;
 
 const core = @import("lexbor").core;
 const html = @import("lexbor").html;
@@ -24,6 +25,6 @@ pub fn serializeNode(node: *dom.NodeType) void {
 fn serializerCallback(data: ?[*:0]const core.CharType, len: usize, ctx: ?*anyopaque) callconv(.C) core.StatusType {
     _ = ctx;
     _ = len;
-    std.debug.print("{s}", .{data.?});
+    print("{s}", .{data.?});
     return @intFromEnum(core.Status.ok);
 }
