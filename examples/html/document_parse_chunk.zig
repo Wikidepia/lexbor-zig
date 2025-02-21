@@ -38,7 +38,6 @@ pub fn main() !void {
     if (status != core.Status.ok) return error.FailedToParseChunkBegin;
 
     for (input) |in| {
-        // status = html.document.parseChunk(doc, &in[0], in.len);
         status = html.document.parseChunk(doc, in, in.len);
         if (status != core.Status.ok) return error.FailedToParseChunk;
     }
