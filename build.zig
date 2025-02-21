@@ -76,7 +76,6 @@ pub fn build(b: *Build) !void {
             .root_module = lib_mod,
             .linkage = .static,
         });
-        // tests.linkLibrary(single_lib);
     } else {
         if (options.core)
             compileCore(b, .{
@@ -178,8 +177,6 @@ pub fn build(b: *Build) !void {
             .name = example.name,
             .root_module = exe_mod,
         });
-
-        exe.linkLibC();
 
         const run_cmd = b.addRunArtifact(exe);
         if (b.args) |args| {
