@@ -99,6 +99,8 @@ pub const lxb_dom_node = extern struct {
     // #endif /* LXB_DOM_NODE_USER_VARIABLES */
 };
 
+pub extern fn lxb_dom_node_insert_child(to: ?*lxb_dom_node_t, node: ?*lxb_dom_node_t) void;
+
 // dom/interface.h
 
 pub const lxb_dom_event_target_t = lxb_dom_event_target;

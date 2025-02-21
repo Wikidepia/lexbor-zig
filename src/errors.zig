@@ -18,19 +18,19 @@ pub const LxbStatusError = error{
 
 pub fn maybeLxbStatusError(status: core.lxb_status_t) LxbStatusError!void {
     return switch (@as(core.lexbor_status_t, @enumFromInt(status))) {
-        .LXB_STATUS_ERROR => error.Error,
-        .LXB_STATUS_ERROR_MEMORY_ALLOCATION => error.MemoryAllocation,
-        .LXB_STATUS_ERROR_OBJECT_IS_NULL => error.ObjectIsNull,
-        .LXB_STATUS_ERROR_SMALL_BUFFER => error.SmallBuffer,
-        .LXB_STATUS_ERROR_INCOMPLETE_OBJECT => error.IncompleteObject,
-        .LXB_STATUS_ERROR_NO_FREE_SLOT => error.NoFreeSlot,
-        .LXB_STATUS_ERROR_TOO_SMALL_SIZE => error.TooSmallSize,
-        .LXB_STATUS_ERROR_NOT_EXISTS => error.NotExists,
-        .LXB_STATUS_ERROR_WRONG_ARGS => error.WrongArgs,
-        .LXB_STATUS_ERROR_WRONG_STAGE => error.WrongStage,
-        .LXB_STATUS_ERROR_UNEXPECTED_RESULT => error.UnexpectedResult,
-        .LXB_STATUS_ERROR_UNEXPECTED_DATA => error.UnexpectedData,
-        .LXB_STATUS_ERROR_OVERFLOW => error.Overflow,
+        .@"error" => error.Error,
+        .error_memory_allocation => error.MemoryAllocation,
+        .error_object_is_null => error.ObjectIsNull,
+        .error_small_buffer => error.SmallBuffer,
+        .error_incomplete_object => error.IncompleteObject,
+        .error_no_free_slot => error.NoFreeSlot,
+        .error_too_small_size => error.TooSmallSize,
+        .error_not_exists => error.NotExists,
+        .error_wrong_args => error.WrongArgs,
+        .error_wrong_stage => error.WrongStage,
+        .error_unexpected_result => error.UnexpectedResult,
+        .error_unexpected_data => error.UnexpectedData,
+        .error_overflow => error.Overflow,
         else => {},
     };
 }

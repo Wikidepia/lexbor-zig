@@ -3,6 +3,7 @@ const expectEqual = std.testing.expectEqual;
 const expectEqualSlices = std.testing.expectEqualSlices;
 const panic = std.debug.panic;
 
+const core = @import("lexbor").core;
 const html = @import("lexbor").html;
 const tag = @import("lexbor").tag;
 const dom = @import("lexbor").dom;
@@ -36,7 +37,7 @@ test "document_title" {
     }
 
     // Print HTML tree
-    // try html.document.serialize(doc, .LXB_HTML_SERIALIZE_OPT_UNDEF);
+    // serialize(dom.interface.node(doc));
 }
 
 test "document_parse_chunk" {
@@ -78,7 +79,7 @@ test "document_parse_chunk" {
     }
 
     // Print Result
-    try html.document.serialize(doc, .LXB_HTML_SERIALIZE_OPT_UNDEF);
+    // serialize(dom.interface.node(doc));
 }
 
 test "document_create" {
@@ -93,28 +94,54 @@ test "document_create" {
 
     // Parse
     const doc = try html.parser.parse(parser, input, input.len);
+    defer html.document.destroy(doc);
+
     html.parser.destroy(parser);
 
     const body = html.document.bodyElement(doc);
-    _ = body;
 
     var cur: tag.IdEnum = .LXB_TAG_A;
     const last: tag.IdEnum = .LXB_TAG__LAST_ENTRY;
 
     while (@intFromEnum(cur) < @intFromEnum(last)) : (cur = @enumFromInt(@intFromEnum(cur) + 1)) {
         const tag_name = try tag.nameById(cur, &tag_name_len);
-        // const element = try dom.Document.createElement(&doc.document.dom_document, &tag_name.?[0], tag_name_len, null);
-        // const element = try dom.Document.createElement(&doc.document.dom_document, tag_name, tag_name_len, null);
         const element = try dom.document.createElement(&doc.dom_document, tag_name, tag_name_len, null);
-        _ = element;
 
         if (html.tag.isVoid(cur)) {
             // std.debug.print("Create element by tag name \"{s}\"\n", .{tag_name});
         } else {
-            // std.debug.print("Create element by tag name \"{s}\" and append text node: ", .{tag_name});
-            // lxb_dom_document_create_text_node
+            // std.debug.print("Create element by tag name \"{s}\" and append text node\n", .{tag_name});
+            const text = try dom.document.createTextNode(&doc.dom_document, tag_name, tag_name_len);
+            dom.node.insertChild(dom.interface.node(element), dom.interface.node(text));
         }
+        // serializeNode(dom.interface.node(element));
+        dom.node.insertChild(dom.interface.node(body), dom.interface.node(element));
     }
+    // Print Result
+    // serialize(dom.interface.node(doc));
+}
+
+pub fn serialize(node: *dom.NodeType) void {
+    const status = html.serialize.prettyTreeCb(node, @intFromEnum(html.serialize.Opt.undef), 0, serializerCallback, null);
+
+    if (status != @intFromEnum(core.Status.ok)) {
+        panic("Failed to serialization HTML tree", .{});
+    }
+}
+
+pub fn serializeNode(node: *dom.NodeType) void {
+    const status = html.serialize.prettyCb(node, @intFromEnum(html.serialize.Opt.undef), 0, serializerCallback, null);
+
+    if (status != @intFromEnum(core.Status.ok)) {
+        panic("Failed to serialization HTML tree", .{});
+    }
+}
+
+fn serializerCallback(data: ?[*:0]const core.CharType, len: usize, ctx: ?*anyopaque) callconv(.C) core.StatusType {
+    _ = ctx;
+    _ = len;
+    std.debug.print("{s}", .{data.?});
+    return @intFromEnum(core.Status.ok);
 }
 
 // test {

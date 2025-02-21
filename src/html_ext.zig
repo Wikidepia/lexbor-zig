@@ -590,20 +590,31 @@ pub const lxb_html_window = extern struct {
 // html/serialize.h
 
 pub const lxb_html_serialize_opt_t = c_int;
+// pub const lxb_html_serialize_opt = enum(c_int) {
+//     LXB_HTML_SERIALIZE_OPT_UNDEF = 0x00,
+//     LXB_HTML_SERIALIZE_OPT_SKIP_WS_NODES = 0x01,
+//     LXB_HTML_SERIALIZE_OPT_SKIP_COMMENT = 0x02,
+//     LXB_HTML_SERIALIZE_OPT_RAW = 0x04,
+//     LXB_HTML_SERIALIZE_OPT_WITHOUT_CLOSING = 0x08,
+//     LXB_HTML_SERIALIZE_OPT_TAG_WITH_NS = 0x10,
+//     LXB_HTML_SERIALIZE_OPT_WITHOUT_TEXT_INDENT = 0x20,
+//     LXB_HTML_SERIALIZE_OPT_FULL_DOCTYPE = 0x40,
+// };
 pub const lxb_html_serialize_opt = enum(c_int) {
-    LXB_HTML_SERIALIZE_OPT_UNDEF = 0x00,
-    LXB_HTML_SERIALIZE_OPT_SKIP_WS_NODES = 0x01,
-    LXB_HTML_SERIALIZE_OPT_SKIP_COMMENT = 0x02,
-    LXB_HTML_SERIALIZE_OPT_RAW = 0x04,
-    LXB_HTML_SERIALIZE_OPT_WITHOUT_CLOSING = 0x08,
-    LXB_HTML_SERIALIZE_OPT_TAG_WITH_NS = 0x10,
-    LXB_HTML_SERIALIZE_OPT_WITHOUT_TEXT_INDENT = 0x20,
-    LXB_HTML_SERIALIZE_OPT_FULL_DOCTYPE = 0x40,
+    undef = 0x00,
+    skip_ws_nodes = 0x01,
+    skip_comment = 0x02,
+    raw = 0x04,
+    without_closing = 0x08,
+    tag_with_ns = 0x10,
+    without_text_indent = 0x20,
+    full_doctype = 0x40,
 };
 
 pub const lxb_html_serialize_cb_f = ?*const fn (data: ?[*:0]const core.lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) core.lxb_status_t;
 
 pub extern fn lxb_html_serialize_pretty_tree_cb(node: ?*dom.lxb_dom_node_t, opt: lxb_html_serialize_opt_t, indent: usize, cb: lxb_html_serialize_cb_f, ctx: ?*anyopaque) core.lxb_status_t;
+pub extern fn lxb_html_serialize_pretty_cb(node: ?*dom.lxb_dom_node_t, opt: lxb_html_serialize_opt_t, indent: usize, cb: lxb_html_serialize_cb_f, ctx: ?*anyopaque) core.lxb_status_t;
 
 // html/parser.h
 
