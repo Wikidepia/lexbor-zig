@@ -841,4 +841,5 @@ var examples = [_]Example{
     .{ .name = "html-element-create", .path = "examples/html/element_create.zig" },
     .{ .name = "html-element-innerHTML", .path = "examples/html/element_innerHTML.zig" },
     .{ .name = "html-elements-by-attr", .path = "examples/html/elements_by_attr.zig" },
+    .{ .name = "html-elements-by-class-name", .path = "examples/html/elements_by_class_name.zig" },
 };
