@@ -42,12 +42,12 @@ pub fn main() !void {
 
     const content = core.fs.fileEasyRead(args[1], &len);
     if (content == null) {
-        failed(true, "Failed to read file: {s}", .{args[1]});
+        failed(true, "Failed to read file: {s}\n", .{args[1]});
     }
 
     status = html.encoding.init(&em);
     if (status != core.Status.ok) {
-        failed(false, "Failed to init html encoding", .{});
+        failed(false, "Failed to init html encoding\n", .{});
     }
 
     status = html.encoding.determine(&em, content.?, @ptrFromInt((@intFromPtr(content.?.ptr) + len)));
@@ -55,7 +55,7 @@ pub fn main() !void {
         core.free(@constCast(content.?.ptr));
         _ = html.encoding.destroy(&em, false);
 
-        failed(false, "Failed to determine encoding", .{});
+        failed(false, "Failed to determine encoding\n", .{});
     }
 
     const entry = html.encoding.metaEntry(&em, 0);
