@@ -5,6 +5,8 @@ pub const core = @import("../core_ext.zig");
 pub const html = @import("../html_ext.zig");
 pub const dom = @import("../dom_ext.zig");
 
+pub const Document = html.lxb_html_document_t;
+
 pub fn create() ?*html.lxb_html_document_t {
     return html.lxb_html_document_create();
 }
