@@ -172,6 +172,8 @@ pub const lxb_dom_element = extern struct {
     custom_state: lxb_dom_element_custom_state_t,
 };
 
+pub extern fn lxb_dom_elements_by_tag_name(root: ?*lxb_dom_element_t, collection: ?*lxb_dom_collection_t, qualified_name: ?*const core.lxb_char_t, len: usize) core.lexbor_status_t;
+
 pub extern fn lxb_dom_elements_by_class_name(root: ?*lxb_dom_element_t, collection: ?*lxb_dom_collection_t, class_name: ?*const core.lxb_char_t, len: usize) core.lexbor_status_t;
 
 pub extern fn lxb_dom_elements_by_attr_begin(root: ?*lxb_dom_element_t, collection: ?*lxb_dom_collection_t, qualified_name: ?*const core.lxb_char_t, qname_len: usize, value: ?*const core.lxb_char_t, value_len: usize, case_insensitive: bool) core.lexbor_status_t;
@@ -181,8 +183,6 @@ pub extern fn lxb_dom_elements_by_attr_end(root: ?*lxb_dom_element_t, collection
 pub extern fn lxb_dom_elements_by_attr_contain(root: ?*lxb_dom_element_t, collection: ?*lxb_dom_collection_t, qualified_name: ?*const core.lxb_char_t, qname_len: usize, value: ?*const core.lxb_char_t, value_len: usize, case_insensitive: bool) core.lexbor_status_t;
 
 pub extern fn lxb_dom_elements_by_attr(root: ?*lxb_dom_element_t, collection: ?*lxb_dom_collection_t, qualified_name: ?*const core.lxb_char_t, qname_len: usize, value: ?*const core.lxb_char_t, value_len: usize, case_insensitive: bool) core.lexbor_status_t;
-
-pub extern fn lxb_dom_elements_by_tag_name(root: ?*lxb_dom_element_t, collection: ?*lxb_dom_collection_t, qualified_name: ?*const core.lxb_char_t, len: usize) core.lexbor_status_t;
 
 pub extern fn lxb_dom_element_set_attribute(element: ?*lxb_dom_element_t, qualified_name: ?*const core.lxb_char_t, qn_len: usize, value: ?*const core.lxb_char_t, value_len: usize) ?*lxb_dom_attr_t;
 
