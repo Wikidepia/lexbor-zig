@@ -67,6 +67,10 @@ pub inline fn lxb_html_document_body_element(document: ?*lxb_html_document_t) ?*
 
 // html/interface.h
 
+pub inline fn lxb_html_interface_element(obj: anytype) *lxb_html_element_t {
+    return @as(*lxb_html_element_t, @ptrCast(obj));
+}
+
 pub const lxb_html_document_t = lxb_html_document;
 pub const lxb_html_anchor_element_t = lxb_html_anchor_element;
 pub const lxb_html_area_element_t = lxb_html_area_element;
@@ -590,16 +594,7 @@ pub const lxb_html_window = extern struct {
 // html/serialize.h
 
 pub const lxb_html_serialize_opt_t = c_int;
-// pub const lxb_html_serialize_opt = enum(c_int) {
-//     LXB_HTML_SERIALIZE_OPT_UNDEF = 0x00,
-//     LXB_HTML_SERIALIZE_OPT_SKIP_WS_NODES = 0x01,
-//     LXB_HTML_SERIALIZE_OPT_SKIP_COMMENT = 0x02,
-//     LXB_HTML_SERIALIZE_OPT_RAW = 0x04,
-//     LXB_HTML_SERIALIZE_OPT_WITHOUT_CLOSING = 0x08,
-//     LXB_HTML_SERIALIZE_OPT_TAG_WITH_NS = 0x10,
-//     LXB_HTML_SERIALIZE_OPT_WITHOUT_TEXT_INDENT = 0x20,
-//     LXB_HTML_SERIALIZE_OPT_FULL_DOCTYPE = 0x40,
-// };
+
 pub const lxb_html_serialize_opt = enum(c_int) {
     undef = 0x00,
     skip_ws_nodes = 0x01,
@@ -832,3 +827,7 @@ pub inline fn lxb_html_tag_is_void(tag_id: tag.lxb_tag_id_t) bool {
         else => return false,
     }
 }
+
+// html/interfaces/element.h
+
+pub extern fn lxb_html_element_inner_html_set(element: ?*lxb_html_element_t, html: ?*const core.lxb_char_t, size: usize) ?*lxb_html_element_t;

@@ -4,3 +4,6 @@ pub const Document = document.Document;
 pub const parser = @import("html/parser.zig");
 pub const tag = @import("html/tag.zig");
 pub const serialize = @import("html/serialize.zig");
+pub const interface = @import("html/interface.zig");
+
+pub const element = @import("html/interfaces/element.zig");
