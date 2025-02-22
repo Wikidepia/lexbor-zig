@@ -145,6 +145,16 @@ pub const LEXBOR_VERSION_STRING = "1.8.0";
 // TODO: #define lexbor_max(val1, val2) ((val1) > (val2) ? (val1) : (val2))
 // TODO: #define lexbor_min(val1, val2) ((val1) < (val2) ? (val1) : (val2))
 
+pub inline fn lexbor_max(val1: anytype, val2: @TypeOf(val1)) @TypeOf(val1) {
+    if (val1 > val2) return val1;
+    return val2;
+}
+
+pub inline fn lexbor_min(val1: anytype, val2: @TypeOf(val1)) @TypeOf(val1) {
+    if (val1 < val2) return val1;
+    return val2;
+}
+
 pub const lexbor_status_t = enum(c_int) {
     ok = 0x0000,
     @"error" = 0x0001,
@@ -170,9 +180,9 @@ pub const lexbor_status_t = enum(c_int) {
 };
 
 pub const lexbor_action_t = enum(c_int) {
-    LEXBOR_ACTION_OK = 0x00,
-    LEXBOR_ACTION_STOP = 0x01,
-    LEXBOR_ACTION_NEXT = 0x02,
+    ok = 0x00,
+    stop = 0x01,
+    next = 0x02,
 };
 
 pub const lexbor_serialize_cb_f = ?*const fn (data: ?*const lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
@@ -679,7 +689,7 @@ pub const lexbor_memory_calloc_f = ?*const fn (num: usize, size: usize) callconv
 pub const lexbor_memory_free_f = ?*const fn (dst: ?*anyopaque) callconv(.C) void;
 
 pub extern fn lexbor_malloc(size: usize) ?*anyopaque;
-pub extern fn lexbor_realloc(dst: *anyopaque, size: usize) ?*anyopaque;
+pub extern fn lexbor_realloc(dst: ?*anyopaque, size: usize) ?*anyopaque;
 pub extern fn lexbor_calloc(num: usize, size: usize) ?*anyopaque;
 pub extern fn lexbor_free(dst: ?*anyopaque) void;
 pub extern fn lexbor_memory_setup(new_malloc: lexbor_memory_malloc_f, new_realloc: lexbor_memory_realloc_f, new_calloc: lexbor_memory_calloc_f, new_free: lexbor_memory_free_f) void;

@@ -831,3 +831,27 @@ pub inline fn lxb_html_tag_is_void(tag_id: tag.lxb_tag_id_t) bool {
 // html/interfaces/element.h
 
 pub extern fn lxb_html_element_inner_html_set(element: ?*lxb_html_element_t, html: ?*const core.lxb_char_t, size: usize) ?*lxb_html_element_t;
+
+// html/encoding.h
+
+pub const lxb_html_encoding_entry_t = extern struct {
+    name: ?*const core.lxb_char_t,
+    end: ?*const core.lxb_char_t,
+};
+
+pub const lxb_html_encoding_t = extern struct {
+    cache: core.lexbor_array_obj_t,
+    result: core.lexbor_array_obj_t,
+};
+
+pub extern fn lxb_html_encoding_init(em: ?*lxb_html_encoding_t) core.lxb_status_t;
+
+pub extern fn lxb_html_encoding_destroy(em: ?*lxb_html_encoding_t, self_destroy: bool) ?*lxb_html_encoding_t;
+
+pub extern fn lxb_html_encoding_determine(em: ?*lxb_html_encoding_t, data: ?*const core.lxb_char_t, end: ?*const core.lxb_char_t) core.lxb_status_t;
+
+pub extern fn lxb_html_encoding_content(data: ?*const core.lxb_char_t, end: ?*const core.lxb_char_t, name_end: ?*?*const core.lxb_char_t) ?*const core.lxb_char_t;
+
+pub inline fn lxb_html_encoding_meta_entry(em: ?*lxb_html_encoding_t, idx: usize) ?*lxb_html_encoding_entry_t {
+    return @ptrCast(@alignCast(core.lexbor_array_obj_get(&em.?.result, idx)));
+}

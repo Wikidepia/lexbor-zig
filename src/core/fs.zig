@@ -1,0 +1,23 @@
+const std = @import("std");
+const sliceTo = std.mem.sliceTo;
+
+pub const core = @import("../core_ext.zig");
+
+pub const DirFileF = core.lexbor_fs_dir_file_f;
+pub const DirOpt = core.lexbor_fs_dir_opt;
+pub const FileType = core.lexbor_fs_file_type_t;
+
+pub fn dirRead(dirpath: []const u8, opt: core.lexbor_fs_dir_opt, callback: core.lexbor_fs_dir_file_f, ctx: ?*anyopaque) core.lxb_status_t {
+    const status = core.lexbor_fs_dir_read(@ptrCast(dirpath.ptr), @intFromEnum(opt), callback, ctx);
+    return @enumFromInt(status);
+}
+
+pub fn fileType(full_path: []const u8) core.lexbor_fs_file_type_t {
+    const file_type = core.lexbor_fs_file_type(@ptrCast(full_path.ptr));
+    return @enumFromInt(file_type);
+}
+
+pub fn fileEasyRead(full_path: []const u8, len: ?*usize) ?[]const u8 {
+    const content = core.lexbor_fs_file_easy_read(@ptrCast(full_path.ptr), len) orelse return null;
+    return sliceTo(@as([*:0]const u8, @ptrCast(content)), 0);
+}
