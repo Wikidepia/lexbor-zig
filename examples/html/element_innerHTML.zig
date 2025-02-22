@@ -4,7 +4,6 @@ const print = std.debug.print;
 const parse = @import("base.zig").parse;
 const serialize = @import("base.zig").serialize;
 
-const core = @import("lexbor").core;
 const dom = @import("lexbor").dom;
 const html = @import("lexbor").html;
 

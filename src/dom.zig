@@ -1,4 +1,3 @@
-pub const collection = @import("dom/collection.zig");
 pub const document = @import("dom/document.zig");
 pub const interface = @import("dom/interface.zig");
 
@@ -12,3 +11,6 @@ pub const Element = element.Element;
 
 pub const attr = @import("dom/interfaces/attr.zig");
 pub const Attr = attr.Attr;
+
+pub const collection = @import("dom/collection.zig");
+pub const Collection = collection.Collection;
