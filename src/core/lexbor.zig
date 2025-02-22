@@ -17,8 +17,8 @@ pub fn calloc(num: usize, size: usize) ?*anyopaque {
     return core.lexbor_calloc(num, size);
 }
 
-pub fn free(dst: ?*anyopaque) ?*anyopaque {
-    return core.lexbor_free(dst);
+pub fn free(dst: ?*anyopaque) void {
+    core.lexbor_free(dst);
 }
 
 pub fn memorySetup(new_malloc: core.lexbor_memory_malloc_f, new_realloc: core.lexbor_memory_realloc_f, new_calloc: core.lexbor_memory_calloc_f, new_free: core.lexbor_memory_free_f) void {

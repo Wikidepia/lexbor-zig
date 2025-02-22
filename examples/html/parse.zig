@@ -1,15 +1,21 @@
 const std = @import("std");
 const argsAlloc = std.process.argsAlloc;
 const argsFree = std.process.argsFree;
-const exit = std.process.exit;
 const c_allocator = std.heap.c_allocator;
+const exit = std.process.exit;
 const print = std.debug.print;
-
-const serialize = @import("base.zig").serialize;
+const printf = std.c.printf;
 
 const core = @import("lexbor").core;
-const dom = @import("lexbor").dom;
 const html = @import("lexbor").html;
+
+fn failed(with_usage: bool, comptime fmt: []const u8, args: anytype) void {
+    print(fmt, args);
+
+    if (with_usage) usage();
+
+    exit(1);
+}
 
 fn usage() void {
     print("Usage:\n", .{});
@@ -17,6 +23,10 @@ fn usage() void {
 }
 
 pub fn main() !void {
+    var len: usize = undefined;
+    var em: html.Encoding = undefined;
+    var status: core.Status = undefined;
+
     var arena = std.heap.ArenaAllocator.init(c_allocator);
     defer arena.deinit();
 
@@ -30,26 +40,31 @@ pub fn main() !void {
         exit(0);
     }
 
-    for (args) |arg| {
-        print("{s}\n", .{arg});
+    const content = core.fs.fileEasyRead(args[1], &len);
+    if (content == null) {
+        failed(true, "Failed to read file: {s}", .{args[1]});
     }
 
-    // const input = "<div><p>blah-blah-blah</div>";
-    //
-    // // Initialization
-    // const doc = html.document.create();
-    // if (doc == null) return error.FailedToCreate;
-    // defer _ = html.document.destroy(doc);
-    //
-    // // Parse HTML
-    // const status = html.document.parse(doc, input, input.len);
-    // if (status != core.Status.ok) return error.FailedToParse;
-    //
-    // // Print Incoming Data
-    // print("HTML:\n", .{});
-    // print("{s}\n", .{input});
-    //
-    // // Print Result
-    // print("\nHTML Tree:\n", .{});
-    // serialize(dom.interface.node(doc));
+    status = html.encoding.init(&em);
+    if (status != core.Status.ok) {
+        failed(false, "Failed to init html encoding", .{});
+    }
+
+    status = html.encoding.determine(&em, content.?, @ptrFromInt((@intFromPtr(content.?.ptr) + len)));
+    if (status != core.Status.ok) {
+        core.free(@constCast(content.?.ptr));
+        _ = html.encoding.destroy(&em, false);
+
+        failed(false, "Failed to determine encoding", .{});
+    }
+
+    const entry = html.encoding.metaEntry(&em, 0);
+    if (entry != null) {
+        _ = printf("%.*s\n", @intFromPtr(entry.?.end) - @intFromPtr(entry.?.name), entry.?.name);
+    } else {
+        print("Encoding not found\n", .{});
+    }
+
+    core.free(@constCast(content.?.ptr));
+    _ = html.encoding.destroy(&em, false);
 }

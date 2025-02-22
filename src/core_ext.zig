@@ -778,7 +778,8 @@ pub inline fn lexbor_mraw_data_size(data: ?*anyopaque) usize {
 
 pub inline fn lexbor_mraw_data_size_set(data: ?*anyopaque, size: usize) void {
     const dest: ?*anyopaque = @ptrFromInt(@intFromPtr(@as(*u8, @ptrCast(data.?))) - lexbor_mraw_meta_size);
-    _ = memcpy(dest, @ptrCast(@constCast(&size)), @sizeOf(usize));
+    // _ = memcpy(dest, @ptrCast(@constCast(&size)), @sizeOf(usize));
+    _ = memcpy(dest, @constCast(&size), @sizeOf(usize));
 }
 
 pub inline fn lexbor_mraw_dup(mraw: ?*lexbor_mraw_t, src: ?*const anyopaque, size: usize) ?*anyopaque {

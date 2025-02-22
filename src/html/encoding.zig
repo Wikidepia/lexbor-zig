@@ -8,17 +8,17 @@ pub const dom = @import("../dom_ext.zig");
 pub const Entry = html.lxb_html_encoding_entry_t;
 pub const Encoding = html.lxb_html_encoding_t;
 
-pub fn init(em: ?*html.lxb_html_encoding_t) core.lxb_status_t {
+pub fn init(em: ?*html.lxb_html_encoding_t) core.lexbor_status_t {
     const status = html.lxb_html_encoding_init(em);
     return @enumFromInt(status);
 }
 
-pub fn lxb_html_encoding_destroy(em: ?*html.lxb_html_encoding_t, self_destroy: bool) ?*html.lxb_html_encoding_t {
+pub fn destroy(em: ?*html.lxb_html_encoding_t, self_destroy: bool) ?*html.lxb_html_encoding_t {
     return html.lxb_html_encoding_destroy(em, self_destroy);
 }
 
-pub fn determine(em: ?*html.lxb_html_encoding_t, data: []const u8, end: []const u8) core.lxb_status_t {
-    const status = html.lxb_html_encoding_determine(em, @ptrCast(data.ptr), @ptrCast(end.ptr));
+pub fn determine(em: ?*html.lxb_html_encoding_t, data: []const u8, end: ?*const core.lxb_char_t) core.lexbor_status_t {
+    const status = html.lxb_html_encoding_determine(em, @ptrCast(data.ptr), end);
     return @enumFromInt(status);
 }
 
