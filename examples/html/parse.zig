@@ -52,7 +52,7 @@ pub fn main() !void {
 
     status = html.encoding.determine(&em, content.?, @ptrFromInt((@intFromPtr(content.?.ptr) + len)));
     if (status != core.Status.ok) {
-        core.free(@constCast(content.?.ptr));
+        core.free(content.?.ptr);
         _ = html.encoding.destroy(&em, false);
 
         failed(false, "Failed to determine encoding\n", .{});
@@ -65,6 +65,6 @@ pub fn main() !void {
         print("Encoding not found\n", .{});
     }
 
-    core.free(@constCast(content.?.ptr));
+    core.free(content.?.ptr);
     _ = html.encoding.destroy(&em, false);
 }

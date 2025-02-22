@@ -17,7 +17,7 @@ pub fn fileType(full_path: []const u8) core.lexbor_fs_file_type_t {
     return @enumFromInt(file_type);
 }
 
-pub fn fileEasyRead(full_path: []const u8, len: ?*usize) ?[]const u8 {
+pub fn fileEasyRead(full_path: []const u8, len: ?*usize) ?[]u8 {
     const content = core.lexbor_fs_file_easy_read(@ptrCast(full_path.ptr), len) orelse return null;
-    return sliceTo(@as([*:0]const u8, @ptrCast(content)), 0);
+    return sliceTo(@as([*:0]u8, @ptrCast(content)), 0);
 }
