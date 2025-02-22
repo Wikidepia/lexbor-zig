@@ -5,7 +5,7 @@ pub const core = @import("../core_ext.zig");
 
 pub const DirFileF = core.lexbor_fs_dir_file_f;
 pub const DirOpt = core.lexbor_fs_dir_opt;
-pub const FileType = core.lexbor_fs_file_type_t;
+pub const File = core.lexbor_fs_file_type_t;
 
 pub fn dirRead(dirpath: []const u8, opt: core.lexbor_fs_dir_opt, callback: core.lexbor_fs_dir_file_f, ctx: ?*anyopaque) core.lxb_status_t {
     const status = core.lexbor_fs_dir_read(@ptrCast(dirpath.ptr), @intFromEnum(opt), callback, ctx);
