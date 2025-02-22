@@ -835,7 +835,8 @@ const Example = struct {
 
 var examples = [_]Example{
     .{ .name = "html-document-parse", .path = "examples/html/document_parse.zig" },
-    .{ .name = "html-document-title", .path = "examples/html/document_title.zig" },
     .{ .name = "html-document-parse-chunk", .path = "examples/html/document_parse_chunk.zig" },
+    .{ .name = "html-document-title", .path = "examples/html/document_title.zig" },
+    .{ .name = "html-element-attributes", .path = "examples/html/element_attributes.zig" },
     .{ .name = "html-element-create", .path = "examples/html/element_create.zig" },
 };

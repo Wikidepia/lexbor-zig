@@ -107,6 +107,10 @@ pub inline fn lxb_dom_interface_node(obj: anytype) *lxb_dom_node_t {
     return @as(*lxb_dom_node_t, @ptrCast(obj));
 }
 
+pub inline fn lxb_dom_interface_element(obj: anytype) *lxb_dom_element_t {
+    return @as(*lxb_dom_element_t, @ptrCast(obj));
+}
+
 pub const lxb_dom_event_target_t = lxb_dom_event_target;
 pub const lxb_dom_node_t = lxb_dom_node;
 pub const lxb_dom_element_t = lxb_dom_element;
@@ -168,6 +172,30 @@ pub const lxb_dom_element = extern struct {
     custom_state: lxb_dom_element_custom_state_t,
 };
 
+pub extern fn lxb_dom_elements_by_tag_name(root: ?*lxb_dom_element_t, collection: ?*lxb_dom_collection_t, qualified_name: ?*const core.lxb_char_t, len: usize) core.lexbor_status_t;
+
+pub extern fn lxb_dom_element_set_attribute(element: ?*lxb_dom_element_t, qualified_name: ?*const core.lxb_char_t, qn_len: usize, value: ?*const core.lxb_char_t, value_len: usize) ?*lxb_dom_attr_t;
+
+pub extern fn lxb_dom_element_has_attribute(element: ?*lxb_dom_element_t, qualified_name: ?*const core.lxb_char_t, qn_len: usize) bool;
+
+pub extern fn lxb_dom_element_get_attribute(element: ?*lxb_dom_element_t, qualified_name: ?*const core.lxb_char_t, qn_len: usize, value_len: ?*usize) ?*const core.lxb_char_t;
+
+pub extern fn lxb_dom_element_attr_by_name(element: ?*lxb_dom_element_t, qualified_name: ?*const core.lxb_char_t, length: usize) ?*lxb_dom_attr_t;
+
+pub extern fn lxb_dom_element_remove_attribute(element: ?*lxb_dom_element_t, qualified_name: ?*const core.lxb_char_t, qn_len: usize) core.lxb_status_t;
+
+pub inline fn lxb_dom_element_first_attribute(element: ?*lxb_dom_element_t) ?*lxb_dom_attr_t {
+    return element.?.first_attr;
+}
+
+pub inline fn lxb_dom_element_prev_attribute(attr: ?*lxb_dom_attr_t) ?*lxb_dom_attr_t {
+    return attr.?.prev;
+}
+
+pub inline fn lxb_dom_element_next_attribute(attr: ?*lxb_dom_attr_t) ?*lxb_dom_attr_t {
+    return attr.?.next;
+}
+
 // dom/interfaces/attr.h
 
 pub const lxb_dom_attr_data_t = extern struct {
@@ -186,6 +214,26 @@ pub const lxb_dom_attr = extern struct {
     next: ?*lxb_dom_attr_t,
     prev: ?*lxb_dom_attr_t,
 };
+
+pub extern fn lxb_dom_attr_qualified_name(attr: ?*lxb_dom_attr_t, len: ?*usize) ?*core.lxb_char_t;
+
+pub extern fn lxb_dom_attr_set_value(attr: ?*lxb_dom_attr_t, value: ?*const core.lxb_char_t, value_len: usize) core.lxb_status_t;
+
+pub inline fn lxb_dom_attr_value(attr: ?*lxb_dom_attr_t, len: ?*usize) ?*const core.lxb_char_t {
+    if (attr.?.value == null) {
+        if (len != null) {
+            len.?.* = 0;
+        }
+
+        return null;
+    }
+
+    if (len != null) {
+        len.?.* = attr.?.value.?.length;
+    }
+
+    return @ptrCast(attr.?.value.?.data);
+}
 
 // dom/interfaces/attr_const.h
 
@@ -291,3 +339,32 @@ pub const lxb_dom_processing_instruction = extern struct {
     char_data: lxb_dom_character_data_t,
     target: core.lexbor_str_t,
 };
+
+// dom/collection.h
+pub const lxb_dom_collection_t = extern struct {
+    array: core.lexbor_array_t,
+    document: ?*lxb_dom_document_t,
+};
+
+pub extern fn lxb_dom_collection_create(document: ?*lxb_dom_document_t) ?*lxb_dom_collection_t;
+pub extern fn lxb_dom_collection_init(col: ?*lxb_dom_collection_t, start_list_size: usize) core.lxb_status_t;
+pub extern fn lxb_dom_collection_destroy(col: ?*lxb_dom_collection_t, self_destroy: bool) ?*lxb_dom_collection_t;
+
+pub inline fn lxb_dom_collection_make(document: ?*lxb_dom_document_t, start_list_size: usize) ?*lxb_dom_collection_t {
+    const col = lxb_dom_collection_create(document);
+    const status = lxb_dom_collection_init(col, start_list_size);
+
+    if (status != @intFromEnum(core.lexbor_status_t.ok)) {
+        return lxb_dom_collection_destroy(col, true);
+    }
+
+    return col;
+}
+
+pub inline fn lxb_dom_collection_length(col: ?*lxb_dom_collection_t) usize {
+    return core.lexbor_array_length(&col.?.array);
+}
+
+pub inline fn lxb_dom_collection_element(col: ?*lxb_dom_collection_t, idx: usize) ?*lxb_dom_element_t {
+    return @ptrCast(@alignCast(core.lexbor_array_get(&col.?.array, idx)));
+}

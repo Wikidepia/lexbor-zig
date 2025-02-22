@@ -29,7 +29,7 @@ pub fn parse(input: []const u8, input_len: usize) *html.Document {
     return document.?;
 }
 
-pub fn serialize(node: *dom.Node) void {
+pub fn serialize(node: ?*dom.Node) void {
     const status = html.serialize.prettyTreeCb(node, html.serialize.Opt.undef, 0, serializerCallback, null);
 
     if (status != core.Status.ok) {
@@ -37,7 +37,7 @@ pub fn serialize(node: *dom.Node) void {
     }
 }
 
-pub fn serializeNode(node: *dom.Node) void {
+pub fn serializeNode(node: ?*dom.Node) void {
     const status = html.serialize.prettyCb(node, html.serialize.Opt.undef, 0, serializerCallback, null);
 
     if (status != core.Status.ok) {

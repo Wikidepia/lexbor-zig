@@ -36,13 +36,13 @@ pub fn parseChunkEnd(document: ?*html.lxb_html_document_t) core.lexbor_status_t 
 pub fn getTitle(document: ?*html.lxb_html_document_t) ?[]const u8 {
     var len: usize = undefined;
     const title = html.lxb_html_document_title(document, &len) orelse return null;
-    return sliceTo(@as([*:0]u8, @ptrCast(title)), 0);
+    return sliceTo(@as([*:0]const u8, @ptrCast(title)), 0);
 }
 
 pub fn getRawTitle(document: ?*html.lxb_html_document_t) ?[]const u8 {
     var len: usize = undefined;
     const raw_title = html.lxb_html_document_title_raw(document, &len) orelse return null;
-    return sliceTo(@as([*:0]u8, @ptrCast(raw_title)), 0);
+    return sliceTo(@as([*:0]const u8, @ptrCast(raw_title)), 0);
 }
 
 pub fn setTitle(document: ?*html.lxb_html_document_t, new_title: []const u8, new_title_len: usize) core.lexbor_status_t {
