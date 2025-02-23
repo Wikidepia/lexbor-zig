@@ -736,8 +736,8 @@ pub const lxb_html_token_type = enum(c_int) {
 pub const lxb_html_token_t = extern struct {
     begin: ?[*]const core.lxb_char_t,
     end: ?[*]const core.lxb_char_t,
-    text_start: ?*const core.lxb_char_t,
-    text_end: ?*const core.lxb_char_t,
+    text_start: ?[*]const core.lxb_char_t,
+    text_end: ?[*]const core.lxb_char_t,
     attr_first: ?*lxb_html_token_attr_t,
     attr_last: ?*lxb_html_token_attr_t,
     base_element: ?*anyopaque,
