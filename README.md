@@ -1,9 +1,10 @@
 ### (WIP) lexbor-zig-static (currently windows only)
-Experimental Zig build package and wrapper for [Lexbor](https://github.com/lexbor/lexbor/) v2.4.0
+Experimental Zig build package and wrapper for [Lexbor](https://github.com/lexbor/lexbor/) v2.4.0  
+Currently, it has only been tested on Windows.
 
 #### Fetch
 ```
-zig fetch --save=lexbor https://github.com/doccaico/lexbor-zig-static2/archive/<git-commit-hash>.tar.gz
+zig fetch --save=lexbor https://github.com/doccaico/lexbor-zig/archive/<git-commit-hash>.tar.gz
 ```
 
 #### Using as a single static library (it included all modules)
@@ -48,7 +49,6 @@ const lexbor = b.dependency("lexbor", .{
 });
 
 exe.root_module.addImport("lexbor", lexbor.module("lexbor"));
-exe.linkLibrary(lexbor.artifact("liblexbor-html"));
 ```
 
 See more options: [build.zig](https://github.com/doccaico/lexbor-zig-static/blob/main/build.zig)
@@ -65,9 +65,4 @@ zig build
 git clone https://github.com/doccaico/lexbor-zig-static
 
 zig build -Dhtml
-```
-
-#### Test (currently, it has only been tested on Windows)
-```
-zig run test
 ```
