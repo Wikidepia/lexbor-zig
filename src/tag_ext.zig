@@ -14,7 +14,8 @@ pub const LXB_TAG_CONST_VERSION = "A161EC911182C3254E7A972D5C51DF86";
 
 pub const lxb_tag_id_t = usize;
 
-pub const lxb_tag_id_enum_t = enum(c_int) {
+// pub const lxb_tag_id_enum_t = enum(c_int) {
+pub const lxb_tag_id_enum_t = enum(usize) {
     _undef = 0x0000,
     _end_of_file = 0x0001,
     _text = 0x0002,
@@ -108,9 +109,9 @@ pub const lxb_tag_id_enum_t = enum(c_int) {
     glyphref = 0x005a,
     h1 = 0x005b,
     h2 = 0x005c,
-    h3 = 0x005D,
-    h4 = 0x005E,
-    h5 = 0x005F,
+    h3 = 0x005d,
+    h4 = 0x005e,
+    h5 = 0x005f,
     h6 = 0x0060,
     head = 0x0061,
     header = 0x0062,
@@ -212,6 +213,7 @@ pub const lxb_tag_id_enum_t = enum(c_int) {
     wbr = 0x00c2,
     xmp = 0x00c3,
     _last_entry = 0x00c4,
+    _,
 };
 
 // tag/tag.h

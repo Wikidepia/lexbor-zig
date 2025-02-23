@@ -800,12 +800,20 @@ pub const lxb_html_token_attr = extern struct {
     value_begin: ?[*]const core.lxb_char_t,
     value_end: ?[*]const core.lxb_char_t,
     name: ?*const dom.lxb_dom_attr_data_t,
-    value: ?*core.lxb_char_t,
+    value: ?[*:0]core.lxb_char_t,
     value_size: usize,
     next: ?*lxb_html_token_attr_t,
     prev: ?*lxb_html_token_attr_t,
     type: lxb_html_token_attr_type_t,
 };
+
+pub extern fn lxb_html_token_attr_create(dobj: ?*core.lexbor_dobject_t) ?*lxb_html_token_attr_t;
+
+pub extern fn lxb_html_token_attr_clean(attr: ?*lxb_html_token_attr_t) void;
+
+pub extern fn lxb_html_token_attr_destroy(attr: ?*lxb_html_token_attr_t, dobj: ?*core.lexbor_dobject_t) ?*lxb_html_token_attr_t;
+
+pub extern fn lxb_html_token_attr_name(attr: ?*lxb_html_token_attr_t, length: ?*usize) ?[*:0]const core.lxb_char_t;
 
 // html/tag.h
 

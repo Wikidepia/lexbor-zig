@@ -28,7 +28,6 @@ pub fn main() void {
 
     for (0..dom.collection.length(collection)) |i| {
         const element = dom.collection.element(collection, i);
-        // _ = element;
         serializeNode(dom.interface.node(element));
     }
 }
