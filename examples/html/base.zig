@@ -51,7 +51,7 @@ pub fn serializeNode(node: ?*dom.Node) void {
     }
 }
 
-fn serializerCallback(data: ?[*:0]const core.CharType, len: usize, ctx: ?*anyopaque) callconv(.C) core.StatusType {
+pub fn serializerCallback(data: ?[*:0]const core.CharType, len: usize, ctx: ?*anyopaque) callconv(.C) core.StatusType {
     _ = ctx;
     _ = len;
     print("{s}", .{data.?});
