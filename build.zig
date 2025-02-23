@@ -22,6 +22,7 @@ pub const Options = struct {
     unicode: bool = false,
     url: bool = false,
     utils: bool = false,
+    with_utils: bool = false,
 };
 
 pub fn build(b: *Build) !void {
@@ -40,6 +41,7 @@ pub fn build(b: *Build) !void {
         .unicode = b.option(bool, "unicode", "Build a unicode module") orelse defaults.unicode,
         .url = b.option(bool, "url", "Build a url module") orelse defaults.url,
         .utils = b.option(bool, "utils", "Build a utils module") orelse defaults.utils,
+        .with_utils = b.option(bool, "with_utils", "default: OFF; Build with utils module") orelse defaults.with_utils,
     };
 
     const target = b.standardTargetOptions(.{});
@@ -54,80 +56,80 @@ pub fn build(b: *Build) !void {
     const is_single = parseOptions(&options);
 
     if (is_single) {
-        compileSingle(b, options.utils, .{
+        compileSingle(b, options.with_utils, .{
             .name = "liblexbor",
             .root_module = lib_mod,
             .linkage = .static,
         });
     } else {
         if (options.core)
-            compileCore(b, options.utils, .{
+            compileCore(b, options.with_utils, .{
                 .name = "liblexbor-core",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.css)
-            compileCss(b, options.utils, .{
+            compileCss(b, options.with_utils, .{
                 .name = "liblexbor-css",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.dom)
-            compileDom(b, options.utils, .{
+            compileDom(b, options.with_utils, .{
                 .name = "liblexbor-dom",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.encoding)
-            compileEncoding(b, options.utils, .{
+            compileEncoding(b, options.with_utils, .{
                 .name = "liblexbor-encoding",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.html)
-            compileHtml(b, options.utils, .{
+            compileHtml(b, options.with_utils, .{
                 .name = "liblexbor-html",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.ns)
-            compileNs(b, options.utils, .{
+            compileNs(b, options.with_utils, .{
                 .name = "liblexbor-ns",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.ports)
-            compilePorts(b, options.utils, .{
+            compilePorts(b, options.with_utils, .{
                 .name = "liblexbor-ports",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.punycode)
-            compilePunycode(b, options.utils, .{
+            compilePunycode(b, options.with_utils, .{
                 .name = "liblexbor-punycode",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.selectors)
-            compileSelectors(b, options.utils, .{
+            compileSelectors(b, options.with_utils, .{
                 .name = "liblexbor-selectors",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.tag)
-            compileTag(b, options.utils, .{
+            compileTag(b, options.with_utils, .{
                 .name = "liblexbor-tag",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.unicode)
-            compileUnicode(b, options.utils, .{
+            compileUnicode(b, options.with_utils, .{
                 .name = "liblexbor-unicode",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.url)
-            compileUrl(b, options.utils, .{
+            compileUrl(b, options.with_utils, .{
                 .name = "liblexbor-url",
                 .root_module = lib_mod,
                 .linkage = .static,
