@@ -53,8 +53,11 @@ pub fn main() !void {
 
     status = html.encoding.determine(&em, content, @ptrFromInt((@intFromPtr(content.ptr) + len)));
     if (status != core.Status.ok) {
-        core.free(content.ptr);
+        // delete all allocated memory
         _ = html.encoding.destroy(&em, false);
+        core.free(content.ptr);
+        argsFree(allocator, args);
+        arena.deinit();
 
         failed(false, "Failed to determine encoding\n", .{});
     }
