@@ -1,7 +1,6 @@
 const std = @import("std");
 const exit = std.process.exit;
 const print = std.debug.print;
-const c_allocator = std.heap.c_allocator;
 
 const core = @import("lexbor").core;
 const html = @import("lexbor").html;

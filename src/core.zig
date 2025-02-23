@@ -1,4 +1,5 @@
-pub const fs = @import("core/fs.zig");
+pub const array = @import("core/array.zig");
+pub const Array = array.Array;
 
 const base = @import("core/base.zig");
 pub const VERSION_MAJOR = base.VERSION_MAJOR;
@@ -12,6 +13,8 @@ pub const Action = base.Action;
 pub const SerializeCbF = base.serializeCbF;
 pub const SerializeCbCpF = base.serializeCbCpF;
 pub const SerializeCtx = base.serializeCtx;
+
+pub const fs = @import("core/fs.zig");
 
 const types = @import("core/types.zig");
 pub const CodepointType = types.CodepointType;

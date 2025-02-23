@@ -3,7 +3,7 @@ Experimental Zig build package and wrapper for [Lexbor](https://github.com/lexbo
 
 #### Fetch
 ```
-zig fetch --save=lexbor https://github.com/doccaico/lexbor-zig-static/archive/<git-commit-hash>.tar.gz
+zig fetch --save=lexbor https://github.com/doccaico/lexbor-zig-static2/archive/<git-commit-hash>.tar.gz
 ```
 
 #### Using as a single static library (it included all modules)
@@ -18,21 +18,20 @@ const lexbor = b.dependency("lexbor", .{
 });
 
 exe.root_module.addImport("lexbor", lexbor.module("lexbor"));
-exe.linkLibrary(lexbor.artifact("liblexbor"));
 
 // src/main.zig
 
 const std = @import("std");
 
-const lb = @import("lexbor");
+const core = @import("lexbor").core;
 
 pub fn main() !void {
-    var array = lb.core.Array.create().?;
-    const status = array.init(32);
+    const array = core.array.create().?;
+    const status = core.array.init(array, 32);
 
-    try std.testing.expectEqual(status, @intFromEnum(lb.core.Status.ok));
+    try std.testing.expectEqual(status, .ok);
 
-    _ = array.destroy(true);
+    _ = core.array.destroy(array, true);
 }
 ```
 
