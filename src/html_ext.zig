@@ -689,6 +689,23 @@ pub const lxb_html_tokenizer = extern struct {
 
 pub const lxb_html_tokenizer_eof = @extern(**const core.lxb_char_t, .{ .name = "lxb_html_tokenizer_eof" });
 
+pub extern fn lxb_html_tokenizer_create() ?*lxb_html_tokenizer_t;
+
+pub extern fn lxb_html_tokenizer_init(tkz: ?*lxb_html_tokenizer_t) core.lxb_status_t;
+
+pub extern fn lxb_html_tokenizer_begin(tkz: ?*lxb_html_tokenizer_t) core.lxb_status_t;
+
+pub extern fn lxb_html_tokenizer_chunk(tkz: ?*lxb_html_tokenizer_t, data: ?*const core.lxb_char_t, size: usize) core.lxb_status_t;
+
+pub extern fn lxb_html_tokenizer_end(tkz: ?*lxb_html_tokenizer_t) core.lxb_status_t;
+
+pub extern fn lxb_html_tokenizer_destroy(tkz: ?*lxb_html_tokenizer_t) ?*lxb_html_tokenizer_t;
+
+pub inline fn lxb_html_tokenizer_callback_token_done_set(tkz: ?*lxb_html_tokenizer_t, call_func: lxb_html_tokenizer_token_f, ctx: ?*anyopaque) void {
+    tkz.?.callback_token_done = call_func;
+    tkz.?.callback_token_ctx = ctx;
+}
+
 // html/base.h
 
 pub const LEXBOR_HTML_VERSION_MAJOR = 2;
@@ -709,11 +726,11 @@ pub const lxb_html_status_t = enum(c_int) {
 pub const lxb_html_token_type_t = c_int;
 
 pub const lxb_html_token_type = enum(c_int) {
-    LXB_HTML_TOKEN_TYPE_OPEN = 0x0000,
-    LXB_HTML_TOKEN_TYPE_CLOSE = 0x0001,
-    LXB_HTML_TOKEN_TYPE_CLOSE_SELF = 0x0002,
-    LXB_HTML_TOKEN_TYPE_FORCE_QUIRKS = 0x0004,
-    LXB_HTML_TOKEN_TYPE_DONE = 0x0008,
+    open = 0x0000,
+    close = 0x0001,
+    close_self = 0x0002,
+    force_quirks = 0x0004,
+    done = 0x0008,
 };
 
 pub const lxb_html_token_t = extern struct {

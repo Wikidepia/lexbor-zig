@@ -847,4 +847,8 @@ var examples = [_]Example{
     .{ .name = "html-html2sexpr", .path = "examples/html/html2sexpr.zig" },
     .{ .name = "html-parse", .path = "examples/html/parse.zig" },
     .{ .name = "html-parse-chunk", .path = "examples/html/parse_chunk.zig" },
+    .{ .name = "html-tokenizer-callback", .path = "examples/html/tokenizer/callback.zig" },
+    .{ .name = "html-tokenizer-simple", .path = "examples/html/tokenizer/simple.zig" },
+    .{ .name = "html-tokenizer-tag-attributes", .path = "examples/html/tokenizer/tag_attributes.zig" },
+    .{ .name = "html-tokenizer-text", .path = "examples/html/tokenizer/text.zig" },
 };
