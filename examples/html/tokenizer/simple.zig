@@ -65,8 +65,7 @@ fn tokenCallback(tkz: ?*html.Tokenizer, token: ?*html.Token, ctx: ?*anyopaque) c
         // Value
         if (attr.?.value_begin != null) {
             // Get original quote
-            // const qo: core.CharType = @as(*core.CharType, @ptrFromInt((@intFromPtr(attr.?.value_begin) - 1))).*;
-            const qo: core.CharType = (@intFromPtr(attr.?.value_begin.?) - 1).*;
+            const qo = (attr.?.value_begin.? - 1)[0];
 
             // Attribute have no quote
             if (qo == '=') {

@@ -4,7 +4,6 @@ const argsFree = std.process.argsFree;
 const c_allocator = std.heap.c_allocator;
 const exit = std.process.exit;
 const print = std.debug.print;
-const printf = std.c.printf;
 
 const core = @import("lexbor").core;
 const html = @import("lexbor").html;
@@ -64,7 +63,7 @@ pub fn main() !void {
 
     const entry = html.encoding.metaEntry(&em, 0);
     if (entry != null) {
-        _ = printf("%.*s\n", @intFromPtr(entry.?.end) - @intFromPtr(entry.?.name), entry.?.name);
+        print("{s}\n", .{entry.?.name.?[0 .. entry.?.end.? - entry.?.name.?]});
     } else {
         print("Encoding not found\n", .{});
     }

@@ -610,7 +610,7 @@ pub const lxb_html_serialize_opt = enum(c_int) {
     full_doctype = 0x40,
 };
 
-pub const lxb_html_serialize_cb_f = ?*const fn (data: ?[*:0]const core.lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) core.lxb_status_t;
+pub const lxb_html_serialize_cb_f = ?*const fn (data: ?[*]const core.lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) core.lxb_status_t;
 
 pub extern fn lxb_html_serialize_pretty_tree_cb(node: ?*dom.lxb_dom_node_t, opt: lxb_html_serialize_opt_t, indent: usize, cb: lxb_html_serialize_cb_f, ctx: ?*anyopaque) core.lxb_status_t;
 pub extern fn lxb_html_serialize_pretty_cb(node: ?*dom.lxb_dom_node_t, opt: lxb_html_serialize_opt_t, indent: usize, cb: lxb_html_serialize_cb_f, ctx: ?*anyopaque) core.lxb_status_t;
@@ -858,8 +858,8 @@ pub extern fn lxb_html_element_inner_html_set(element: ?*lxb_html_element_t, htm
 // html/encoding.h
 
 pub const lxb_html_encoding_entry_t = extern struct {
-    name: ?*const core.lxb_char_t,
-    end: ?*const core.lxb_char_t,
+    name: ?[*]const core.lxb_char_t,
+    end: ?[*]const core.lxb_char_t,
 };
 
 pub const lxb_html_encoding_t = extern struct {

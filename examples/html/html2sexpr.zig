@@ -4,7 +4,6 @@ const argsFree = std.process.argsFree;
 const c_allocator = std.heap.c_allocator;
 const exit = std.process.exit;
 const print = std.debug.print;
-const printf = std.c.printf;
 
 const failed = @import("base.zig").failed;
 
@@ -176,8 +175,8 @@ fn attributes(node: ?*dom.Node, cb: html.serialize.CbF, ctx: ?*anyopaque) core.S
     return .ok;
 }
 
-fn serializeCb(data: ?[*:0]const core.CharType, len: usize, ctx: ?*anyopaque) callconv(.C) core.StatusType {
+fn serializeCb(data: ?[*]const core.CharType, len: usize, ctx: ?*anyopaque) callconv(.C) core.StatusType {
     _ = ctx;
-    _ = printf("%.*s", len, data.?);
+    print("{s}", .{data.?[0..len]});
     return @intFromEnum(core.Status.ok);
 }
