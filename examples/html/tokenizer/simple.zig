@@ -1,7 +1,6 @@
 const std = @import("std");
 const exit = std.process.exit;
 const print = std.debug.print;
-const printf = std.c.printf;
 
 const core = @import("lexbor").core;
 const html = @import("lexbor").html;
@@ -45,16 +44,15 @@ fn tokenCallback(tkz: ?*html.Tokenizer, token: ?*html.Token, ctx: ?*anyopaque) c
 
     // Text token
     if (@as(tag.IdEnum, @enumFromInt(token.?.tag_id)) == ._text) {
-        _ = printf("%.*s", @intFromPtr(token.?.end) - @intFromPtr(token.?.begin), token.?.begin);
+        print("{s}", .{token.?.begin.?[0 .. token.?.end.? - token.?.begin.?]});
         return token;
     }
 
     // Tag name
-    // if (token.?.type & @intFromEnum(html.token.Type.close) == 1) {
     if (token.?.type & @intFromEnum(html.token.Type.close) == 1) {
-        _ = printf("</%.*s", @intFromPtr(token.?.end) - @intFromPtr(token.?.begin), token.?.begin);
+        print("</{s}", .{token.?.begin.?[0 .. token.?.end.? - token.?.begin.?]});
     } else {
-        _ = printf("<%.*s", @intFromPtr(token.?.end) - @intFromPtr(token.?.begin), token.?.begin);
+        print("<{s}", .{token.?.begin.?[0 .. token.?.end.? - token.?.begin.?]});
     }
 
     // Attributes
@@ -62,7 +60,7 @@ fn tokenCallback(tkz: ?*html.Tokenizer, token: ?*html.Token, ctx: ?*anyopaque) c
 
     while (attr != null) {
         // Name
-        _ = printf(" %.*s", @intFromPtr(attr.?.name_end) - @intFromPtr(attr.?.name_begin), attr.?.name_begin);
+        print(" {s}", .{attr.?.name_begin.?[0 .. attr.?.name_end.? - attr.?.name_begin.?]});
 
         // Value
         if (attr.?.value_begin != null) {
@@ -71,9 +69,9 @@ fn tokenCallback(tkz: ?*html.Tokenizer, token: ?*html.Token, ctx: ?*anyopaque) c
 
             // Attribute have no quote
             if (qo == '=') {
-                _ = printf("=%.*s", @intFromPtr(attr.?.value_end) - @intFromPtr(attr.?.value_begin), attr.?.value_begin);
+                print("={s}", .{attr.?.value_begin.?[0 .. attr.?.value_end.? - attr.?.value_begin.?]});
             } else {
-                _ = printf("=%c%.*s%c", qo, @intFromPtr(attr.?.value_end) - @intFromPtr(attr.?.value_begin), attr.?.value_begin, qo);
+                print("={c}{s}{c}", .{ qo, attr.?.value_begin.?[0 .. attr.?.value_end.? - attr.?.value_begin.?], qo });
             }
         }
 

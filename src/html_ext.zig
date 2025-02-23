@@ -734,8 +734,8 @@ pub const lxb_html_token_type = enum(c_int) {
 };
 
 pub const lxb_html_token_t = extern struct {
-    begin: ?*const core.lxb_char_t,
-    end: ?*const core.lxb_char_t,
+    begin: ?[*]const core.lxb_char_t,
+    end: ?[*]const core.lxb_char_t,
     text_start: ?*const core.lxb_char_t,
     text_end: ?*const core.lxb_char_t,
     attr_first: ?*lxb_html_token_attr_t,
@@ -795,10 +795,10 @@ pub const lxb_html_token_attr_type = enum(c_int) {
 };
 
 pub const lxb_html_token_attr = extern struct {
-    name_begin: ?*const core.lxb_char_t,
-    name_end: ?*const core.lxb_char_t,
-    value_begin: ?*const core.lxb_char_t,
-    value_end: ?*const core.lxb_char_t,
+    name_begin: ?[*]const core.lxb_char_t,
+    name_end: ?[*]const core.lxb_char_t,
+    value_begin: ?[*]const core.lxb_char_t,
+    value_end: ?[*]const core.lxb_char_t,
     name: ?*const dom.lxb_dom_attr_data_t,
     value: ?*core.lxb_char_t,
     value_size: usize,
