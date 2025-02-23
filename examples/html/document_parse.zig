@@ -17,7 +17,7 @@ pub fn main() void {
 
     // Parse HTML
     const status = html.document.parse(doc, input, input.len);
-    if (status != core.Status.ok) failed("Failed to parse HTML", .{});
+    if (status != .ok) failed("Failed to parse HTML", .{});
 
     // Print Incoming Data
     print("HTML:\n", .{});

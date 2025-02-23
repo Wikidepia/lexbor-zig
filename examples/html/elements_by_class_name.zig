@@ -23,7 +23,7 @@ pub fn main() void {
     defer _ = dom.collection.destroy(collection, true);
 
     const status = dom.elements.byClassName(dom.interface.element(doc.body), collection, "best", 4);
-    if (status != core.Status.ok) failed("Failed to get elements by name", .{});
+    if (status != .ok) failed("Failed to get elements by name", .{});
 
     print("HTML:\n", .{});
     print("{s}\n", .{input});

@@ -19,7 +19,7 @@ fn failed(with_usage: bool, comptime fmt: []const u8, args: anytype) noreturn {
 
 fn usage() void {
     print("Usage:\n", .{});
-    print("    zig build html-encoding -- <file-path-to-html>:\n", .{});
+    print("    zig build html-encoding -- <file-path-to-html>\n", .{});
 }
 
 pub fn main() !void {
@@ -47,12 +47,12 @@ pub fn main() !void {
 
     status = html.encoding.init(&em);
     defer _ = html.encoding.destroy(&em, false);
-    if (status != core.Status.ok) {
+    if (status != .ok) {
         failed(false, "Failed to init html encoding\n", .{});
     }
 
     status = html.encoding.determine(&em, content, @ptrFromInt((@intFromPtr(content.ptr) + len)));
-    if (status != core.Status.ok) {
+    if (status != .ok) {
         // delete all allocated memory
         _ = html.encoding.destroy(&em, false);
         core.free(content.ptr);

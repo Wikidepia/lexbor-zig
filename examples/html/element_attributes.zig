@@ -36,7 +36,7 @@ pub fn main() void {
     // Find DIV eleemnt
     status = dom.elements.byTagName(element, collection, "div", 3);
 
-    if (status != core.Status.ok or dom.collection.length(collection) == 0) {
+    if (status != .ok or dom.collection.length(collection) == 0) {
         failed("Failed to find DIV element", .{});
     }
 
@@ -89,7 +89,7 @@ pub fn main() void {
 
     attr = dom.element.attrByName(element, name, name.len);
     status = dom.attr.setValue(attr, "new value", 9);
-    if (status != core.Status.ok) failed("Failed to change attribute value", .{});
+    if (status != .ok) failed("Failed to change attribute value", .{});
 
     print("Element after attribute \"{s}\" change: ", .{name});
     serializeNode(dom.interface.node(element));

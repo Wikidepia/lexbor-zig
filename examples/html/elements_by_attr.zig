@@ -31,28 +31,28 @@ pub fn main() void {
 
     // Full match
     status = dom.elements.byAttr(body, collection, "class", 5, "red c++ best", 12, true);
-    if (status != core.Status.ok) failed("Failed to get elements by name", .{});
+    if (status != .ok) failed("Failed to get elements by name", .{});
 
     print("\nFull match by 'red c++ best':\n", .{});
     print_collection_elements(collection);
 
     // From begin
     status = dom.elements.byAttrBegin(body, collection, "href", 4, "http", 4, true);
-    if (status != core.Status.ok) failed("Failed to get elements by name", .{});
+    if (status != .ok) failed("Failed to get elements by name", .{});
 
     print("\nFrom begin by 'http':\n", .{});
     print_collection_elements(collection);
 
     // From end
     status = dom.elements.byAttrEnd(body, collection, "class", 5, "grep", 4, true);
-    if (status != core.Status.ok) failed("Failed to get elements by name", .{});
+    if (status != .ok) failed("Failed to get elements by name", .{});
 
     print("\nFrom end by 'grep':\n", .{});
     print_collection_elements(collection);
 
     // Contain
     status = dom.elements.byAttrContain(body, collection, "class", 5, "c++ b", 5, true);
-    if (status != core.Status.ok) failed("Failed to get elements by name", .{});
+    if (status != .ok) failed("Failed to get elements by name", .{});
 
     print("\nContain by 'c++ b':\n", .{});
     print_collection_elements(collection);

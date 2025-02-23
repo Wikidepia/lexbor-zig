@@ -60,20 +60,20 @@ pub extern fn lxb_dom_document_create_text_node(document: ?*lxb_dom_document_t, 
 pub const lxb_dom_node_simple_walker_f = ?*const fn (node: ?*lxb_dom_node_t, ctx: ?*anyopaque) callconv(.C) core.lexbor_action_t;
 
 pub const lxb_dom_node_type_t = enum(c_int) {
-    LXB_DOM_NODE_TYPE_UNDEF = 0x00,
-    LXB_DOM_NODE_TYPE_ELEMENT = 0x01,
-    LXB_DOM_NODE_TYPE_ATTRIBUTE = 0x02,
-    LXB_DOM_NODE_TYPE_TEXT = 0x03,
-    LXB_DOM_NODE_TYPE_CDATA_SECTION = 0x04,
-    LXB_DOM_NODE_TYPE_ENTITY_REFERENCE = 0x05, // historical
-    LXB_DOM_NODE_TYPE_ENTITY = 0x06, // historical
-    LXB_DOM_NODE_TYPE_PROCESSING_INSTRUCTION = 0x07,
-    LXB_DOM_NODE_TYPE_COMMENT = 0x08,
-    LXB_DOM_NODE_TYPE_DOCUMENT = 0x09,
-    LXB_DOM_NODE_TYPE_DOCUMENT_TYPE = 0x0A,
-    LXB_DOM_NODE_TYPE_DOCUMENT_FRAGMENT = 0x0B,
-    LXB_DOM_NODE_TYPE_NOTATION = 0x0C, // historical
-    LXB_DOM_NODE_TYPE_LAST_ENTRY = 0x0D,
+    undef = 0x00,
+    element = 0x01,
+    attribute = 0x02,
+    text = 0x03,
+    cdata_section = 0x04,
+    entity_reference = 0x05, // HISTORICAL
+    entity = 0x06, // HISTORICAL
+    processing_instruction = 0x07,
+    comment = 0x08,
+    document = 0x09,
+    document_type = 0x0a,
+    document_fragment = 0x0b,
+    notation = 0x0c, // HISTORICAL
+    last_entry = 0x0d,
 };
 
 pub const lxb_dom_node = extern struct {
@@ -193,6 +193,8 @@ pub extern fn lxb_dom_element_get_attribute(element: ?*lxb_dom_element_t, qualif
 pub extern fn lxb_dom_element_attr_by_name(element: ?*lxb_dom_element_t, qualified_name: ?*const core.lxb_char_t, length: usize) ?*lxb_dom_attr_t;
 
 pub extern fn lxb_dom_element_remove_attribute(element: ?*lxb_dom_element_t, qualified_name: ?*const core.lxb_char_t, qn_len: usize) core.lxb_status_t;
+
+pub extern fn lxb_dom_element_qualified_name(element: ?*lxb_dom_element_t, len: ?*usize) ?*const core.lxb_char_t;
 
 pub inline fn lxb_dom_element_first_attribute(element: ?*lxb_dom_element_t) ?*lxb_dom_attr_t {
     return element.?.first_attr;

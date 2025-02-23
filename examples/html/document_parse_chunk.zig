@@ -35,7 +35,7 @@ pub fn main() void {
 
     // Parse HTML
     status = html.document.parseChunkBegin(doc);
-    if (status != core.Status.ok) failed("Failed to parse HTML", .{});
+    if (status != .ok) failed("Failed to parse HTML", .{});
 
     print("Incoming HTML chunks:\n", .{});
 
@@ -44,11 +44,11 @@ pub fn main() void {
 
         status = html.document.parseChunk(doc, in, in.len);
 
-        if (status != core.Status.ok) failed("Failed to parse HTML chunk", .{});
+        if (status != .ok) failed("Failed to parse HTML chunk", .{});
     }
 
     status = html.document.parseChunkEnd(doc);
-    if (status != core.Status.ok) failed("Failed to parse HTML", .{});
+    if (status != .ok) failed("Failed to parse HTML", .{});
 
     // Print Result
     print("\nHTML Tree:\n", .{});

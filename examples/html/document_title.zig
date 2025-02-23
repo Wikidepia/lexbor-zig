@@ -18,7 +18,7 @@ pub fn main() void {
 
     // Parse HTML
     status = html.document.parse(doc, input, input.len);
-    if (status != core.Status.ok) failed("Failed to parse HTML", .{});
+    if (status != .ok) failed("Failed to parse HTML", .{});
 
     // Print HTML tree
     print("HTML Tree:\n", .{});
@@ -43,7 +43,7 @@ pub fn main() void {
 
     // Set new title
     status = html.document.setTitle(doc, new_title, new_title.len);
-    if (status != core.Status.ok) failed("Failed to change HTML title", .{});
+    if (status != .ok) failed("Failed to change HTML title", .{});
 
     // Get new title
     if (html.document.getTitle(doc)) |title| {

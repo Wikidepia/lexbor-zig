@@ -67,6 +67,10 @@ pub inline fn lxb_html_document_body_element(document: ?*lxb_html_document_t) ?*
 
 // html/interface.h
 
+pub inline fn lxb_html_interface_template(obj: anytype) *lxb_html_template_element_t {
+    return @as(*lxb_html_template_element_t, @ptrCast(obj));
+}
+
 pub inline fn lxb_html_interface_element(obj: anytype) *lxb_html_element_t {
     return @as(*lxb_html_element_t, @ptrCast(obj));
 }

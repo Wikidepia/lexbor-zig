@@ -7,12 +7,12 @@ pub const dom = @import("../../dom_ext.zig");
 pub const Attr = dom.lxb_dom_attr_t;
 
 pub fn qualifiedName(attr: ?*dom.lxb_dom_attr_t, len: ?*usize) ?[]const u8 {
-    const qn = dom.lxb_dom_attr_qualified_name(attr, len);
+    const qn = dom.lxb_dom_attr_qualified_name(attr, len) orelse return null;
     return sliceTo(@as([*:0]const u8, @ptrCast(qn)), 0);
 }
 
 pub fn value(attr: ?*dom.lxb_dom_attr_t, len: ?*usize) ?[]const u8 {
-    const v = dom.lxb_dom_attr_value(attr, len);
+    const v = dom.lxb_dom_attr_value(attr, len) orelse return null;
     return sliceTo(@as([*:0]const u8, @ptrCast(v)), 0);
 }
 

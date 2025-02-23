@@ -15,7 +15,7 @@ pub fn hasAttribute(element: ?*dom.lxb_dom_element_t, qualified_name: []const u8
 }
 
 pub fn getAttribute(element: ?*dom.lxb_dom_element_t, qualified_name: []const u8, qn_len: usize, value_len: ?*usize) ?[]const u8 {
-    const attr = dom.lxb_dom_element_get_attribute(element, @ptrCast(qualified_name.ptr), qn_len, value_len);
+    const attr = dom.lxb_dom_element_get_attribute(element, @ptrCast(qualified_name.ptr), qn_len, value_len) orelse return null;
     return sliceTo(@as([*:0]const u8, @ptrCast(attr)), 0);
 }
 
@@ -37,4 +37,9 @@ pub fn attrByName(element: ?*dom.lxb_dom_element_t, qualified_name: []const u8, 
 
 pub fn removeAttribute(element: ?*dom.lxb_dom_element_t, qualified_name: []const u8, qn_len: usize) core.lxb_status_t {
     return dom.lxb_dom_element_remove_attribute(element, @ptrCast(qualified_name.ptr), qn_len);
+}
+
+pub fn qualifiedName(element: ?*dom.lxb_dom_element_t, len: ?*usize) ?[]const u8 {
+    const qn = dom.lxb_dom_element_qualified_name(element, len) orelse return null;
+    return sliceTo(@as([*:0]const u8, @ptrCast(qn)), 0);
 }
