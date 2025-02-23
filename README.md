@@ -55,14 +55,14 @@ See more options: [build.zig](https://github.com/doccaico/lexbor-zig-static/blob
 
 #### How to build a static library (it included all modules)
 ```
-git clone https://github.com/doccaico/lexbor-zig-static
+git clone https://github.com/doccaico/lexbor-zig
 
 zig build
 ```
 
 #### How to build static libraries separately (e.g. html module)
 ```
-git clone https://github.com/doccaico/lexbor-zig-static
+git clone https://github.com/doccaico/lexbor-zig
 
 zig build -Dhtml
 ```
