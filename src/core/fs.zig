@@ -1,5 +1,5 @@
 const std = @import("std");
-const sliceTo = std.mem.sliceTo;
+const span = std.mem.span;
 
 pub const core = @import("../core_ext.zig");
 
@@ -19,5 +19,5 @@ pub fn fileType(full_path: []const u8) core.lexbor_fs_file_type_t {
 
 pub fn fileEasyRead(full_path: []const u8, len: ?*usize) ?[]u8 {
     const content = core.lexbor_fs_file_easy_read(@ptrCast(full_path.ptr), len) orelse return null;
-    return sliceTo(@as([*:0]u8, @ptrCast(content)), 0);
+    return span(content);
 }

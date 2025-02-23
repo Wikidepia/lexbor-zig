@@ -499,7 +499,7 @@ pub const lexbor_fs_file_type_t = enum(c_int) {
 
 pub extern fn lexbor_fs_dir_read(dirpath: ?*const lxb_char_t, opt: c_int, callback: lexbor_fs_dir_file_f, ctx: ?*anyopaque) lxb_status_t;
 pub extern fn lexbor_fs_file_type(full_path: ?*const lxb_char_t) lexbor_fs_file_type_t;
-pub extern fn lexbor_fs_file_easy_read(full_path: ?*const lxb_char_t, len: ?*usize) ?*lxb_char_t;
+pub extern fn lexbor_fs_file_easy_read(full_path: ?*const lxb_char_t, len: ?*usize) ?[*:0]lxb_char_t;
 
 // core/hash.h
 

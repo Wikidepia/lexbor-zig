@@ -227,7 +227,7 @@ pub extern fn lxb_tag_data_by_id(tag_id: lxb_tag_id_t) ?*lxb_tag_data_t;
 pub extern fn lxb_tag_data_by_name(hash: ?*core.lexbor_hash_t, name: ?*const core.lxb_char_t, len: usize) ?*lxb_tag_data_t;
 pub extern fn lxb_tag_data_by_name_upper(hash: ?*core.lexbor_hash_t, name: ?*const core.lxb_char_t, len: usize) ?*lxb_tag_data_t;
 
-pub inline fn lxb_tag_name_by_id(tag_id: lxb_tag_id_t, len: ?*usize) ?[*:0]core.lxb_char_t {
+pub inline fn lxb_tag_name_by_id(tag_id: lxb_tag_id_t, len: ?*usize) ?[*:0]const core.lxb_char_t {
     const data = lxb_tag_data_by_id(tag_id);
     if (data == null) {
         if (len != null) {

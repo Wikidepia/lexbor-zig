@@ -188,13 +188,13 @@ pub extern fn lxb_dom_element_set_attribute(element: ?*lxb_dom_element_t, qualif
 
 pub extern fn lxb_dom_element_has_attribute(element: ?*lxb_dom_element_t, qualified_name: ?*const core.lxb_char_t, qn_len: usize) bool;
 
-pub extern fn lxb_dom_element_get_attribute(element: ?*lxb_dom_element_t, qualified_name: ?*const core.lxb_char_t, qn_len: usize, value_len: ?*usize) ?*const core.lxb_char_t;
+pub extern fn lxb_dom_element_get_attribute(element: ?*lxb_dom_element_t, qualified_name: ?*const core.lxb_char_t, qn_len: usize, value_len: ?*usize) ?[*:0]const core.lxb_char_t;
 
 pub extern fn lxb_dom_element_attr_by_name(element: ?*lxb_dom_element_t, qualified_name: ?*const core.lxb_char_t, length: usize) ?*lxb_dom_attr_t;
 
 pub extern fn lxb_dom_element_remove_attribute(element: ?*lxb_dom_element_t, qualified_name: ?*const core.lxb_char_t, qn_len: usize) core.lxb_status_t;
 
-pub extern fn lxb_dom_element_qualified_name(element: ?*lxb_dom_element_t, len: ?*usize) ?*const core.lxb_char_t;
+pub extern fn lxb_dom_element_qualified_name(element: ?*lxb_dom_element_t, len: ?*usize) ?[*:0]const core.lxb_char_t;
 
 pub inline fn lxb_dom_element_first_attribute(element: ?*lxb_dom_element_t) ?*lxb_dom_attr_t {
     return element.?.first_attr;
@@ -227,11 +227,11 @@ pub const lxb_dom_attr = extern struct {
     prev: ?*lxb_dom_attr_t,
 };
 
-pub extern fn lxb_dom_attr_qualified_name(attr: ?*lxb_dom_attr_t, len: ?*usize) ?*core.lxb_char_t;
+pub extern fn lxb_dom_attr_qualified_name(attr: ?*lxb_dom_attr_t, len: ?*usize) ?[*:0]core.lxb_char_t;
 
 pub extern fn lxb_dom_attr_set_value(attr: ?*lxb_dom_attr_t, value: ?*const core.lxb_char_t, value_len: usize) core.lxb_status_t;
 
-pub inline fn lxb_dom_attr_value(attr: ?*lxb_dom_attr_t, len: ?*usize) ?*const core.lxb_char_t {
+pub inline fn lxb_dom_attr_value(attr: ?*lxb_dom_attr_t, len: ?*usize) ?[*:0]const core.lxb_char_t {
     if (attr.?.value == null) {
         if (len != null) {
             len.?.* = 0;

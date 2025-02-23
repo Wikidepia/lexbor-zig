@@ -56,9 +56,9 @@ pub extern fn lxb_html_document_parse_chunk_begin(document: ?*lxb_html_document_
 pub extern fn lxb_html_document_parse_chunk(document: ?*lxb_html_document_t, html: ?*const core.lxb_char_t, size: usize) core.lxb_status_t;
 pub extern fn lxb_html_document_parse_chunk_end(document: ?*lxb_html_document_t) core.lxb_status_t;
 
-pub extern fn lxb_html_document_title(document: ?*lxb_html_document_t, len: ?*usize) ?*core.lxb_char_t;
+pub extern fn lxb_html_document_title(document: ?*lxb_html_document_t, len: ?*usize) ?[*:0]core.lxb_char_t;
 pub extern fn lxb_html_document_title_set(document: ?*lxb_html_document_t, title: ?*const core.lxb_char_t, len: usize) core.lxb_status_t;
-pub extern fn lxb_html_document_title_raw(document: ?*lxb_html_document_t, len: ?*usize) ?*core.lxb_char_t;
+pub extern fn lxb_html_document_title_raw(document: ?*lxb_html_document_t, len: ?*usize) ?[*:0]core.lxb_char_t;
 
 // inline functions
 pub inline fn lxb_html_document_body_element(document: ?*lxb_html_document_t) ?*lxb_html_body_element_t {
@@ -610,7 +610,7 @@ pub const lxb_html_serialize_opt = enum(c_int) {
     full_doctype = 0x40,
 };
 
-pub const lxb_html_serialize_cb_f = ?*const fn (data: ?[*]const core.lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) core.lxb_status_t;
+pub const lxb_html_serialize_cb_f = ?*const fn (data: ?[*:0]const core.lxb_char_t, len: usize, ctx: ?*anyopaque) callconv(.C) core.lxb_status_t;
 
 pub extern fn lxb_html_serialize_pretty_tree_cb(node: ?*dom.lxb_dom_node_t, opt: lxb_html_serialize_opt_t, indent: usize, cb: lxb_html_serialize_cb_f, ctx: ?*anyopaque) core.lxb_status_t;
 pub extern fn lxb_html_serialize_pretty_cb(node: ?*dom.lxb_dom_node_t, opt: lxb_html_serialize_opt_t, indent: usize, cb: lxb_html_serialize_cb_f, ctx: ?*anyopaque) core.lxb_status_t;
@@ -873,7 +873,7 @@ pub extern fn lxb_html_encoding_destroy(em: ?*lxb_html_encoding_t, self_destroy:
 
 pub extern fn lxb_html_encoding_determine(em: ?*lxb_html_encoding_t, data: ?*const core.lxb_char_t, end: ?*const core.lxb_char_t) core.lxb_status_t;
 
-pub extern fn lxb_html_encoding_content(data: ?*const core.lxb_char_t, end: ?*const core.lxb_char_t, name_end: ?*?*const core.lxb_char_t) ?*const core.lxb_char_t;
+pub extern fn lxb_html_encoding_content(data: ?*const core.lxb_char_t, end: ?*const core.lxb_char_t, name_end: ?*?*const core.lxb_char_t) ?[*:0]const core.lxb_char_t;
 
 pub inline fn lxb_html_encoding_meta_entry(em: ?*lxb_html_encoding_t, idx: usize) ?*lxb_html_encoding_entry_t {
     return @ptrCast(@alignCast(core.lexbor_array_obj_get(&em.?.result, idx)));

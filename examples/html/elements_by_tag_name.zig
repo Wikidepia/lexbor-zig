@@ -1,6 +1,5 @@
 const std = @import("std");
 const print = std.debug.print;
-const panic = std.debug.panic;
 
 const failed = @import("base.zig").failed;
 const parse = @import("base.zig").parse;
@@ -29,6 +28,7 @@ pub fn main() void {
 
     for (0..dom.collection.length(collection)) |i| {
         const element = dom.collection.element(collection, i);
+        // _ = element;
         serializeNode(dom.interface.node(element));
     }
 }

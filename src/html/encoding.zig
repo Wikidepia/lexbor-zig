@@ -1,5 +1,5 @@
 const std = @import("std");
-const sliceTo = std.mem.sliceTo;
+const span = std.mem.span;
 
 pub const core = @import("../core_ext.zig");
 pub const html = @import("../html_ext.zig");
@@ -24,7 +24,7 @@ pub fn determine(em: ?*html.lxb_html_encoding_t, data: []const u8, end: ?*const 
 
 pub fn content(data: []const u8, end: []const u8, name_end: [][]const u8) ?[]const u8 {
     const content_ = html.lxb_html_encoding_content(@ptrCast(data.ptr), @ptrCast(end.ptr), @ptrCast(name_end.ptr)) orelse return null;
-    return sliceTo(@as([*:0][*:0]const u8, @ptrCast(content_)), 0);
+    return span(content_);
 }
 
 pub fn metaEntry(em: ?*html.lxb_html_encoding_t, idx: usize) ?*html.lxb_html_encoding_entry_t {

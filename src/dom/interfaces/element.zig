@@ -1,5 +1,5 @@
 const std = @import("std");
-const sliceTo = std.mem.sliceTo;
+const span = std.mem.span;
 
 pub const core = @import("../../core_ext.zig");
 pub const dom = @import("../../dom_ext.zig");
@@ -16,7 +16,7 @@ pub fn hasAttribute(element: ?*dom.lxb_dom_element_t, qualified_name: []const u8
 
 pub fn getAttribute(element: ?*dom.lxb_dom_element_t, qualified_name: []const u8, qn_len: usize, value_len: ?*usize) ?[]const u8 {
     const attr = dom.lxb_dom_element_get_attribute(element, @ptrCast(qualified_name.ptr), qn_len, value_len) orelse return null;
-    return sliceTo(@as([*:0]const u8, @ptrCast(attr)), 0);
+    return span(attr);
 }
 
 pub fn firstAttribute(element: ?*dom.lxb_dom_element_t) ?*dom.lxb_dom_attr_t {
@@ -41,5 +41,5 @@ pub fn removeAttribute(element: ?*dom.lxb_dom_element_t, qualified_name: []const
 
 pub fn qualifiedName(element: ?*dom.lxb_dom_element_t, len: ?*usize) ?[]const u8 {
     const qn = dom.lxb_dom_element_qualified_name(element, len) orelse return null;
-    return sliceTo(@as([*:0]const u8, @ptrCast(qn)), 0);
+    return span(qn);
 }
