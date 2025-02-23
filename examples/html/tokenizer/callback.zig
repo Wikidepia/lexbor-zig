@@ -40,7 +40,7 @@ fn tokenCallback(tkz: ?*html.Tokenizer, token: ?*html.Token, ctx: ?*anyopaque) c
 
     const bool_str = if ((token.?.type & @intFromEnum(html.token.Type.close)) == 1) "true" else "false";
 
-    print("Tag name: {s}; Tag id: {any}; Is close: {s}\n", .{ name, token.?.tag_id, bool_str });
+    print("Tag name: {s}; Tag id: {d}; Is close: {s}\n", .{ name, token.?.tag_id, bool_str });
 
     return token;
 }
