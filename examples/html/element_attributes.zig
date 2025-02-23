@@ -1,6 +1,7 @@
 const std = @import("std");
 const print = std.debug.print;
 
+const failed = @import("base.zig").failed;
 const parse = @import("base.zig").parse;
 const serialize = @import("base.zig").serialize;
 const serializeNode = @import("base.zig").serializeNode;
@@ -9,7 +10,7 @@ const core = @import("lexbor").core;
 const dom = @import("lexbor").dom;
 const html = @import("lexbor").html;
 
-pub fn main() !void {
+pub fn main() void {
     const input = "<div id=my-best-id></div>";
     const name = "my-name";
     var element: ?*dom.Element = undefined;
@@ -25,7 +26,7 @@ pub fn main() !void {
     print("Tree after parse:\n", .{});
     serialize(dom.interface.node(doc));
 
-    const collection = dom.collection.make(&doc.dom_document, 16) orelse return error.FailedToCreateCollection;
+    const collection = dom.collection.make(&doc.dom_document, 16) orelse failed("Failed to create collection", .{});
     defer _ = dom.collection.destroy(collection, true);
 
     // Get BODY element (root for search)
@@ -36,13 +37,13 @@ pub fn main() !void {
     status = dom.elements.byTagName(element, collection, "div", 3);
 
     if (status != core.Status.ok or dom.collection.length(collection) == 0) {
-        return error.FailedToFindDivElement;
+        failed("Failed to find DIV element", .{});
     }
 
     // Append new attribute
     element = dom.collection.element(collection, 0);
 
-    var attr: ?*dom.Attr = dom.element.setAttribute(element, name, name.len, "oh God", 6) orelse return error.FailedToCreateNewAttribute;
+    var attr: ?*dom.Attr = dom.element.setAttribute(element, name, name.len, "oh God", 6) orelse failed("Failed to create and append new attribute", .{});
 
     // Print Result
     print("\nTree after append attribute to DIV element:\n", .{});
@@ -59,7 +60,7 @@ pub fn main() !void {
 
     // Get value by qualified name
     var value_len: usize = undefined;
-    const value = dom.element.getAttribute(element, name, name.len, &value_len) orelse return error.FailedToGetAttribute;
+    const value = dom.element.getAttribute(element, name, name.len, &value_len) orelse failed("Failed to get attribute value by qualified name", .{});
 
     print("\nGet attribute value by qualified name \"{s}\": {s}\n", .{ name, value });
 
@@ -88,9 +89,7 @@ pub fn main() !void {
 
     attr = dom.element.attrByName(element, name, name.len);
     status = dom.attr.setValue(attr, "new value", 9);
-    if (status != core.Status.ok) {
-        return error.FailedToChangeAttributeValue;
-    }
+    if (status != core.Status.ok) failed("Failed to change attribute value", .{});
 
     print("Element after attribute \"{s}\" change: ", .{name});
     serializeNode(dom.interface.node(element));

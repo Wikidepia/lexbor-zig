@@ -1,13 +1,14 @@
 const std = @import("std");
 const print = std.debug.print;
 
+const failed = @import("base.zig").failed;
 const serialize = @import("base.zig").serialize;
 
 const core = @import("lexbor").core;
 const dom = @import("lexbor").dom;
 const html = @import("lexbor").html;
 
-pub fn main() !void {
+pub fn main() void {
     const input = [_][]const u8{
         "<!DOCT",
         "YPE htm",
@@ -29,23 +30,27 @@ pub fn main() !void {
     var status: core.Status = undefined;
 
     // Initialization
-    const doc = html.document.create();
-    if (doc == null) return error.FailedToCreate;
+    const doc = html.document.create() orelse failed("Failed to create HTML Document", .{});
     defer _ = html.document.destroy(doc);
 
     // Parse HTML
     status = html.document.parseChunkBegin(doc);
-    if (status != core.Status.ok) return error.FailedToParseChunkBegin;
+    if (status != core.Status.ok) failed("Failed to parse HTML", .{});
+
+    print("Incoming HTML chunks:\n", .{});
 
     for (input) |in| {
+        print("{s}\n", .{in});
+
         status = html.document.parseChunk(doc, in, in.len);
-        if (status != core.Status.ok) return error.FailedToParseChunk;
+
+        if (status != core.Status.ok) failed("Failed to parse HTML chunk", .{});
     }
 
     status = html.document.parseChunkEnd(doc);
-    if (status != core.Status.ok) return error.FailedToParseChunkEnd;
+    if (status != core.Status.ok) failed("Failed to parse HTML", .{});
 
     // Print Result
-    print("HTML Tree:\n", .{});
+    print("\nHTML Tree:\n", .{});
     serialize(dom.interface.node(doc));
 }

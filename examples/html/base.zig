@@ -1,10 +1,16 @@
 const std = @import("std");
+const exit = std.process.exit;
 const panic = std.debug.panic;
 const print = std.debug.print;
 
 const core = @import("lexbor").core;
 const html = @import("lexbor").html;
 const dom = @import("lexbor").dom;
+
+pub fn failed(comptime fmt: []const u8, args: anytype) noreturn {
+    print(fmt, args);
+    exit(1);
+}
 
 pub fn parse(input: []const u8, input_len: usize) *html.Document {
     var status: core.Status = undefined;

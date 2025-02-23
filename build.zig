@@ -843,5 +843,6 @@ var examples = [_]Example{
     .{ .name = "html-elements-by-attr", .path = "examples/html/elements_by_attr.zig" },
     .{ .name = "html-elements-by-class-name", .path = "examples/html/elements_by_class_name.zig" },
     .{ .name = "html-elements-by-tag-name", .path = "examples/html/elements_by_tag_name.zig" },
+    .{ .name = "html-encoding", .path = "examples/html/encoding.zig" },
     .{ .name = "html-parse", .path = "examples/html/parse.zig" },
 };

@@ -1,7 +1,7 @@
 const std = @import("std");
 const print = std.debug.print;
-const panic = std.debug.panic;
 
+const failed = @import("base.zig").failed;
 const parse = @import("base.zig").parse;
 const serializeNode = @import("base.zig").serializeNode;
 
@@ -9,7 +9,7 @@ const core = @import("lexbor").core;
 const dom = @import("lexbor").dom;
 const html = @import("lexbor").html;
 
-pub fn main() !void {
+pub fn main() void {
     const input =
         "<div class=\"best blue some\"><span></div>" ++
         "<div class=\"red pref_best grep\"></div>" ++
@@ -26,41 +26,33 @@ pub fn main() !void {
 
     const body = dom.interface.element(doc.body);
 
-    const collection = dom.collection.make(&doc.dom_document, 128) orelse return error.FailedToCreateCollectionObj;
+    const collection = dom.collection.make(&doc.dom_document, 128) orelse failed("Failed to create Collection object", .{});
     defer _ = dom.collection.destroy(collection, true);
 
     // Full match
     status = dom.elements.byAttr(body, collection, "class", 5, "red c++ best", 12, true);
-    if (status != core.Status.ok) {
-        panic("Failed to get elements by name", .{});
-    }
+    if (status != core.Status.ok) failed("Failed to get elements by name", .{});
 
     print("\nFull match by 'red c++ best':\n", .{});
     print_collection_elements(collection);
 
     // From begin
     status = dom.elements.byAttrBegin(body, collection, "href", 4, "http", 4, true);
-    if (status != core.Status.ok) {
-        panic("Failed to get elements by name", .{});
-    }
+    if (status != core.Status.ok) failed("Failed to get elements by name", .{});
 
     print("\nFrom begin by 'http':\n", .{});
     print_collection_elements(collection);
 
     // From end
     status = dom.elements.byAttrEnd(body, collection, "class", 5, "grep", 4, true);
-    if (status != core.Status.ok) {
-        panic("Failed to get elements by name", .{});
-    }
+    if (status != core.Status.ok) failed("Failed to get elements by name", .{});
 
     print("\nFrom end by 'grep':\n", .{});
     print_collection_elements(collection);
 
     // Contain
     status = dom.elements.byAttrContain(body, collection, "class", 5, "c++ b", 5, true);
-    if (status != core.Status.ok) {
-        panic("Failed to get elements by name", .{});
-    }
+    if (status != core.Status.ok) failed("Failed to get elements by name", .{});
 
     print("\nContain by 'c++ b':\n", .{});
     print_collection_elements(collection);

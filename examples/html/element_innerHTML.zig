@@ -1,13 +1,14 @@
 const std = @import("std");
 const print = std.debug.print;
 
+const failed = @import("base.zig").failed;
 const parse = @import("base.zig").parse;
 const serialize = @import("base.zig").serialize;
 
 const dom = @import("lexbor").dom;
 const html = @import("lexbor").html;
 
-pub fn main() !void {
+pub fn main() void {
     const input = "<div><span>blah-blah-blah</div>";
     const inner = "<ul><li>1<li>2<li>3</ul>";
 
@@ -27,7 +28,7 @@ pub fn main() !void {
     print("\nHTML for innerHTML:\n", .{});
     print("{s}\n", .{inner});
 
-    _ = html.element.innerHtmlSet(html.interface.element(body), inner, inner.len) orelse return error.FailedToParseInnerHTML;
+    _ = html.element.innerHtmlSet(html.interface.element(body), inner, inner.len) orelse failed("Failed to parse innerHTML", .{});
 
     // Print Result
     print("\nTree after innerHTML set:\n", .{});

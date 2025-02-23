@@ -1,7 +1,7 @@
 const std = @import("std");
 const print = std.debug.print;
-const panic = std.debug.panic;
 
+const failed = @import("base.zig").failed;
 const parse = @import("base.zig").parse;
 const serializeNode = @import("base.zig").serializeNode;
 
@@ -9,7 +9,7 @@ const core = @import("lexbor").core;
 const dom = @import("lexbor").dom;
 const html = @import("lexbor").html;
 
-pub fn main() !void {
+pub fn main() void {
     const input =
         "<div class=\"best blue some\"><span></div>" ++
         "<div class=\"red pref_best grep\"></div>" ++
@@ -19,13 +19,11 @@ pub fn main() !void {
     const doc = parse(input, input.len);
     defer _ = html.document.destroy(doc);
 
-    const collection = dom.collection.make(&doc.dom_document, 128) orelse return error.FailedToCreateCollectionObj;
+    const collection = dom.collection.make(&doc.dom_document, 128) orelse failed("Failed to create Collection object", .{});
     defer _ = dom.collection.destroy(collection, true);
 
     const status = dom.elements.byClassName(dom.interface.element(doc.body), collection, "best", 4);
-    if (status != core.Status.ok) {
-        panic("Failed to get elements by name", .{});
-    }
+    if (status != core.Status.ok) failed("Failed to get elements by name", .{});
 
     print("HTML:\n", .{});
     print("{s}\n", .{input});
