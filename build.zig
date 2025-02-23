@@ -8,8 +8,6 @@ const eql = std.mem.eql;
 const exit = std.process.exit;
 const print = std.debug.print;
 
-var is_single: bool = undefined;
-
 pub const Options = struct {
     core: bool = false,
     css: bool = false,
@@ -47,89 +45,89 @@ pub fn build(b: *Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    parseOptions(&options);
-
     const lib_mod = b.addModule("lexbor", .{
         .root_source_file = b.path("src/lexbor.zig"),
         .target = target,
         .optimize = optimize,
     });
 
+    const is_single = parseOptions(&options);
+
     if (is_single) {
-        compileSingle(b, .{
+        compileSingle(b, options.utils, .{
             .name = "liblexbor",
             .root_module = lib_mod,
             .linkage = .static,
         });
     } else {
         if (options.core)
-            compileCore(b, .{
+            compileCore(b, options.utils, .{
                 .name = "liblexbor-core",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.css)
-            compileCss(b, .{
+            compileCss(b, options.utils, .{
                 .name = "liblexbor-css",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.dom)
-            compileDom(b, .{
+            compileDom(b, options.utils, .{
                 .name = "liblexbor-dom",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.encoding)
-            compileEncoding(b, .{
+            compileEncoding(b, options.utils, .{
                 .name = "liblexbor-encoding",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.html)
-            compileHtml(b, .{
+            compileHtml(b, options.utils, .{
                 .name = "liblexbor-html",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.ns)
-            compileNs(b, .{
+            compileNs(b, options.utils, .{
                 .name = "liblexbor-ns",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.ports)
-            compilePorts(b, .{
+            compilePorts(b, options.utils, .{
                 .name = "liblexbor-ports",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.punycode)
-            compilePunycode(b, .{
+            compilePunycode(b, options.utils, .{
                 .name = "liblexbor-punycode",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.selectors)
-            compileSelectors(b, .{
+            compileSelectors(b, options.utils, .{
                 .name = "liblexbor-selectors",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.tag)
-            compileTag(b, .{
+            compileTag(b, options.utils, .{
                 .name = "liblexbor-tag",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.unicode)
-            compileUnicode(b, .{
+            compileUnicode(b, options.utils, .{
                 .name = "liblexbor-unicode",
                 .root_module = lib_mod,
                 .linkage = .static,
             });
         if (options.url)
-            compileUrl(b, .{
+            compileUrl(b, options.utils, .{
                 .name = "liblexbor-url",
                 .root_module = lib_mod,
                 .linkage = .static,
@@ -173,19 +171,18 @@ pub fn build(b: *Build) !void {
     }
 }
 
-fn parseOptions(options: *Options) void {
+fn parseOptions(options: *Options) bool {
     if (!options.core and !options.css and !options.dom and
         !options.encoding and !options.html and !options.ns and
         !options.ports and !options.punycode and !options.selectors and
-        !options.tag and !options.unicode and !options.url and
-        !options.utils)
+        !options.tag and !options.unicode and !options.url)
     {
-        is_single = true;
-        return;
+        return true;
     }
+    return false;
 }
 
-fn compileCore(b: *Build, static_options: LibraryOptions) void {
+fn compileCore(b: *Build, with_utils: bool, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     // DEPENDENCIES ""
@@ -197,11 +194,15 @@ fn compileCore(b: *Build, static_options: LibraryOptions) void {
         .files = &ports_src,
         .flags = &cflags_ports,
     });
+    if (with_utils) lib.addCSourceFiles(.{
+        .files = &utils_src,
+        .flags = &cflags,
+    });
     lib.linkLibC();
     b.installArtifact(lib);
 }
 
-fn compileCss(b: *Build, static_options: LibraryOptions) void {
+fn compileCss(b: *Build, with_utils: bool, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     // DEPENDENCIES "core"
@@ -217,11 +218,15 @@ fn compileCss(b: *Build, static_options: LibraryOptions) void {
         .files = &css_src,
         .flags = &cflags,
     });
+    if (with_utils) lib.addCSourceFiles(.{
+        .files = &utils_src,
+        .flags = &cflags,
+    });
     lib.linkLibC();
     b.installArtifact(lib);
 }
 
-fn compileDom(b: *Build, static_options: LibraryOptions) void {
+fn compileDom(b: *Build, with_utils: bool, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     // DEPENDENCIES "core tag ns"
@@ -245,11 +250,15 @@ fn compileDom(b: *Build, static_options: LibraryOptions) void {
         .files = &dom_src,
         .flags = &cflags,
     });
+    if (with_utils) lib.addCSourceFiles(.{
+        .files = &utils_src,
+        .flags = &cflags,
+    });
     lib.linkLibC();
     b.installArtifact(lib);
 }
 
-fn compileEncoding(b: *Build, static_options: LibraryOptions) void {
+fn compileEncoding(b: *Build, with_utils: bool, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     // DEPENDENCIES "core"
@@ -265,11 +274,15 @@ fn compileEncoding(b: *Build, static_options: LibraryOptions) void {
         .files = &encoding_src,
         .flags = &cflags,
     });
+    if (with_utils) lib.addCSourceFiles(.{
+        .files = &utils_src,
+        .flags = &cflags,
+    });
     lib.linkLibC();
     b.installArtifact(lib);
 }
 
-fn compileHtml(b: *Build, static_options: LibraryOptions) void {
+fn compileHtml(b: *Build, with_utils: bool, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     // DEPENDENCIES "core dom ns tag css selectors"
@@ -305,11 +318,15 @@ fn compileHtml(b: *Build, static_options: LibraryOptions) void {
         .files = &html_src,
         .flags = &cflags,
     });
+    if (with_utils) lib.addCSourceFiles(.{
+        .files = &utils_src,
+        .flags = &cflags,
+    });
     lib.linkLibC();
     b.installArtifact(lib);
 }
 
-fn compileNs(b: *Build, static_options: LibraryOptions) void {
+fn compileNs(b: *Build, with_utils: bool, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     // DEPENDENCIES "core"
@@ -325,21 +342,30 @@ fn compileNs(b: *Build, static_options: LibraryOptions) void {
         .files = &ns_src,
         .flags = &cflags,
     });
+    if (with_utils) lib.addCSourceFiles(.{
+        .files = &utils_src,
+        .flags = &cflags,
+    });
     lib.linkLibC();
     b.installArtifact(lib);
 }
 
-fn compilePorts(b: *Build, static_options: LibraryOptions) void {
+fn compilePorts(b: *Build, with_utils: bool, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     lib.addCSourceFiles(.{
         .files = &ports_src,
         .flags = &cflags_ports,
     });
+    if (with_utils) lib.addCSourceFiles(.{
+        .files = &utils_src,
+        .flags = &cflags,
+    });
+    lib.linkLibC();
     b.installArtifact(lib);
 }
 
-fn compilePunycode(b: *Build, static_options: LibraryOptions) void {
+fn compilePunycode(b: *Build, with_utils: bool, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     // DEPENDENCIES "core encoding"
@@ -359,11 +385,15 @@ fn compilePunycode(b: *Build, static_options: LibraryOptions) void {
         .files = &punycode_src,
         .flags = &cflags,
     });
+    if (with_utils) lib.addCSourceFiles(.{
+        .files = &utils_src,
+        .flags = &cflags,
+    });
     lib.linkLibC();
     b.installArtifact(lib);
 }
 
-fn compileSelectors(b: *Build, static_options: LibraryOptions) void {
+fn compileSelectors(b: *Build, with_utils: bool, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     // DEPENDENCIES "core dom css tag ns"
@@ -395,11 +425,15 @@ fn compileSelectors(b: *Build, static_options: LibraryOptions) void {
         .files = &selectors_src,
         .flags = &cflags,
     });
+    if (with_utils) lib.addCSourceFiles(.{
+        .files = &utils_src,
+        .flags = &cflags,
+    });
     lib.linkLibC();
     b.installArtifact(lib);
 }
 
-fn compileTag(b: *Build, static_options: LibraryOptions) void {
+fn compileTag(b: *Build, with_utils: bool, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     // DEPENDENCIES "core"
@@ -415,11 +449,15 @@ fn compileTag(b: *Build, static_options: LibraryOptions) void {
         .files = &tag_src,
         .flags = &cflags,
     });
+    if (with_utils) lib.addCSourceFiles(.{
+        .files = &utils_src,
+        .flags = &cflags,
+    });
     lib.linkLibC();
     b.installArtifact(lib);
 }
 
-fn compileUnicode(b: *Build, static_options: LibraryOptions) void {
+fn compileUnicode(b: *Build, with_utils: bool, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     // DEPENDENCIES "core encoding punycode"
@@ -443,11 +481,15 @@ fn compileUnicode(b: *Build, static_options: LibraryOptions) void {
         .files = &unicode_src,
         .flags = &cflags,
     });
+    if (with_utils) lib.addCSourceFiles(.{
+        .files = &utils_src,
+        .flags = &cflags,
+    });
     lib.linkLibC();
     b.installArtifact(lib);
 }
 
-fn compileUrl(b: *Build, static_options: LibraryOptions) void {
+fn compileUrl(b: *Build, with_utils: bool, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     // DEPENDENCIES "core encoding unicode punycode"
@@ -475,6 +517,10 @@ fn compileUrl(b: *Build, static_options: LibraryOptions) void {
         .files = &url_src,
         .flags = &cflags,
     });
+    if (with_utils) lib.addCSourceFiles(.{
+        .files = &utils_src,
+        .flags = &cflags,
+    });
     lib.linkLibC();
     b.installArtifact(lib);
 }
@@ -499,7 +545,7 @@ fn compileUtils(b: *Build, static_options: LibraryOptions) void {
     b.installArtifact(lib);
 }
 
-fn compileSingle(b: *Build, static_options: LibraryOptions) void {
+fn compileSingle(b: *Build, with_utils: bool, static_options: LibraryOptions) void {
     const lib = b.addLibrary(static_options);
     lib.addIncludePath(b.path("lib"));
     // core
@@ -563,7 +609,7 @@ fn compileSingle(b: *Build, static_options: LibraryOptions) void {
         .flags = &cflags,
     });
     // utils
-    lib.addCSourceFiles(.{
+    if (with_utils) lib.addCSourceFiles(.{
         .files = &utils_src,
         .flags = &cflags,
     });
