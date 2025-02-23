@@ -846,4 +846,5 @@ var examples = [_]Example{
     .{ .name = "html-encoding", .path = "examples/html/encoding.zig" },
     .{ .name = "html-html2sexpr", .path = "examples/html/html2sexpr.zig" },
     .{ .name = "html-parse", .path = "examples/html/parse.zig" },
+    .{ .name = "html-parse-chunk", .path = "examples/html/parse_chunk.zig" },
 };

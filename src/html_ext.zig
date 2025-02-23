@@ -639,8 +639,10 @@ pub const lxb_html_parser_t = extern struct {
 pub extern fn lxb_html_parser_create() ?*lxb_html_parser_t;
 pub extern fn lxb_html_parser_init(parser: ?*lxb_html_parser_t) core.lxb_status_t;
 pub extern fn lxb_html_parser_destroy(parser: ?*lxb_html_parser_t) ?*lxb_html_parser_t;
-
 pub extern fn lxb_html_parse(parser: ?*lxb_html_parser_t, html: ?*const core.lxb_char_t, size: usize) ?*lxb_html_document_t;
+pub extern fn lxb_html_parse_chunk_begin(parser: ?*lxb_html_parser_t) ?*lxb_html_document_t;
+pub extern fn lxb_html_parse_chunk_process(parser: ?*lxb_html_parser_t, html: ?*const core.lxb_char_t, size: usize) core.lxb_status_t;
+pub extern fn lxb_html_parse_chunk_end(parser: ?*lxb_html_parser_t) core.lxb_status_t;
 
 // html/tokenizer.h
 

@@ -21,10 +21,10 @@ pub fn main() void {
     }
 
     // Parse
-    const doc_one = html.parser.parse(parser, html_one, html_one.len) orelse failed("Failed to create Document object", .{});
+    const doc_one = html.parse(parser, html_one, html_one.len) orelse failed("Failed to create Document object", .{});
     defer _ = html.document.destroy(doc_one);
 
-    const doc_two = html.parser.parse(parser, html_two, html_two.len) orelse failed("Failed to create Document object", .{});
+    const doc_two = html.parse(parser, html_two, html_two.len) orelse failed("Failed to create Document object", .{});
     defer _ = html.document.destroy(doc_two);
 
     // Destroy parser

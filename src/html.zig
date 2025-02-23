@@ -6,6 +6,8 @@ pub const Entry = encoding.Entry;
 pub const Encoding = encoding.Encoding;
 
 pub const parser = @import("html/parser.zig");
+pub const parse = parser.parse;
+
 pub const tag = @import("html/tag.zig");
 pub const serialize = @import("html/serialize.zig");
 pub const interface = @import("html/interface.zig");
