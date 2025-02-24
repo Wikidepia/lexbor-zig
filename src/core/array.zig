@@ -51,3 +51,11 @@ pub fn insert(array: ?*core.lexbor_array_t, idx: usize, value: ?*anyopaque) core
 pub fn size(array: ?*core.lexbor_array_t) usize {
     return core.lexbor_array_size(array);
 }
+
+pub fn delete(array: ?*core.lexbor_array_t, begin: usize, length_: usize) void {
+    return core.lexbor_array_delete(array, begin, length_);
+}
+
+pub fn expand(array: ?*core.lexbor_array_t, up_to: usize) ?*?*anyopaque {
+    return core.lexbor_array_expand(array, up_to);
+}

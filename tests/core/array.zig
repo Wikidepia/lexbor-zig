@@ -254,111 +254,111 @@ test "insert_to_end" {
     _ = core.array.destroy(&array, false);
 }
 
-// test "delete" {
-//     var array: lb.core.Array = undefined;
-//     _ = array.init(32);
-//
-//     for (0..10) |i| {
-//         _ = array.push(@as(?*anyopaque, @ptrFromInt(i)));
-//     }
-//
-//     try expectEqual(array.length, 10);
-//
-//     array.delete(10, 100);
-//     try expectEqual(array.length, 10);
-//
-//     array.delete(100, 1);
-//     try expectEqual(array.length, 10);
-//
-//     array.delete(100, 0);
-//     try expectEqual(array.length, 10);
-//
-//     for (0..10) |i| {
-//         try expectEqual(lb.core.arrayGet(&array, i), @as(?*anyopaque, @ptrFromInt(i)));
-//     }
-//
-//     array.delete(4, 4);
-//     try expectEqual(array.length, 6);
-//
-//     array.delete(4, 0);
-//     try expectEqual(array.length, 6);
-//
-//     array.delete(0, 0);
-//     try expectEqual(array.length, 6);
-//
-//     try expectEqual(lb.core.arrayGet(&array, 0), @as(?*anyopaque, @ptrFromInt(0)));
-//     try expectEqual(lb.core.arrayGet(&array, 1), @as(*anyopaque, @ptrFromInt(1)));
-//     try expectEqual(lb.core.arrayGet(&array, 2), @as(*anyopaque, @ptrFromInt(2)));
-//     try expectEqual(lb.core.arrayGet(&array, 3), @as(*anyopaque, @ptrFromInt(3)));
-//     try expectEqual(lb.core.arrayGet(&array, 4), @as(*anyopaque, @ptrFromInt(8)));
-//     try expectEqual(lb.core.arrayGet(&array, 5), @as(*anyopaque, @ptrFromInt(9)));
-//
-//     array.delete(0, 1);
-//     try expectEqual(array.length, 5);
-//
-//     try expectEqual(lb.core.arrayGet(&array, 0), @as(*anyopaque, @ptrFromInt(1)));
-//     try expectEqual(lb.core.arrayGet(&array, 1), @as(*anyopaque, @ptrFromInt(2)));
-//     try expectEqual(lb.core.arrayGet(&array, 2), @as(*anyopaque, @ptrFromInt(3)));
-//     try expectEqual(lb.core.arrayGet(&array, 3), @as(*anyopaque, @ptrFromInt(8)));
-//     try expectEqual(lb.core.arrayGet(&array, 4), @as(*anyopaque, @ptrFromInt(9)));
-//
-//     array.delete(1, 1000);
-//     try expectEqual(array.length, 1);
-//
-//     try expectEqual(lb.core.arrayGet(&array, 0), @as(*anyopaque, @ptrFromInt(1)));
-//
-//     _ = array.destroy(false);
-// }
-//
-// test "delete_if_empty" {
-//     var array: lb.core.Array = undefined;
-//     _ = array.init(32);
-//
-//     array.delete(0, 0);
-//     try expectEqual(array.length, 0);
-//
-//     array.delete(1, 0);
-//     try expectEqual(array.length, 0);
-//
-//     array.delete(1, 1);
-//     try expectEqual(array.length, 0);
-//
-//     array.delete(100, 1);
-//     try expectEqual(array.length, 0);
-//
-//     array.delete(10, 100);
-//     try expectEqual(array.length, 0);
-//
-//     _ = array.destroy(false);
-// }
-//
-// test "expand" {
-//     var array: lb.core.Array = undefined;
-//     _ = array.init(32);
-//
-//     try expect(array.expand(128) != null);
-//     try expectEqual(array.size, 128);
-//
-//     _ = array.destroy(false);
-// }
-//
-// test "destroy" {
-//     var array = lb.core.Array.create().?;
-//     _ = array.init(32);
-//
-//     try expectEqual(array.destroy(true), null);
-//
-//     array = lb.core.Array.create().?;
-//     _ = array.init(32);
-//
-//     try expectEqual(array.destroy(false), array);
-//     try expectEqual(array.destroy(true), null);
-//     try expectEqual(lb.core.Array.destroy(null, false), null);
-// }
-//
-// test "destroy_stack" {
-//     var array: lb.core.Array = undefined;
-//     _ = array.init(32);
-//
-//     try expectEqual(array.destroy(false), &array);
-// }
+test "delete" {
+    var array: core.Array = undefined;
+    _ = core.array.init(&array, 32);
+
+    for (0..10) |i| {
+        _ = core.array.push(&array, @as(?*anyopaque, @ptrFromInt(i)));
+    }
+
+    try expectEqual(core.array.length(&array), 10);
+
+    core.array.delete(&array, 10, 100);
+    try expectEqual(core.array.length(&array), 10);
+
+    core.array.delete(&array, 100, 1);
+    try expectEqual(core.array.length(&array), 10);
+
+    core.array.delete(&array, 100, 0);
+    try expectEqual(core.array.length(&array), 10);
+
+    for (0..10) |i| {
+        try expectEqual(core.array.get(&array, i), @as(?*anyopaque, @ptrFromInt(i)));
+    }
+
+    core.array.delete(&array, 4, 4);
+    try expectEqual(core.array.length(&array), 6);
+
+    core.array.delete(&array, 4, 0);
+    try expectEqual(core.array.length(&array), 6);
+
+    core.array.delete(&array, 0, 0);
+    try expectEqual(core.array.length(&array), 6);
+
+    try expectEqual(core.array.get(&array, 0), @as(?*anyopaque, @ptrFromInt(0)));
+    try expectEqual(core.array.get(&array, 1), @as(*anyopaque, @ptrFromInt(1)));
+    try expectEqual(core.array.get(&array, 2), @as(*anyopaque, @ptrFromInt(2)));
+    try expectEqual(core.array.get(&array, 3), @as(*anyopaque, @ptrFromInt(3)));
+    try expectEqual(core.array.get(&array, 4), @as(*anyopaque, @ptrFromInt(8)));
+    try expectEqual(core.array.get(&array, 5), @as(*anyopaque, @ptrFromInt(9)));
+
+    core.array.delete(&array, 0, 1);
+    try expectEqual(core.array.length(&array), 5);
+
+    try expectEqual(core.array.get(&array, 0), @as(*anyopaque, @ptrFromInt(1)));
+    try expectEqual(core.array.get(&array, 1), @as(*anyopaque, @ptrFromInt(2)));
+    try expectEqual(core.array.get(&array, 2), @as(*anyopaque, @ptrFromInt(3)));
+    try expectEqual(core.array.get(&array, 3), @as(*anyopaque, @ptrFromInt(8)));
+    try expectEqual(core.array.get(&array, 4), @as(*anyopaque, @ptrFromInt(9)));
+
+    core.array.delete(&array, 1, 1000);
+    try expectEqual(core.array.length(&array), 1);
+
+    try expectEqual(core.array.get(&array, 0), @as(*anyopaque, @ptrFromInt(1)));
+
+    _ = core.array.destroy(&array, false);
+}
+
+test "delete_if_empty" {
+    var array: core.Array = undefined;
+    _ = core.array.init(&array, 32);
+
+    core.array.delete(&array, 0, 0);
+    try expectEqual(core.array.length(&array), 0);
+
+    core.array.delete(&array, 1, 0);
+    try expectEqual(core.array.length(&array), 0);
+
+    core.array.delete(&array, 1, 1);
+    try expectEqual(core.array.length(&array), 0);
+
+    core.array.delete(&array, 100, 1);
+    try expectEqual(core.array.length(&array), 0);
+
+    core.array.delete(&array, 10, 100);
+    try expectEqual(core.array.length(&array), 0);
+
+    _ = core.array.destroy(&array, false);
+}
+
+test "expand" {
+    var array: core.Array = undefined;
+    _ = core.array.init(&array, 32);
+
+    try expect(core.array.expand(&array, 128) != null);
+    try expectEqual(core.array.size(&array), 128);
+
+    _ = core.array.destroy(&array, false);
+}
+
+test "destroy" {
+    var array = core.array.create().?;
+    _ = core.array.init(array, 32);
+
+    try expectEqual(core.array.destroy(array, true), null);
+
+    array = core.array.create().?;
+    _ = core.array.init(array, 32);
+
+    try expectEqual(core.array.destroy(array, false), array);
+    try expectEqual(core.array.destroy(array, true), null);
+    try expectEqual(core.array.destroy(null, false), null);
+}
+
+test "destroy_stack" {
+    var array: core.Array = undefined;
+    _ = core.array.init(&array, 32);
+
+    try expectEqual(core.array.destroy(&array, false), &array);
+}
