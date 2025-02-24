@@ -142,6 +142,19 @@ pub fn build(b: *Build) !void {
             });
     }
 
+    // tests
+    const lib_unit_tests = b.addTest(.{
+        .name = "lexbor-zig-tests",
+        .root_source_file = b.path("tests/root.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+    lib_unit_tests.root_module.addImport("lexbor", lib_mod);
+
+    const test_step = b.step("test", "Run unit tests");
+    test_step.dependOn(&b.addRunArtifact(lib_unit_tests).step);
+
+    // examples
     const examples_step = b.step("examples", "Builds all the examples");
 
     for (examples) |example| {
