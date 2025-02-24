@@ -1,9 +1,6 @@
 const std = @import("std");
-// const span = std.mem.span;
 
 pub const core = @import("../core_ext.zig");
-// pub const html = @import("../html_ext.zig");
-// pub const dom = @import("../dom_ext.zig");
 
 pub const Array = core.lexbor_array_t;
 
@@ -11,8 +8,8 @@ pub fn create() ?*core.lexbor_array_t {
     return core.lexbor_array_create();
 }
 
-pub fn init(array: ?*core.lexbor_array_t, size: usize) core.lexbor_status_t {
-    const status = core.lexbor_array_init(array, size);
+pub fn init(array: ?*core.lexbor_array_t, size_: usize) core.lexbor_status_t {
+    const status = core.lexbor_array_init(array, size_);
     return @enumFromInt(status);
 }
 
@@ -39,4 +36,18 @@ pub fn length(array: ?*core.lexbor_array_t) usize {
 
 pub fn pop(array: ?*core.lexbor_array_t) ?*anyopaque {
     return core.lexbor_array_pop(array);
+}
+
+pub fn set(array: ?*core.lexbor_array_t, idx: usize, value: ?*anyopaque) core.lexbor_status_t {
+    const status = core.lexbor_array_set(array, idx, value);
+    return @enumFromInt(status);
+}
+
+pub fn insert(array: ?*core.lexbor_array_t, idx: usize, value: ?*anyopaque) core.lexbor_status_t {
+    const status = core.lexbor_array_insert(array, idx, value);
+    return @enumFromInt(status);
+}
+
+pub inline fn size(array: ?*core.lexbor_array_t) usize {
+    return core.lexbor_array_size(array);
 }
