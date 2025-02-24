@@ -1,6 +1,9 @@
 pub const array = @import("core/array.zig");
 pub const Array = array.Array;
 
+pub const array_obj = @import("core/array_obj.zig");
+pub const ArrayObj = array_obj.ArrayObj;
+
 const base = @import("core/base.zig");
 pub const VERSION_MAJOR = base.VERSION_MAJOR;
 pub const VERSION_MINOR = base.VERSION_MINOR;
