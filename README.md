@@ -1,4 +1,4 @@
-### (WIP) lexbor-zig-static (currently windows only)
+### (WIP) lexbor-zig
 Experimental Zig build package and wrapper for [Lexbor](https://github.com/lexbor/lexbor/) v2.4.0  
 Currently, it has only been tested on Windows.
 
@@ -27,7 +27,7 @@ const std = @import("std");
 const core = @import("lexbor").core;
 
 pub fn main() !void {
-    const array = core.array.create().?;
+    const array = core.array.create();
     const status = core.array.init(array, 32);
 
     try std.testing.expectEqual(status, .ok);

@@ -5,7 +5,7 @@ const expectEqual = std.testing.expectEqual;
 const core = @import("lexbor").core;
 
 test "init" {
-    const array = core.array.create().?;
+    const array = core.array.create();
     const status = core.array.init(array, 32);
 
     try expectEqual(status, .ok);
@@ -343,12 +343,12 @@ test "expand" {
 }
 
 test "destroy" {
-    var array = core.array.create().?;
+    var array = core.array.create();
     _ = core.array.init(array, 32);
 
     try expectEqual(core.array.destroy(array, true), null);
 
-    array = core.array.create().?;
+    array = core.array.create();
     _ = core.array.init(array, 32);
 
     try expectEqual(core.array.destroy(array, false), array);

@@ -10,7 +10,7 @@ pub const testStruct = struct {
 };
 
 test "init" {
-    const array = core.array_obj.create().?;
+    const array = core.array_obj.create();
     const status = core.array_obj.init(array, 32, @sizeOf(testStruct));
 
     try expectEqual(status, .ok);
@@ -230,12 +230,12 @@ test "expand" {
 }
 
 test "destroy" {
-    var array = core.array_obj.create().?;
+    var array = core.array_obj.create();
     _ = core.array_obj.init(array, 32, @sizeOf(testStruct));
 
     try expectEqual(core.array_obj.destroy(array, true), null);
 
-    array = core.array_obj.create().?;
+    array = core.array_obj.create();
     _ = core.array_obj.init(array, 32, @sizeOf(testStruct));
 
     try expectEqual(core.array_obj.destroy(array, false), array);
