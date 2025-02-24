@@ -23,6 +23,7 @@ pub extern fn lexbor_array_pop(array: ?*lexbor_array_t) ?*anyopaque;
 pub extern fn lexbor_array_insert(array: ?*lexbor_array_t, idx: usize, value: ?*anyopaque) lxb_status_t;
 pub extern fn lexbor_array_set(array: ?*lexbor_array_t, idx: usize, value: ?*anyopaque) lxb_status_t;
 pub extern fn lexbor_array_delete(array: ?*lexbor_array_t, begin: usize, length: usize) void;
+
 pub extern fn lexbor_array_get_noi(array: ?*lexbor_array_t, idx: usize) ?*anyopaque;
 pub extern fn lexbor_array_length_noi(array: ?*lexbor_array_t) usize;
 pub extern fn lexbor_array_size_noi(array: ?*lexbor_array_t) usize;
@@ -88,7 +89,7 @@ pub inline fn lexbor_array_obj_size(array: ?*lexbor_array_obj_t) usize {
     return array.?.size;
 }
 
-pub inline fn lexbor_array_obj_structSize(array: ?*lexbor_array_obj_t) usize {
+pub inline fn lexbor_array_obj_struct_size(array: ?*lexbor_array_obj_t) usize {
     return array.?.struct_size;
 }
 

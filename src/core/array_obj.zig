@@ -1,5 +1,3 @@
-const std = @import("std");
-
 pub const core = @import("../core_ext.zig");
 
 pub const ArrayObj = core.lexbor_array_obj_t;
