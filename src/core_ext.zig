@@ -141,9 +141,6 @@ pub const LEXBOR_VERSION_STRING = "1.8.0";
 
 // TODO: #define lexbor_assert(val)
 
-// TODO: #define lexbor_max(val1, val2) ((val1) > (val2) ? (val1) : (val2))
-// TODO: #define lexbor_min(val1, val2) ((val1) < (val2) ? (val1) : (val2))
-
 pub inline fn lexbor_max(val1: anytype, val2: @TypeOf(val1)) @TypeOf(val1) {
     if (val1 > val2) return val1;
     return val2;
