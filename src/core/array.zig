@@ -23,3 +23,20 @@ pub fn clean(array: ?*core.lexbor_array_t) void {
 pub fn destroy(array: ?*core.lexbor_array_t, self_destroy: bool) ?*core.lexbor_array_t {
     return core.lexbor_array_destroy(array, self_destroy);
 }
+
+pub fn push(array: ?*core.lexbor_array_t, value: ?*anyopaque) core.lexbor_status_t {
+    const status = core.lexbor_array_push(array, value);
+    return @enumFromInt(status);
+}
+
+pub fn get(array: ?*core.lexbor_array_t, idx: usize) ?*anyopaque {
+    return core.lexbor_array_get(array, idx);
+}
+
+pub fn length(array: ?*core.lexbor_array_t) usize {
+    return core.lexbor_array_length(array);
+}
+
+pub fn pop(array: ?*core.lexbor_array_t) ?*anyopaque {
+    return core.lexbor_array_pop(array);
+}
