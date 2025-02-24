@@ -1,7 +1,5 @@
 const std = @import("std");
 
-// const lb = @import("lexbor.zig");
-
 // libc
 
 pub extern fn memset(dest: ?*anyopaque, c: c_int, count: usize) ?*anyopaque;
