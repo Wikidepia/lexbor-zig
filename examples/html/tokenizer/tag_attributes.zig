@@ -50,14 +50,14 @@ fn tokenCallback(tkz: ?*html.Tokenizer, token: ?*html.Token, ctx: ?*anyopaque) c
     var attr = token.?.attr_first;
 
     // Skip all #text or without attributes tokens
-    if (@as(tag.IdEnum, @enumFromInt(token.?.tag_id)) == ._text or attr == null) {
+    if (token.?.tag_id == ._text or attr == null) {
         return token;
     }
 
-    const tag_name = tag.nameById(@enumFromInt(token.?.tag_id), null);
-    if (tag_name == null) failed("Failed to get token name", .{});
+    const tag_name = tag.nameById(token.?.tag_id, null) orelse
+        failed("Failed to get token name", .{});
 
-    print("\"{s}\" attributes:\n", .{tag_name.?});
+    print("\"{s}\" attributes:\n", .{tag_name});
 
     while (attr != null) {
         const name = html.token_attr.name(attr, null);

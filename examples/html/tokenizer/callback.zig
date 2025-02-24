@@ -36,11 +36,11 @@ fn tokenCallback(tkz: ?*html.Tokenizer, token: ?*html.Token, ctx: ?*anyopaque) c
     _ = tkz;
     _ = ctx;
 
-    const name = tag.nameById(@enumFromInt(token.?.tag_id), null) orelse failed("Failed to get token name", .{});
+    const name = tag.nameById(token.?.tag_id, null) orelse failed("Failed to get token name", .{});
 
     const bool_str = if ((token.?.type & @intFromEnum(html.token.Type.close)) == 1) "true" else "false";
 
-    print("Tag name: {s}; Tag id: {d}; Is close: {s}\n", .{ name, token.?.tag_id, bool_str });
+    print("Tag name: {s}; Tag id: {d}; Is close: {s}\n", .{ name, @intFromEnum(token.?.tag_id), bool_str });
 
     return token;
 }

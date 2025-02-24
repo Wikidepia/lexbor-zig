@@ -41,9 +41,7 @@ fn tokenCallback(tkz: ?*html.Tokenizer, token: ?*html.Token, ctx: ?*anyopaque) c
     _ = ctx;
 
     // Skip all not #text tokens
-    if (@as(tag.IdEnum, @enumFromInt(token.?.tag_id)) != ._text) {
-        return token;
-    }
+    if (token.?.tag_id != ._text) return token;
 
     print("{s}\n", .{token.?.text_start.?[0 .. token.?.text_end.? - token.?.text_start.?]});
 

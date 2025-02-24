@@ -14,8 +14,7 @@ pub const LXB_TAG_CONST_VERSION = "A161EC911182C3254E7A972D5C51DF86";
 
 pub const lxb_tag_id_t = usize;
 
-// pub const lxb_tag_id_enum_t = enum(c_int) {
-pub const lxb_tag_id_enum_t = enum(usize) {
+pub const lxb_tag_id_enum_t = enum(lxb_tag_id_t) {
     _undef = 0x0000,
     _end_of_file = 0x0001,
     _text = 0x0002,
@@ -220,16 +219,16 @@ pub const lxb_tag_id_enum_t = enum(usize) {
 
 pub const lxb_tag_data_t = extern struct {
     entry: core.lexbor_hash_entry_t,
-    tag_id: lxb_tag_id_t,
+    tag_id: lxb_tag_id_enum_t,
     ref_count: usize,
     read_only: bool,
 };
 
-pub extern fn lxb_tag_data_by_id(tag_id: lxb_tag_id_t) ?*lxb_tag_data_t;
+pub extern fn lxb_tag_data_by_id(tag_id: lxb_tag_id_enum_t) ?*lxb_tag_data_t;
 pub extern fn lxb_tag_data_by_name(hash: ?*core.lexbor_hash_t, name: ?*const core.lxb_char_t, len: usize) ?*lxb_tag_data_t;
 pub extern fn lxb_tag_data_by_name_upper(hash: ?*core.lexbor_hash_t, name: ?*const core.lxb_char_t, len: usize) ?*lxb_tag_data_t;
 
-pub inline fn lxb_tag_name_by_id(tag_id: lxb_tag_id_t, len: ?*usize) ?[*:0]const core.lxb_char_t {
+pub inline fn lxb_tag_name_by_id(tag_id: lxb_tag_id_enum_t, len: ?*usize) ?[*:0]const core.lxb_char_t {
     const data = lxb_tag_data_by_id(tag_id);
     if (data == null) {
         if (len != null) {

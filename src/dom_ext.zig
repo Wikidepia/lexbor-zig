@@ -131,7 +131,7 @@ pub const lxb_dom_interface_constructor_f = ?*const fn (document: ?*anyopaque) c
 
 pub const lxb_dom_interface_destructor_f = ?*const fn (intrfc: ?*anyopaque) callconv(.C) ?*anyopaque;
 
-pub const lxb_dom_interface_create_f = ?*const fn (document: ?*lxb_dom_document_t, tag_id: tag.lxb_tag_id_t, ns: ns.lxb_ns_id_t) callconv(.C) ?*lxb_dom_interface_t;
+pub const lxb_dom_interface_create_f = ?*const fn (document: ?*lxb_dom_document_t, tag_id: tag.lxb_tag_id_enum_t, ns: ns.lxb_ns_id_t) callconv(.C) ?*lxb_dom_interface_t;
 
 pub const lxb_dom_interface_clone_f = ?*const fn (document: ?*lxb_dom_document_t, intrfc: ?*const lxb_dom_interface_t) callconv(.C) ?*lxb_dom_interface_t;
 

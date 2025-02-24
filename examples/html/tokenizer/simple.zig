@@ -40,10 +40,10 @@ fn tokenCallback(tkz: ?*html.Tokenizer, token: ?*html.Token, ctx: ?*anyopaque) c
     _ = ctx;
 
     // Last token, end of parsing
-    if (@as(tag.IdEnum, @enumFromInt(token.?.tag_id)) == ._end_of_file) return token;
+    if (token.?.tag_id == ._end_of_file) return token;
 
     // Text token
-    if (@as(tag.IdEnum, @enumFromInt(token.?.tag_id)) == ._text) {
+    if (token.?.tag_id == ._text) {
         print("{s}", .{token.?.begin.?[0 .. token.?.end.? - token.?.begin.?]});
         return token;
     }

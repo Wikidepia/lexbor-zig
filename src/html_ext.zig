@@ -666,7 +666,7 @@ pub const lxb_html_tokenizer = extern struct {
     tree: ?*lxb_html_tree_t,
     markup: ?*const core.lxb_char_t,
     temp: ?*const core.lxb_char_t,
-    tmp_tag_id: tag.lxb_tag_id_t,
+    tmp_tag_id: tag.lxb_tag_id_enum_t,
     start: ?*core.lxb_char_t,
     pos: ?*core.lxb_char_t,
     end: ?*const core.lxb_char_t,
@@ -743,7 +743,7 @@ pub const lxb_html_token_t = extern struct {
     base_element: ?*anyopaque,
 
     null_count: usize,
-    tag_id: tag.lxb_tag_id_t,
+    tag_id: tag.lxb_tag_id_enum_t,
     type: lxb_html_token_type_t,
 };
 
@@ -839,8 +839,8 @@ pub const lxb_html_tag_fixname_t = extern struct {
 // TODO: #define LXB_HTML_TAG_RES_CATS
 // TODO: #define LXB_HTML_TAG_RES_FIXNAME_SVG
 
-pub inline fn lxb_html_tag_is_void(tag_id: tag.lxb_tag_id_t) bool {
-    switch (@as(tag.lxb_tag_id_enum_t, @enumFromInt(tag_id))) {
+pub inline fn lxb_html_tag_is_void(tag_id: tag.lxb_tag_id_enum_t) bool {
+    switch (tag_id) {
         .area,
         .base,
         .br,
