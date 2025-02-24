@@ -48,6 +48,6 @@ pub fn insert(array: ?*core.lexbor_array_t, idx: usize, value: ?*anyopaque) core
     return @enumFromInt(status);
 }
 
-pub inline fn size(array: ?*core.lexbor_array_t) usize {
+pub fn size(array: ?*core.lexbor_array_t) usize {
     return core.lexbor_array_size(array);
 }
