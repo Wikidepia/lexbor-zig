@@ -28,8 +28,38 @@ pub const BstMap = bst_map.BstMap;
 
 pub const conv = @import("core/conv.zig");
 
-pub const fs = @import("core/fs.zig");
+const def = @import("core/def.zig");
+pub const MEM_ALIGN_STEP = def.MEM_ALIGN_STEP;
 
+const diyfp = @import("core/diyfp.zig");
+pub const uint64Hl = diyfp.uint64Hl;
+pub const DBL_SIGNIFICAND_SIZE = diyfp.DBL_SIGNIFICAND_SIZE;
+pub const DBL_EXPONENT_BIAS = diyfp.DBL_EXPONENT_BIAS;
+pub const DBL_EXPONENT_MIN = diyfp.DBL_EXPONENT_MIN;
+pub const DBL_EXPONENT_MAX = diyfp.DBL_EXPONENT_MAX;
+pub const DBL_EXPONENT_DENORMAL = diyfp.DBL_EXPONENT_DENORMAL;
+pub const DBL_SIGNIFICAND_MASK = diyfp.DBL_SIGNIFICAND_MASK;
+pub const DBL_HIDDEN_BIT = diyfp.DBL_HIDDEN_BIT;
+pub const DBL_EXPONENT_MASK = diyfp.DBL_EXPONENT_MASK;
+pub const DIYFP_SIGNIFICAND_SIZE = diyfp.DIYFP_SIGNIFICAND_SIZE;
+pub const SIGNIFICAND_SIZE = diyfp.SIGNIFICAND_SIZE;
+pub const SIGNIFICAND_SHIFT = diyfp.SIGNIFICAND_SHIFT;
+pub const DECIMAL_EXPONENT_OFF = diyfp.DECIMAL_EXPONENT_OFF;
+pub const DECIMAL_EXPONENT_MIN = diyfp.DECIMAL_EXPONENT_MIN;
+pub const DECIMAL_EXPONENT_MAX = diyfp.DECIMAL_EXPONENT_MAX;
+pub const Diyfp = diyfp.Diyfp;
+pub const cachedPowerDec = diyfp.cachedPowerDec;
+pub const cachedPowerBin = diyfp.cachedPowerBin;
+pub const diyfpLeadingZeros64 = diyfp.diyfpLeadingZeros64;
+pub const diyfpFromD2 = diyfp.diyfpFromD2;
+pub const diyfp2d = diyfp.diyfp2d;
+pub const diyfpShiftLeft = diyfp.diyfpShiftLeft;
+pub const diyfpShiftRight = diyfp.diyfpShiftRight;
+pub const diyfpSub = diyfp.diyfpSub;
+pub const diyfpMul = diyfp.diyfpMul;
+pub const diyfpNormalize = diyfp.diyfpNormalize;
+
+pub const fs = @import("core/fs.zig");
 const types = @import("core/types.zig");
 pub const CodepointType = types.CodepointType;
 pub const StatusType = types.StatusType;
