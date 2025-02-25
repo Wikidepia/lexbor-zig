@@ -51,7 +51,7 @@ const lexbor = b.dependency("lexbor", .{
 exe.root_module.addImport("lexbor", lexbor.module("lexbor"));
 ```
 
-See more options: [build.zig](https://github.com/doccaico/lexbor-zig-static/blob/main/build.zig)
+See more options: [build.zig](https://github.com/doccaico/lexbor-zig/blob/main/build.zig)
 
 #### How to build a static library (it included all modules)
 ```
