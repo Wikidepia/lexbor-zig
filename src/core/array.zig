@@ -1,4 +1,4 @@
-pub const core = @import("../core_ext.zig");
+const core = @import("../core_ext.zig");
 
 pub const Array = core.lexbor_array_t;
 

@@ -1,4 +1,4 @@
-pub const core = @import("../core_ext.zig");
+const core = @import("../core_ext.zig");
 
 pub const NodeF = core.lexbor_avl_node_f;
 pub const Node = core.lexbor_avl_node_t;

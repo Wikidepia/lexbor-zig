@@ -20,6 +20,9 @@ pub const SerializeCbF = base.serializeCbF;
 pub const SerializeCbCpF = base.serializeCbCpF;
 pub const SerializeCtx = base.serializeCtx;
 
+const bst = @import("core/bst.zig");
+pub const Bst = bst.Bst;
+
 pub const fs = @import("core/fs.zig");
 
 const types = @import("core/types.zig");

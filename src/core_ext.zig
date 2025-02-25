@@ -201,7 +201,7 @@ pub inline fn lexbor_bst_root_ref(bst: ?*lexbor_bst_t) ?*?*lexbor_bst_entry_t {
     return &(bst.?.root);
 }
 
-pub const lexbor_bst_entry_tF = ?*const fn (bst: ?*lexbor_bst_t, entry: ?*lexbor_bst_entry_t, ctx: ?*anyopaque) callconv(.C) bool;
+pub const lexbor_bst_entry_f = ?*const fn (bst: ?*lexbor_bst_t, entry: ?*lexbor_bst_entry_t, ctx: ?*anyopaque) callconv(.C) bool;
 
 pub const lexbor_bst_entry_t = extern struct {
     value: ?*anyopaque,
@@ -746,9 +746,9 @@ pub inline fn lexbor_mem_align_floor(size: usize) usize {
 
 pub const lexbor_mraw_meta_size =
     if ((@sizeOf(usize) % LEXBOR_MEM_ALIGN_STEP) != 0)
-    @sizeOf(usize) + (LEXBOR_MEM_ALIGN_STEP - (@sizeOf(usize) % LEXBOR_MEM_ALIGN_STEP))
-else
-    @sizeOf(usize);
+        @sizeOf(usize) + (LEXBOR_MEM_ALIGN_STEP - (@sizeOf(usize) % LEXBOR_MEM_ALIGN_STEP))
+    else
+        @sizeOf(usize);
 
 pub const lexbor_mraw_t = extern struct {
     mem: ?*lexbor_mem_t,
