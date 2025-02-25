@@ -62,6 +62,8 @@ pub const diyfpNormalize = diyfp.diyfpNormalize;
 pub const dobject = @import("core/dobject.zig");
 pub const Dobject = dobject.Dobject;
 
+pub const dtoa = @import("core/dtoa.zig").dtoa;
+
 pub const fs = @import("core/fs.zig");
 const types = @import("core/types.zig");
 pub const CodepointType = types.CodepointType;
