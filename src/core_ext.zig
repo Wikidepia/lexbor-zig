@@ -486,25 +486,27 @@ pub extern fn lexbor_dtoa(value: f64, begin: ?*lxb_char_t, len: usize) usize;
 
 pub const lexbor_fs_dir_file_f = ?*const fn (fullpath: ?*const lxb_char_t, fullpath_len: usize, filename: ?*const lxb_char_t, filename_len: usize, ctx: ?*anyopaque) callconv(.C) lexbor_action_t;
 
-pub const lexbor_fs_dir_opt = enum(c_int) {
-    LEXBOR_FS_DIR_OPT_UNDEF = 0x00,
-    LEXBOR_FS_DIR_OPT_WITHOUT_DIR = 0x01,
-    LEXBOR_FS_DIR_OPT_WITHOUT_FILE = 0x02,
-    LEXBOR_FS_DIR_OPT_WITHOUT_HIDDEN = 0x04,
+pub const lexbor_fs_dir_opt_t = c_int;
+
+pub const lexbor_fs_dir_opt = enum(lexbor_fs_dir_opt_t) {
+    undef = 0x00,
+    without_dir = 0x01,
+    without_file = 0x02,
+    without_hidden = 0x04,
 };
 
 pub const lexbor_fs_file_type_t = enum(c_int) {
-    LEXBOR_FS_FILE_TYPE_UNDEF = 0x00,
-    LEXBOR_FS_FILE_TYPE_FILE = 0x01,
-    LEXBOR_FS_FILE_TYPE_DIRECTORY = 0x02,
-    LEXBOR_FS_FILE_TYPE_BLOCK_DEVICE = 0x03,
-    LEXBOR_FS_FILE_TYPE_CHARACTER_DEVICE = 0x04,
-    LEXBOR_FS_FILE_TYPE_PIPE = 0x05,
-    LEXBOR_FS_FILE_TYPE_SYMLINK = 0x06,
-    LEXBOR_FS_FILE_TYPE_SOCKET = 0x07,
+    undef = 0x00,
+    file = 0x01,
+    directory = 0x02,
+    block_device = 0x03,
+    character_device = 0x04,
+    pipe = 0x05,
+    symlink = 0x06,
+    socket = 0x07,
 };
 
-pub extern fn lexbor_fs_dir_read(dirpath: ?*const lxb_char_t, opt: c_int, callback: lexbor_fs_dir_file_f, ctx: ?*anyopaque) lxb_status_t;
+pub extern fn lexbor_fs_dir_read(dirpath: ?*const lxb_char_t, opt: lexbor_fs_dir_opt, callback: lexbor_fs_dir_file_f, ctx: ?*anyopaque) lxb_status_t;
 pub extern fn lexbor_fs_file_type(full_path: ?*const lxb_char_t) lexbor_fs_file_type_t;
 pub extern fn lexbor_fs_file_easy_read(full_path: ?*const lxb_char_t, len: ?*usize) ?[*:0]lxb_char_t;
 
