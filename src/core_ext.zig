@@ -518,13 +518,13 @@ pub const lexbor_hash_insert_t = lexbor_hash_insert_;
 pub const LEXBOR_HASH_SHORT_SIZE = 16;
 pub const LEXBOR_HASH_TABLE_MIN_SIZE = 32;
 
-pub const lexbor_hash_insert_raw = @extern(**const lexbor_hash_insert, .{ .name = "lexbor_hash_insert_raw" });
-pub const lexbor_hash_insert_lower = @extern(**const lexbor_hash_insert, .{ .name = "lexbor_hash_insert_lower" });
-pub const lexbor_hash_insert_upper = @extern(**const lexbor_hash_insert, .{ .name = "lexbor_hash_insert_upper" });
+pub const lexbor_hash_insert_raw = @extern(**const lexbor_hash_insert_t, .{ .name = "lexbor_hash_insert_raw" });
+pub const lexbor_hash_insert_lower = @extern(**const lexbor_hash_insert_t, .{ .name = "lexbor_hash_insert_lower" });
+pub const lexbor_hash_insert_upper = @extern(**const lexbor_hash_insert_t, .{ .name = "lexbor_hash_insert_upper" });
 
-pub const lexbor_hash_search_raw = @extern(**const lexbor_hash_search, .{ .name = "lexbor_hash_search_raw" });
-pub const lexbor_hash_search_lower = @extern(**const lexbor_hash_search, .{ .name = "lexbor_hash_search_lower" });
-pub const lexbor_hash_search_upper = @extern(**const lexbor_hash_search, .{ .name = "lexbor_hash_search_upper" });
+pub const lexbor_hash_search_raw = @extern(**const lexbor_hash_search_t, .{ .name = "lexbor_hash_search_raw" });
+pub const lexbor_hash_search_lower = @extern(**const lexbor_hash_search_t, .{ .name = "lexbor_hash_search_lower" });
+pub const lexbor_hash_search_upper = @extern(**const lexbor_hash_search_t, .{ .name = "lexbor_hash_search_upper" });
 
 pub const lexbor_hash_t = lexbor_hash;
 pub const lexbor_hash_entry_t = lexbor_hash_entry;
@@ -566,9 +566,9 @@ pub extern fn lexbor_hash_init(hash: ?*lexbor_hash_t, table_size: usize, struct_
 pub extern fn lexbor_hash_clean(hash: ?*lexbor_hash_t) void;
 pub extern fn lexbor_hash_destroy(hash: ?*lexbor_hash_t, destroy_obj: bool) ?*lexbor_hash_t;
 pub extern fn lexbor_hash_insert(hash: ?*lexbor_hash_t, insert: ?*const lexbor_hash_insert_t, key: ?*const lxb_char_t, length: usize) ?*anyopaque;
-pub extern fn lexbor_hash_insert_by_entry(hash: ?*lexbor_hash_t, entry: ?*lexbor_hash_entry_t, search: ?*const lexbor_hash_search, key: ?*const lxb_char_t, length: usize) ?*anyopaque;
-pub extern fn lexbor_hash_remove(hash: ?*lexbor_hash_t, search: ?*const lexbor_hash_search, key: ?*const lxb_char_t, length: usize) void;
-pub extern fn lexbor_hash_search(hash: ?*lexbor_hash_t, search: ?*const lexbor_hash_search, key: ?*const lxb_char_t, length: usize) ?*anyopaque;
+pub extern fn lexbor_hash_insert_by_entry(hash: ?*lexbor_hash_t, entry: ?*lexbor_hash_entry_t, search: ?*const lexbor_hash_search_t, key: ?*const lxb_char_t, length: usize) ?*anyopaque;
+pub extern fn lexbor_hash_remove(hash: ?*lexbor_hash_t, search: ?*const lexbor_hash_search_t, key: ?*const lxb_char_t, length: usize) void;
+pub extern fn lexbor_hash_search(hash: ?*lexbor_hash_t, search: ?*const lexbor_hash_search_t, key: ?*const lxb_char_t, length: usize) ?*anyopaque;
 pub extern fn lexbor_hash_remove_by_hash_id(hash: ?*lexbor_hash_t, hash_id: u32, key: ?*const lxb_char_t, length: usize, cmp_func: lexbor_hash_cmp_f) void;
 pub extern fn lexbor_hash_search_by_hash_id(hash: ?*lexbor_hash_t, hash_id: u32, key: ?*const lxb_char_t, length: usize, cmp_func: lexbor_hash_cmp_f) ?*anyopaque;
 pub extern fn lexbor_hash_make_id(key: ?*const lxb_char_t, length: usize) u32;

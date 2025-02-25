@@ -4,10 +4,10 @@ test {
     // _ = @import("core/avl.zig");
     // _ = @import("core/bst.zig");
     // _ = @import("core/bst_map.zig");
-    // _ = @import("core/conv.zig");
+    // _ = @import("core/conv.zig"); // my test
     // _ = @import("core/dobject.zig");
-    _ = @import("core/dtoa.zig");
-    // _ = @import("core/hash.zig");
+    // _ = @import("core/dtoa.zig"); // my test
+    _ = @import("core/hash.zig");
     // _ = @import("core/in.zig");
     // _ = @import("core/mem.zig");
     // _ = @import("core/mraw.zig");

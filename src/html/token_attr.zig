@@ -16,7 +16,7 @@ pub fn destroy(attr: ?*html.lxb_html_token_attr_t, dobj: ?*core.lexbor_dobject_t
     return html.lxb_html_token_attr_destroy(attr, dobj);
 }
 
-pub fn name(attr: ?*html.lxb_html_token_attr_t, length: ?*usize) ?[]const core.lxb_char_t {
-    const name_ = html.lxb_html_token_attr_name(attr, length);
+pub fn name(attr: ?*html.lxb_html_token_attr_t, length: ?*usize) ?[]const u8 {
+    const name_ = html.lxb_html_token_attr_name(attr, length) orelse return null;
     return span(name_);
 }

@@ -1,3 +1,6 @@
+const std = @import("std");
+const span = std.mem.span;
+
 const core = @import("../core_ext.zig");
 
 pub const Search = core.lexbor_hash_search_t;
@@ -42,15 +45,15 @@ pub fn insert(hash: ?*core.lexbor_hash_t, insert_: ?*const core.lexbor_hash_inse
     return core.lexbor_hash_insert(hash, insert_, @ptrCast(key.ptr), length);
 }
 
-pub fn insertByEntry(hash: ?*core.lexbor_hash_t, entry: ?*core.lexbor_hash_entry_t, search_: ?*const core.lexbor_hash_search, key: []const u8, length: usize) ?*anyopaque {
+pub fn insertByEntry(hash: ?*core.lexbor_hash_t, entry: ?*core.lexbor_hash_entry_t, search_: ?*const core.lexbor_hash_search_t, key: []const u8, length: usize) ?*anyopaque {
     return core.lexbor_hash_insert_by_entry(hash, entry, search_, @ptrCast(key.ptr), length);
 }
 
-pub fn remove(hash: ?*core.lexbor_hash_t, search_: ?*const core.lexbor_hash_search, key: []const u8, length: usize) void {
+pub fn remove(hash: ?*core.lexbor_hash_t, search_: ?*const core.lexbor_hash_search_t, key: []const u8, length: usize) void {
     core.lexbor_hash_remove(hash, search_, @ptrCast(key.ptr), length);
 }
 
-pub fn search(hash: ?*core.lexbor_hash_t, search_: ?*const core.lexbor_hash_search, key: []const u8, length: usize) ?*anyopaque {
+pub fn search(hash: ?*core.lexbor_hash_t, search_: ?*const core.lexbor_hash_search_t, key: []const u8, length: usize) ?*anyopaque {
     return core.lexbor_hash_search(hash, search_, @ptrCast(key.ptr), length);
 }
 
@@ -87,4 +90,34 @@ pub fn copyLower(hash: ?*core.lexbor_hash_t, entry: ?*core.lexbor_hash_entry_t, 
 pub fn copyUpper(hash: ?*core.lexbor_hash_t, entry: ?*core.lexbor_hash_entry_t, key: []const u8, length: usize) core.lexbor_status_t {
     const status = core.lexbor_hash_copy_upper(hash, entry, @ptrCast(key.ptr), length);
     return @enumFromInt(status);
+}
+
+pub inline fn mraw(hash: ?*core.lexbor_hash_t) ?*core.lexbor_mraw_t {
+    return core.lexbor_hash_mraw(hash);
+}
+
+pub inline fn entryStr(entry: ?*core.lexbor_hash_entry_t) ?[]u8 {
+    const str = core.lexbor_hash_entry_str(entry) orelse return null;
+    return span(str);
+}
+
+pub inline fn entryStrSet(entry: ?*core.lexbor_hash_entry_t, data: []const u8, length: usize) ?[]u8 {
+    const str = core.lexbor_hash_entry_str_set(entry, @ptrCast(data.ptr), length) orelse return null;
+    return span(str);
+}
+
+pub inline fn entryStrFree(hash: ?*core.lexbor_hash_t, entry: ?*core.lexbor_hash_entry_t) void {
+    core.lexbor_hash_entry_str_free(hash, entry);
+}
+
+pub inline fn entryCreate(hash: ?*core.lexbor_hash_t) ?*core.lexbor_hash_entry_t {
+    return core.lexbor_hash_entry_create(hash);
+}
+
+pub inline fn entryDestroy(hash: ?*core.lexbor_hash_t, entry: ?*core.lexbor_hash_entry_t) ?*core.lexbor_hash_entry_t {
+    return core.lexbor_hash_entry_destroy(hash, entry);
+}
+
+pub inline fn entriesCount(hash: ?*core.lexbor_hash_t) usize {
+    return core.lexbor_hash_entries_count(hash);
 }
