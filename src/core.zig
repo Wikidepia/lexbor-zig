@@ -23,6 +23,9 @@ pub const SerializeCtx = base.serializeCtx;
 pub const bst = @import("core/bst.zig");
 pub const Bst = bst.Bst;
 
+pub const bst_map = @import("core/bst_map.zig");
+pub const BstMap = bst_map.BstMap;
+
 pub const fs = @import("core/fs.zig");
 
 const types = @import("core/types.zig");

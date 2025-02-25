@@ -102,9 +102,12 @@ pub inline fn lexbor_array_obj_last(array: ?*lexbor_array_obj_t) ?*anyopaque {
 
 // core/avl.h
 
+pub const lexbor_avl_t = lexbor_avl;
+pub const lexbor_avl_node_t = lexbor_avl_node;
+
 pub const lexbor_avl_node_f = ?*const fn (avl: ?*lexbor_avl_t, root: ?*?*lexbor_avl_node_t, node: ?*lexbor_avl_node_t, ctx: ?*anyopaque) callconv(.C) lxb_status_t;
 
-pub const lexbor_avl_node_t = extern struct {
+pub const lexbor_avl_node = extern struct {
     type: usize,
     height: c_short,
     value: ?*anyopaque,
@@ -113,7 +116,7 @@ pub const lexbor_avl_node_t = extern struct {
     parent: ?*lexbor_avl_node_t,
 };
 
-pub const lexbor_avl_t = extern struct {
+pub const lexbor_avl = extern struct {
     nodes: ?*lexbor_dobject_t,
     last_right: ?*lexbor_avl_node_t,
 };
@@ -201,9 +204,12 @@ pub inline fn lexbor_bst_root_ref(bst: ?*lexbor_bst_t) ?*?*lexbor_bst_entry_t {
     return &(bst.?.root);
 }
 
+pub const lexbor_bst_entry_t = lexbor_bst_entry;
+pub const lexbor_bst_t = lexbor_bst;
+
 pub const lexbor_bst_entry_f = ?*const fn (bst: ?*lexbor_bst_t, entry: ?*lexbor_bst_entry_t, ctx: ?*anyopaque) callconv(.C) bool;
 
-pub const lexbor_bst_entry_t = extern struct {
+pub const lexbor_bst_entry = extern struct {
     value: ?*anyopaque,
     right: ?*lexbor_bst_entry_t,
     left: ?*lexbor_bst_entry_t,
@@ -212,7 +218,7 @@ pub const lexbor_bst_entry_t = extern struct {
     size: usize,
 };
 
-pub const lexbor_bst_t = extern struct {
+pub const lexbor_bst = extern struct {
     dobject: ?*lexbor_dobject_t,
     root: ?*lexbor_bst_entry_t,
     tree_length: usize,
@@ -254,11 +260,12 @@ pub extern fn lexbor_bst_map_search(bst_map: ?*lexbor_bst_map_t, scope: ?*lexbor
 pub extern fn lexbor_bst_map_insert(bst_map: ?*lexbor_bst_map_t, scope: ?*?*lexbor_bst_entry_t, key: ?*const lxb_char_t, key_len: usize, value: ?*anyopaque) ?*lexbor_bst_map_entry_t;
 pub extern fn lexbor_bst_map_insert_not_exists(bst_map: ?*lexbor_bst_map_t, scope: ?*?*lexbor_bst_entry_t, key: ?*const lxb_char_t, key_len: usize) ?*lexbor_bst_map_entry_t;
 pub extern fn lexbor_bst_map_remove(bst_map: ?*lexbor_bst_map_t, scope: ?*?*lexbor_bst_entry_t, key: ?*const lxb_char_t, key_len: usize) ?*anyopaque;
-pub extern fn lexbor_bst_map_mraw_noi(bst_map: ?*lexbor_bst_map_t) ?*lexbor_mraw_t;
 
 pub inline fn lexbor_bst_map_mraw(bst_map: ?*lexbor_bst_map_t) ?*lexbor_mraw_t {
     return bst_map.?.mraw;
 }
+
+pub extern fn lexbor_bst_map_mraw_noi(bst_map: ?*lexbor_bst_map_t) ?*lexbor_mraw_t;
 
 // core/conv.h
 
