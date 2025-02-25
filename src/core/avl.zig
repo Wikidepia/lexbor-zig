@@ -8,12 +8,12 @@ pub fn create() ?*core.lexbor_avl_t {
     return core.lexbor_avl_create();
 }
 
-pub fn lexbor_avl_init(avl: ?*core.lexbor_avl_t, chunk_len: usize, struct_size: usize) core.lexbor_status_t {
+pub fn init(avl: ?*core.lexbor_avl_t, chunk_len: usize, struct_size: usize) core.lexbor_status_t {
     const status = core.lexbor_avl_init(avl, chunk_len, struct_size);
     return @enumFromInt(status);
 }
 
-pub fn lexbor_avl_clean(avl: ?*core.lexbor_avl_t) void {
+pub fn clean(avl: ?*core.lexbor_avl_t) void {
     core.lexbor_avl_clean(avl);
 }
 
