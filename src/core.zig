@@ -26,6 +26,8 @@ pub const Bst = bst.Bst;
 pub const bst_map = @import("core/bst_map.zig");
 pub const BstMap = bst_map.BstMap;
 
+pub const conv = @import("core/conv.zig");
+
 pub const fs = @import("core/fs.zig");
 
 const types = @import("core/types.zig");
