@@ -458,16 +458,14 @@ pub const lexbor_dobject_t = extern struct {
 };
 
 pub extern fn lexbor_dobject_create() ?*lexbor_dobject_t;
-pub extern fn lexbor_dobject_init(lexbor_dobject_t: ?*lexbor_dobject_t, chunk_size: usize, struct_size: usize) lxb_status_t;
-pub extern fn lexbor_dobject_clean(lexbor_dobject_t: ?*lexbor_dobject_t) void;
-pub extern fn lexbor_dobject_destroy(lexbor_dobject_t: ?*lexbor_dobject_t, destroy_self: bool) ?*lexbor_dobject_t;
-pub extern fn lexbor_dobject_init_list_entries(lexbor_dobject_t: ?*lexbor_dobject_t, pos: usize) ?*u8;
-pub extern fn lexbor_dobject_alloc(lexbor_dobject_t: ?*lexbor_dobject_t) ?*anyopaque;
-pub extern fn lexbor_dobject_calloc(lexbor_dobject_t: ?*lexbor_dobject_t) ?*anyopaque;
-pub extern fn lexbor_dobject_free(lexbor_dobject_t: ?*lexbor_dobject_t, data: ?*anyopaque) ?*anyopaque;
-pub extern fn lexbor_dobject_by_absolute_position(lexbor_dobject_t: ?*lexbor_dobject_t, pos: usize) ?*anyopaque;
-pub extern fn lexbor_dobject_allocated_noi(lexbor_dobject_t: ?*lexbor_dobject_t) usize;
-pub extern fn lexbor_dobject_cache_length_noi(lexbor_dobject_t: ?*lexbor_dobject_t) usize;
+pub extern fn lexbor_dobject_init(dobject: ?*lexbor_dobject_t, chunk_size: usize, struct_size: usize) lxb_status_t;
+pub extern fn lexbor_dobject_clean(dobject: ?*lexbor_dobject_t) void;
+pub extern fn lexbor_dobject_destroy(dobject: ?*lexbor_dobject_t, destroy_self: bool) ?*lexbor_dobject_t;
+pub extern fn lexbor_dobject_init_list_entries(dobject: ?*lexbor_dobject_t, pos: usize) ?*u8;
+pub extern fn lexbor_dobject_alloc(dobject: ?*lexbor_dobject_t) ?*anyopaque;
+pub extern fn lexbor_dobject_calloc(dobject: ?*lexbor_dobject_t) ?*anyopaque;
+pub extern fn lexbor_dobject_free(dobject: ?*lexbor_dobject_t, data: ?*anyopaque) ?*anyopaque;
+pub extern fn lexbor_dobject_by_absolute_position(dobject: ?*lexbor_dobject_t, pos: usize) ?*anyopaque;
 
 pub inline fn lexbor_dobject_allocated(dobject: ?*lexbor_dobject_t) usize {
     return dobject.?.allocated;
@@ -476,6 +474,9 @@ pub inline fn lexbor_dobject_allocated(dobject: ?*lexbor_dobject_t) usize {
 pub inline fn lexbor_dobject_cache_length(dobject: ?*lexbor_dobject_t) usize {
     return lexbor_array_length(dobject.?.cache);
 }
+
+pub extern fn lexbor_dobject_allocated_noi(dobject: ?*lexbor_dobject_t) usize;
+pub extern fn lexbor_dobject_cache_length_noi(dobject: ?*lexbor_dobject_t) usize;
 
 // core/dtoa.h
 

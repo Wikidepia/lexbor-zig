@@ -59,6 +59,9 @@ pub const diyfpSub = diyfp.diyfpSub;
 pub const diyfpMul = diyfp.diyfpMul;
 pub const diyfpNormalize = diyfp.diyfpNormalize;
 
+pub const dobject = @import("core/dobject.zig");
+pub const Dobject = dobject.Dobject;
+
 pub const fs = @import("core/fs.zig");
 const types = @import("core/types.zig");
 pub const CodepointType = types.CodepointType;
