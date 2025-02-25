@@ -24,15 +24,10 @@ pub extern fn lexbor_array_insert(array: ?*lexbor_array_t, idx: usize, value: ?*
 pub extern fn lexbor_array_set(array: ?*lexbor_array_t, idx: usize, value: ?*anyopaque) lxb_status_t;
 pub extern fn lexbor_array_delete(array: ?*lexbor_array_t, begin: usize, length: usize) void;
 
-pub extern fn lexbor_array_get_noi(array: ?*lexbor_array_t, idx: usize) ?*anyopaque;
-pub extern fn lexbor_array_length_noi(array: ?*lexbor_array_t) usize;
-pub extern fn lexbor_array_size_noi(array: ?*lexbor_array_t) usize;
-
 pub inline fn lexbor_array_get(array: ?*lexbor_array_t, idx: usize) ?*anyopaque {
     if (idx >= array.?.length) {
         return null;
     }
-
     return array.?.list.?[idx];
 }
 
@@ -43,6 +38,10 @@ pub inline fn lexbor_array_length(array: ?*lexbor_array_t) usize {
 pub inline fn lexbor_array_size(array: ?*lexbor_array_t) usize {
     return array.?.size;
 }
+
+pub extern fn lexbor_array_get_noi(array: ?*lexbor_array_t, idx: usize) ?*anyopaque;
+pub extern fn lexbor_array_length_noi(array: ?*lexbor_array_t) usize;
+pub extern fn lexbor_array_size_noi(array: ?*lexbor_array_t) usize;
 
 // core/array_obj.h
 
@@ -63,12 +62,6 @@ pub extern fn lexbor_array_obj_push_wo_cls(array: ?*lexbor_array_obj_t) ?*anyopa
 pub extern fn lexbor_array_obj_push_n(array: ?*lexbor_array_obj_t, count: usize) ?*anyopaque;
 pub extern fn lexbor_array_obj_pop(array: ?*lexbor_array_obj_t) ?*anyopaque;
 pub extern fn lexbor_array_obj_delete(array: ?*lexbor_array_obj_t, begin: usize, length: usize) void;
-pub extern fn lexbor_array_obj_erase_noi(array: ?*lexbor_array_obj_t) void;
-pub extern fn lexbor_array_obj_get_noi(array: ?*lexbor_array_obj_t, idx: usize) ?*anyopaque;
-pub extern fn lexbor_array_obj_length_noi(array: ?*lexbor_array_obj_t) usize;
-pub extern fn lexbor_array_obj_size_noi(array: ?*lexbor_array_obj_t) usize;
-pub extern fn lexbor_array_obj_struct_size_noi(array: ?*lexbor_array_obj_t) usize;
-pub extern fn lexbor_array_obj_last_noi(array: ?*lexbor_array_obj_t) ?*anyopaque;
 
 pub inline fn lexbor_array_obj_erase(array: ?*lexbor_array_obj_t) void {
     _ = memset(array.?, 0, @sizeOf(lexbor_array_obj_t));
@@ -99,6 +92,13 @@ pub inline fn lexbor_array_obj_last(array: ?*lexbor_array_obj_t) ?*anyopaque {
     }
     return array.?.list + ((array.?.length - 1) * array.?.struct_size);
 }
+
+pub extern fn lexbor_array_obj_erase_noi(array: ?*lexbor_array_obj_t) void;
+pub extern fn lexbor_array_obj_get_noi(array: ?*lexbor_array_obj_t, idx: usize) ?*anyopaque;
+pub extern fn lexbor_array_obj_length_noi(array: ?*lexbor_array_obj_t) usize;
+pub extern fn lexbor_array_obj_size_noi(array: ?*lexbor_array_obj_t) usize;
+pub extern fn lexbor_array_obj_struct_size_noi(array: ?*lexbor_array_obj_t) usize;
+pub extern fn lexbor_array_obj_last_noi(array: ?*lexbor_array_obj_t) ?*anyopaque;
 
 // core/avl.h
 

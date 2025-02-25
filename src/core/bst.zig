@@ -8,9 +8,10 @@ pub inline fn rootRef(bst: ?*core.lexbor_bst_t) ?*?*core.lexbor_bst_entry_t {
     return core.lexbor_bst_root_ref(bst);
 }
 
-pub const EntryF = core.lexbor_bst_entry_f;
 pub const Entry = core.lexbor_bst_entry_t;
 pub const Bst = core.lexbor_bst_t;
+
+pub const EntryF = core.lexbor_bst_entry_f;
 
 pub fn create() ?*core.lexbor_bst_t {
     return core.lexbor_bst_create();

@@ -1,8 +1,9 @@
 const core = @import("../core_ext.zig");
 
-pub const NodeF = core.lexbor_avl_node_f;
-pub const Node = core.lexbor_avl_node_t;
 pub const Avl = core.lexbor_avl_t;
+pub const Node = core.lexbor_avl_node_t;
+
+pub const NodeF = core.lexbor_avl_node_f;
 
 pub fn create() ?*core.lexbor_avl_t {
     return core.lexbor_avl_create();

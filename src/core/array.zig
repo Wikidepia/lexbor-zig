@@ -46,18 +46,6 @@ pub fn delete(array: ?*core.lexbor_array_t, begin: usize, length_: usize) void {
     return core.lexbor_array_delete(array, begin, length_);
 }
 
-pub fn getNoi(array: ?*core.lexbor_array_t, idx: usize) ?*anyopaque {
-    return core.lexbor_array_get_noi(array, idx);
-}
-
-pub fn lengthNoi(array: ?*core.lexbor_array_t) usize {
-    return core.lexbor_array_length_noi(array);
-}
-
-pub fn sizeNoi(array: ?*core.lexbor_array_t) usize {
-    return core.lexbor_array_size_noi(array);
-}
-
 pub inline fn get(array: ?*core.lexbor_array_t, idx: usize) ?*anyopaque {
     return core.lexbor_array_get(array, idx);
 }
@@ -68,4 +56,16 @@ pub inline fn length(array: ?*core.lexbor_array_t) usize {
 
 pub inline fn size(array: ?*core.lexbor_array_t) usize {
     return core.lexbor_array_size(array);
+}
+
+pub fn getNoi(array: ?*core.lexbor_array_t, idx: usize) ?*anyopaque {
+    return core.lexbor_array_get_noi(array, idx);
+}
+
+pub fn lengthNoi(array: ?*core.lexbor_array_t) usize {
+    return core.lexbor_array_length_noi(array);
+}
+
+pub fn sizeNoi(array: ?*core.lexbor_array_t) usize {
+    return core.lexbor_array_size_noi(array);
 }

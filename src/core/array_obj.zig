@@ -43,30 +43,6 @@ pub fn delete(array: ?*core.lexbor_array_obj_t, begin: usize, length_: usize) vo
     core.lexbor_array_obj_delete(array, begin, length_);
 }
 
-pub fn eraseNoi(array: ?*core.lexbor_array_obj_t) void {
-    core.lexbor_array_obj_erase_noi(array);
-}
-
-pub fn getNoi(array: ?*core.lexbor_array_obj_t, idx: usize) ?*anyopaque {
-    return core.lexbor_array_obj_get_noi(array, idx);
-}
-
-pub fn lengthNoi(array: ?*core.lexbor_array_obj_t) usize {
-    return core.lexbor_array_obj_length_noi(array);
-}
-
-pub fn sizeNoi(array: ?*core.lexbor_array_obj_t) usize {
-    return core.lexbor_array_obj_size_noi(array);
-}
-
-pub fn structSizeNoi(array: ?*core.lexbor_array_obj_t) usize {
-    return core.lexbor_array_obj_struct_size_noi(array);
-}
-
-pub fn lastNoi(array: ?*core.lexbor_array_obj_t) ?*anyopaque {
-    return core.lexbor_array_obj_last_noi(array);
-}
-
 pub inline fn erase(array: ?*core.lexbor_array_obj_t) void {
     core.lexbor_array_obj_erase(array);
 }
@@ -89,4 +65,28 @@ pub inline fn structSize(array: ?*core.lexbor_array_obj_t) usize {
 
 pub inline fn last(array: ?*core.lexbor_array_obj_t) ?*anyopaque {
     return core.lexbor_array_obj_last(array);
+}
+
+pub fn eraseNoi(array: ?*core.lexbor_array_obj_t) void {
+    core.lexbor_array_obj_erase_noi(array);
+}
+
+pub fn getNoi(array: ?*core.lexbor_array_obj_t, idx: usize) ?*anyopaque {
+    return core.lexbor_array_obj_get_noi(array, idx);
+}
+
+pub fn lengthNoi(array: ?*core.lexbor_array_obj_t) usize {
+    return core.lexbor_array_obj_length_noi(array);
+}
+
+pub fn sizeNoi(array: ?*core.lexbor_array_obj_t) usize {
+    return core.lexbor_array_obj_size_noi(array);
+}
+
+pub fn structSizeNoi(array: ?*core.lexbor_array_obj_t) usize {
+    return core.lexbor_array_obj_struct_size_noi(array);
+}
+
+pub fn lastNoi(array: ?*core.lexbor_array_obj_t) ?*anyopaque {
+    return core.lexbor_array_obj_last_noi(array);
 }
