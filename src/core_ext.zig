@@ -512,6 +512,9 @@ pub extern fn lexbor_fs_file_easy_read(full_path: ?*const lxb_char_t, len: ?*usi
 
 // core/hash.h
 
+pub const lexbor_hash_search_t = lexbor_hash_search_;
+pub const lexbor_hash_insert_t = lexbor_hash_insert_;
+
 pub const LEXBOR_HASH_SHORT_SIZE = 16;
 pub const LEXBOR_HASH_TABLE_MIN_SIZE = 32;
 
@@ -523,11 +526,14 @@ pub const lexbor_hash_search_raw = @extern(**const lexbor_hash_search, .{ .name 
 pub const lexbor_hash_search_lower = @extern(**const lexbor_hash_search, .{ .name = "lexbor_hash_search_lower" });
 pub const lexbor_hash_search_upper = @extern(**const lexbor_hash_search, .{ .name = "lexbor_hash_search_upper" });
 
+pub const lexbor_hash_t = lexbor_hash;
+pub const lexbor_hash_entry_t = lexbor_hash_entry;
+
 pub const lexbor_hash_id_f = ?*const fn (key: ?*const lxb_char_t, len: usize) callconv(.C) u32;
 pub const lexbor_hash_copy_f = ?*const fn (hash: ?*lexbor_hash_t, entry: ?*lexbor_hash_entry_t, key: ?*const lxb_char_t, len: usize) callconv(.C) lxb_status_t;
 pub const lexbor_hash_cmp_f = ?*const fn (first: ?*const lxb_char_t, second: ?*const lxb_char_t, size: usize) callconv(.C) bool;
 
-pub const lexbor_hash_entry_t = extern struct {
+pub const lexbor_hash_entry = extern struct {
     u: extern union {
         long_str: ?*lxb_char_t,
         short_str: [LEXBOR_HASH_SHORT_SIZE + 1]lxb_char_t,
@@ -536,23 +542,23 @@ pub const lexbor_hash_entry_t = extern struct {
     next: ?*lexbor_hash_entry_t,
 };
 
-pub const lexbor_hash_insert_t = extern struct {
-    hash: lexbor_hash_id_f,
-    cmp: lexbor_hash_cmp_f,
-    copy: lexbor_hash_copy_f,
-};
-
-pub const lexbor_hash_search_t = extern struct {
-    hash: lexbor_hash_id_f,
-    cmp: lexbor_hash_cmp_f,
-};
-
-pub const lexbor_hash_t = extern struct {
+pub const lexbor_hash = extern struct {
     entries: ?*lexbor_dobject_t,
     mraw: ?*lexbor_mraw_t,
     table: ?*?*lexbor_hash_entry_t,
     table_size: usize,
     struct_size: usize,
+};
+
+pub const lexbor_hash_insert_ = extern struct {
+    hash: lexbor_hash_id_f,
+    cmp: lexbor_hash_cmp_f,
+    copy: lexbor_hash_copy_f,
+};
+
+pub const lexbor_hash_search_ = extern struct {
+    hash: lexbor_hash_id_f,
+    cmp: lexbor_hash_cmp_f,
 };
 
 pub extern fn lexbor_hash_create() ?*lexbor_hash_t;
