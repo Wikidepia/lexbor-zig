@@ -626,12 +626,12 @@ pub inline fn lexbor_hash_entries_count(hash: ?*lexbor_hash_t) usize {
 pub const lexbor_in_node_t = lexbor_in_node;
 pub const lexbor_in_opt_t = c_int;
 
-pub const lexbor_in_opt = enum(c_int) {
-    LEXBOR_IN_OPT_UNDEF = 0x00,
-    LEXBOR_IN_OPT_READONLY = 0x01,
-    LEXBOR_IN_OPT_DONE = 0x02,
-    LEXBOR_IN_OPT_FAKE = 0x04,
-    LEXBOR_IN_OPT_ALLOC = 0x08,
+pub const lexbor_in_opt = enum(lexbor_in_opt_t) {
+    undef = 0x00,
+    readonly = 0x01,
+    done = 0x02,
+    fake = 0x04,
+    alloc = 0x08,
 };
 
 pub const lexbor_in_t = extern struct {
@@ -640,7 +640,7 @@ pub const lexbor_in_t = extern struct {
 
 pub const lexbor_in_node = extern struct {
     offset: usize,
-    opt: lexbor_in_opt_t,
+    opt: lexbor_in_opt,
     begin: ?[*]const lxb_char_t,
     end: ?[*]const lxb_char_t,
     use: ?[*]const lxb_char_t,
@@ -660,13 +660,6 @@ pub extern fn lexbor_in_node_split(node: ?*lexbor_in_node_t, pos: ?*const lxb_ch
 pub extern fn lexbor_in_node_find(node: ?*lexbor_in_node_t, pos: ?*const lxb_char_t) ?*lexbor_in_node_t;
 pub extern fn lexbor_in_node_pos_up(node: ?*lexbor_in_node_t, return_node: ?*?*lexbor_in_node_t, pos: ?*const lxb_char_t, offset: usize) ?*const lxb_char_t;
 pub extern fn lexbor_in_node_pos_down(node: ?*lexbor_in_node_t, return_node: ?*?*lexbor_in_node_t, pos: ?*const lxb_char_t, offset: usize) ?*const lxb_char_t;
-pub extern fn lexbor_in_node_begin_noi(node: ?*const lexbor_in_node_t) ?*const lxb_char_t;
-pub extern fn lexbor_in_node_end_noi(node: ?*const lexbor_in_node_t) ?*const lxb_char_t;
-pub extern fn lexbor_in_node_offset_noi(node: ?*const lexbor_in_node_t) usize;
-pub extern fn lexbor_in_node_next_noi(node: ?*const lexbor_in_node_t) ?*lexbor_in_node_t;
-pub extern fn lexbor_in_node_prev_noi(node: ?*const lexbor_in_node_t) ?*lexbor_in_node_t;
-pub extern fn lexbor_in_node_in_noi(node: ?*const lexbor_in_node_t) ?*lexbor_in_t;
-pub extern fn lexbor_in_segment_noi(node: ?*const lexbor_in_node_t, data: ?*const lxb_char_t) bool;
 
 pub inline fn lexbor_in_node_begin(node: ?*const lexbor_in_node_t) ?[*]const lxb_char_t {
     return node.?.begin;
@@ -695,6 +688,14 @@ pub inline fn lexbor_in_node_in(node: ?*const lexbor_in_node_t) ?*lexbor_in_t {
 pub inline fn lexbor_in_segment(node: ?*const lexbor_in_node_t, data: ?*const lxb_char_t) bool {
     return @intFromPtr(&node.?.begin.?[0]) <= @intFromPtr(&data[0]) and @intFromPtr(&node.?.end.?[0]) >= @intFromPtr(&data[0]);
 }
+
+pub extern fn lexbor_in_node_begin_noi(node: ?*const lexbor_in_node_t) ?*const lxb_char_t;
+pub extern fn lexbor_in_node_end_noi(node: ?*const lexbor_in_node_t) ?*const lxb_char_t;
+pub extern fn lexbor_in_node_offset_noi(node: ?*const lexbor_in_node_t) usize;
+pub extern fn lexbor_in_node_next_noi(node: ?*const lexbor_in_node_t) ?*lexbor_in_node_t;
+pub extern fn lexbor_in_node_prev_noi(node: ?*const lexbor_in_node_t) ?*lexbor_in_node_t;
+pub extern fn lexbor_in_node_in_noi(node: ?*const lexbor_in_node_t) ?*lexbor_in_t;
+pub extern fn lexbor_in_segment_noi(node: ?*const lexbor_in_node_t, data: ?*const lxb_char_t) bool;
 
 // core/lexbor.h
 

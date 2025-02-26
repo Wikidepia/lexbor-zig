@@ -69,6 +69,9 @@ pub const fs = @import("core/fs.zig");
 pub const hash = @import("core/hash.zig");
 pub const Hash = hash.Hash;
 
+pub const in = @import("core/in.zig");
+pub const In = in.In;
+
 const types = @import("core/types.zig");
 pub const CodepointType = types.CodepointType;
 pub const StatusType = types.StatusType;
