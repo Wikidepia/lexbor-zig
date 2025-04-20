@@ -857,7 +857,9 @@ const ns_src = [_][]const u8{
     "lib/lexbor/ns/ns.c",
 };
 
-const ports_src = [_][]const u8{};
+const ports_src = [_][]const u8{
+    "lib/lexbor/ports/posix/lexbor/core/memory.c",
+};
 
 const punycode_src = [_][]const u8{
     "lib/lexbor/punycode/punycode.c",
